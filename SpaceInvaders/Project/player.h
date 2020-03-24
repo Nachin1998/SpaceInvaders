@@ -4,22 +4,26 @@
 #include "raylib.h"
 
 namespace MyGame {
-	namespace Player {
+namespace Player {
 
-		struct Player {
-			Rectangle rec;
-			Texture2D texture;
-			int lives;
-			Color color;
-		};
+	const int maxTextures = 4;
 
-		extern Player player;
+	struct Player {
+		Rectangle body;
+		Texture2D texture[maxTextures];
+		Vector2 pos;
+		Vector2 speed;
+		int lives;
+		Color color;
+	};
 
-		void init();
-		void update();
-		void draw();
-		void deInit();
-	}
+	extern Player player;
+
+	void init();
+	void update();
+	void draw();
+	void deInit();
+}
 }
 
 #endif

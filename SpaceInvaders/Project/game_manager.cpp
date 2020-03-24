@@ -2,82 +2,89 @@
 
 #include "raylib.h"
 
+#include "player.h"
+
 namespace MyGame {
-	namespace GameManager {
+namespace GameManager {
 
-		static void init();
-		static void update();
-		static void draw();
-		static void deInit();
+	static void init();
+	static void update();
+	static void draw();
+	static void deInit();
 
-		bool endGame = false;
+	bool endGame = false;
 
-		SpaceInvadersScenes actualScene = MainMenu;
+	SpaceInvadersScenes actualScene = Gameplay;
 
-		void runGame() {
+	void runGame() {
 
-			init();
+		init();
 
-			while (!WindowShouldClose() && !endGame)
-			{
-				update();
-				draw();
-			}
-
-			deInit();
+		while (!WindowShouldClose() && !endGame)
+		{
+			update();
+			draw();
 		}
 
-		void init() {
+		deInit();
+	}
 
-			InitWindow(screenWidth, screenHeight, "Space Invaders - by Ignacio Fernández Lemos");
-			SetExitKey(KEY_F4);
-		}
+	void init() {
 
-		void update() {
+		InitWindow(screenWidth, screenHeight, "Space Invaders - by Ignacio Fernández Lemos");
+		SetExitKey(KEY_F4);
 
-			switch (actualScene)
-			{
-			case MainMenu:
-				break;
+		Player::init();
+	}
 
-			case Gameplay:
-				break;
+	void update() {
 
-			case Credits:
-				break;
+		switch (actualScene)
+		{
+		case MainMenu:
+			break;
 
-			default:
-				break;
-			}
-		}
+		case Gameplay:
+			Player::update();
+			break;
 
-		void draw() {
+		case Credits:
+			break;
 
-			BeginDrawing();
-
-			ClearBackground(BLACK);
-			
-			switch (actualScene)
-			{
-			case MainMenu:
-				break;
-
-			case Gameplay:
-				break;
-
-			case Credits:
-				break;
-
-			default:
-				break;
-			}
-
-			EndDrawing();
-		}
-
-		void deInit() {
-
-			CloseWindow();
+		default:
+			break;
 		}
 	}
+
+	void draw() {
+
+		BeginDrawing();
+
+		ClearBackground(BLACK);
+		
+		switch (actualScene)
+		{
+		case MainMenu:
+			break;
+
+		case Gameplay:
+			Player::draw();
+			break;
+
+		case Credits:
+			break;
+
+		default:
+			break;
+		}
+
+		EndDrawing();
+	}
+
+	void deInit() {
+
+		Player::deInit();
+		CloseWindow();
+	}
+}
 }
