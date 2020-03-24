@@ -13,6 +13,7 @@ namespace Player {
 		Texture2D texture[maxTextures];
 		Vector2 pos;
 		Vector2 speed;
+		int points;
 		int lives;
 		Color color;
 	};

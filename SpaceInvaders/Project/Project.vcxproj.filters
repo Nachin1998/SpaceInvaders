@@ -22,12 +22,18 @@
     <ClCompile Include="player.cpp">
       <Filter>entities</Filter>
     </ClCompile>
+    <ClCompile Include="invaders.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_manager.h">
       <Filter>game_manager</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="invaders.h">
       <Filter>entities</Filter>
     </ClInclude>
   </ItemGroup>

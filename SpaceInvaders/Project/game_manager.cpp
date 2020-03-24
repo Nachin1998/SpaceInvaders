@@ -3,6 +3,7 @@
 #include "raylib.h"
 
 #include "player.h"
+#include "invaders.h"
 
 namespace MyGame {
 namespace GameManager {
@@ -35,6 +36,7 @@ namespace GameManager {
 		SetExitKey(KEY_F4);
 
 		Player::init();
+		Invaders::init();
 	}
 
 	void update() {
@@ -46,6 +48,7 @@ namespace GameManager {
 
 		case Gameplay:
 			Player::update();
+			Invaders::update();
 			break;
 
 		case Credits:
@@ -69,6 +72,7 @@ namespace GameManager {
 
 		case Gameplay:
 			Player::draw();
+			Invaders::draw();
 			break;
 
 		case Credits:

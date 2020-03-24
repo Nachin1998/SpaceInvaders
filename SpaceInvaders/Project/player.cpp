@@ -8,9 +8,12 @@ using namespace GameManager;
 
 	static void playerMovement();
 
-	float maxTextureTimer = 0.4f;
 	Player player;
-	float textureTimer;
+
+	static float textureTimer;
+	static float maxTextureTimer = 0.4f;
+
+	static int mapLimit = 10;
 
 	void init() {
 
@@ -24,6 +27,7 @@ using namespace GameManager;
 		player.body.y = player.pos.y - player.body.height / 2;
 		player.speed.x = 250;
 		player.speed.y = 250;
+		player.points = 0;
 		player.lives = 3;
 		player.texture[0] = LoadTexture("res/player/player_spaceship1.png");
 		player.texture[1] = LoadTexture("res/player/player_spaceship2.png");
@@ -81,7 +85,17 @@ using namespace GameManager;
 
 	void playerMovement() {
 
-		if(player.body.x - 10 > 0)
+		if (IsKeyDown(KEY_W))
+		{
+			player.pos.y -= player.speed.x * GetFrameTime();
+		}
+
+		if (IsKeyDown(KEY_S))
+		{
+			player.pos.y += player.speed.x * GetFrameTime();
+		}
+
+		if(player.body.x - mapLimit > 0)
 		{
 			if (IsKeyDown(KEY_A))
 			{
@@ -89,7 +103,7 @@ using namespace GameManager;
 			}
 		}
 		
-		if (player.body.x +player.body.width + 10 < screenWidth)
+		if (player.body.x +player.body.width + mapLimit < screenWidth)
 		{
 			if (IsKeyDown(KEY_D))
 			{
