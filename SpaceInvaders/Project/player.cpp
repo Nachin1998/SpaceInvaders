@@ -6,7 +6,18 @@ namespace MyGame {
 namespace Player {
 using namespace GameManager;
 
-	static void playerMovement();
+	static void updatePlayer();
+	static void drawPlayer();
+	static void updateBullet();
+	static void drawBullet();
+
+	struct Bullet{
+		Rectangle rec;
+		float speed;
+		bool active;
+		Color color;
+	};
+	Bullet bullet;
 
 	Player player;
 
@@ -34,6 +45,14 @@ using namespace GameManager;
 		player.texture[2] = LoadTexture("res/player/player_spaceship3.png");
 		player.texture[3] = LoadTexture("res/player/player_spaceship4.png");
 		player.color = WHITE;
+
+		bullet.rec.width = 5;
+		bullet.rec.height = 15;
+		bullet.rec.x = player.pos.x - bullet.rec.width / 2;
+		bullet.rec.y = player.pos.y - bullet.rec.height / 2;
+		bullet.speed = 400.0f;
+		bullet.active = false;
+		bullet.color = RED;
 	}
 
 	void update() {
@@ -47,32 +66,14 @@ using namespace GameManager;
 		player.body.x = player.pos.x - player.body.width / 2;
 		player.body.y = player.pos.y - player.body.height / 2;
 
-		playerMovement();
+		updatePlayer();
+		updateBullet();
 	}
 	
 	void draw() {
 
-		//DrawRectangleRec(player.body, player.color);
-
-		if (textureTimer < 0.1f)
-		{
-			DrawTexture(player.texture[0], player.pos.x - player.texture[0].width / 2, player.pos.y - player.texture[0].height / 2, player.color);
-		}
-
-		if (textureTimer > 0.1f && textureTimer < 0.2f)
-		{
-			DrawTexture(player.texture[1], player.pos.x - player.texture[1].width / 2, player.pos.y - player.texture[1].height / 2, player.color);
-		}
-
-		if (textureTimer > 0.2f && textureTimer < 0.3f)
-		{
-			DrawTexture(player.texture[2], player.pos.x - player.texture[2].width / 2, player.pos.y - player.texture[2].height / 2, player.color);
-		}
-
-		if (textureTimer > 0.3f && textureTimer < maxTextureTimer)
-		{
-			DrawTexture(player.texture[3], player.pos.x - player.texture[3].width / 2, player.pos.y - player.texture[3].height / 2, player.color);
-		}
+		drawBullet();
+		drawPlayer();
 	}
 
 	void deInit() {
@@ -83,7 +84,7 @@ using namespace GameManager;
 		}
 	}
 
-	void playerMovement() {
+	void updatePlayer() {
 
 		if (IsKeyDown(KEY_W))
 		{
@@ -109,6 +110,62 @@ using namespace GameManager;
 			{
 				player.pos.x += player.speed.y * GetFrameTime();
 			}
+		}
+	}
+
+	void drawPlayer() {
+
+		//DrawRectangleRec(player.body, player.color);
+		if (textureTimer < 0.1f)
+		{
+			DrawTexture(player.texture[0], player.pos.x - player.texture[0].width / 2, player.pos.y - player.texture[0].height / 2, player.color);
+		}
+
+		if (textureTimer > 0.1f && textureTimer < 0.2f)
+		{
+			DrawTexture(player.texture[1], player.pos.x - player.texture[1].width / 2, player.pos.y - player.texture[1].height / 2, player.color);
+		}
+
+		if (textureTimer > 0.2f && textureTimer < 0.3f)
+		{
+			DrawTexture(player.texture[2], player.pos.x - player.texture[2].width / 2, player.pos.y - player.texture[2].height / 2, player.color);
+		}
+
+		if (textureTimer > 0.3f && textureTimer < maxTextureTimer)
+		{
+			DrawTexture(player.texture[3], player.pos.x - player.texture[3].width / 2, player.pos.y - player.texture[3].height / 2, player.color);
+		}
+	}
+
+	void updateBullet() {
+
+
+		if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			bullet.active = true;
+		}
+
+		if (bullet.active)
+		{
+			bullet.rec.y -= bullet.speed * GetFrameTime();
+		}
+		else
+		{
+			bullet.rec.x = player.pos.x - bullet.rec.width / 2;
+			bullet.rec.y = player.pos.y - player.body.height / 2 - bullet.rec.height / 2;
+		}
+
+		if (bullet.rec.y < 0)
+		{
+			bullet.active = false;
+		}
+	}
+
+	void drawBullet() {
+
+		if (bullet.active)
+		{
+			DrawRectangleRec(bullet.rec, bullet.color);
 		}
 	}
 }

@@ -88,6 +88,7 @@ namespace GameManager {
 	void deInit() {
 
 		Player::deInit();
+		Invaders::deInit();
 		CloseWindow();
 	}
 }

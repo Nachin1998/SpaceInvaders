@@ -22,8 +22,8 @@ using namespace GameManager;
 				invaders[i][j].pos.y = 100 + (60 * i);
 				invaders[i][j].body.x = invaders[i][j].pos.x - invaders[i][j].body.width / 2;
 				invaders[i][j].body.y = invaders[i][j].pos.y - invaders[i][j].body.height / 2;
-				invaders[i][j].speed.x = 100;
-				invaders[i][j].speed.y = 100;
+				invaders[i][j].speed.x = 20;
+				invaders[i][j].speed.y = 20;
 				invaders[i][j].active = true;
 				invaders[i][j].color = WHITE;
 
@@ -65,22 +65,22 @@ using namespace GameManager;
 				//Invader Controls to mimic real movement
 				if (IsKeyPressed(KEY_RIGHT))
 				{
-					invaders[i][j].pos.x += 20;
+					invaders[i][j].pos.x += invaders[i][j].speed.x;
 				}
 
 				if (IsKeyPressed(KEY_UP))
 				{
-					invaders[i][j].pos.y -= 20;
+					invaders[i][j].pos.y -= invaders[i][j].speed.y;
 				}
 
 				if (IsKeyPressed(KEY_DOWN))
 				{
-					invaders[i][j].pos.y += 20;
+					invaders[i][j].pos.y += invaders[i][j].speed.y;
 				}
 
 				if (IsKeyPressed(KEY_LEFT))
 				{
-					invaders[i][j].pos.x -= 20;
+					invaders[i][j].pos.x -= invaders[i][j].speed.x;
 				}
 			}
 		}
