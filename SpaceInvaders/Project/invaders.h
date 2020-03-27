@@ -6,11 +6,13 @@
 namespace MyGame {
 namespace Invaders {
 	
-	const int maxTextures = 2;
+	const int maxInvaderTextures = 2;
+	const int maxBulletTextures = 4;
 
 	struct Invader {
 		Rectangle body;
-		Texture2D texture[maxTextures];
+		Texture2D invaderTexture[maxInvaderTextures];
+		Texture2D bulletTexture[maxBulletTextures];
 		Vector2 pos;
 		Vector2 speed;
 		bool active;

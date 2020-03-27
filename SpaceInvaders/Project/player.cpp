@@ -17,6 +17,7 @@ using namespace GameManager;
 		bool active;
 		Color color;
 	};
+	
 	Bullet bullet;
 
 	Player player;
@@ -116,6 +117,7 @@ using namespace GameManager;
 	void drawPlayer() {
 
 		//DrawRectangleRec(player.body, player.color);
+
 		if (textureTimer < 0.1f)
 		{
 			DrawTexture(player.texture[0], player.pos.x - player.texture[0].width / 2, player.pos.y - player.texture[0].height / 2, player.color);
@@ -138,7 +140,6 @@ using namespace GameManager;
 	}
 
 	void updateBullet() {
-
 
 		if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
