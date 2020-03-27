@@ -9,7 +9,6 @@ namespace MyGame{
 namespace Invaders{
 using namespace GameManager;
 	
-	static void extra();
 	static void initInvader();
 	static void updateInvader();
 	static void drawInvader();
@@ -20,15 +19,6 @@ using namespace GameManager;
 	static void deInitInvader();
 	static void deInitBullet();
 
-	struct Bullet{
-		Texture2D textures[4];
-		Vector2 pos;
-		Rectangle rec;
-		float speed;
-		bool active;
-		Color color;
-	};
-
 	Bullet bullet;
 
 	Invader invaders[maxInvadersY][maxInvadersX];
@@ -38,6 +28,8 @@ using namespace GameManager;
 
 	static float invaderTimer;
 	static float bulletTimer;
+
+	int activeInvaderCounter = maxInvadersX * maxInvadersY;
 	
 	void init(){
 		
@@ -53,7 +45,6 @@ using namespace GameManager;
 
 		updateInvader();
 		updateBullet();
-		extra();
 	}
 
 	void draw() {
@@ -68,20 +59,21 @@ using namespace GameManager;
 		deInitBullet();
 	}
 
-	void extra() {
+	void bulletRespawn() {
 
-		if (IsKeyPressed(KEY_K))
+		if (activeInvaderCounter != 0)
 		{
-			int otherRandX = rand() % maxInvadersX;
-			int otherRandY = rand() % maxInvadersY;
-			
-			while (!invaders[otherRandY][otherRandX].active)
+			randX = rand() % maxInvadersX;
+			randY = rand() % maxInvadersY;
+
+			while (!invaders[randY][randX].active)
 			{
-				otherRandX = rand() % maxInvadersX;
-				otherRandY = rand() % maxInvadersY;
+				randX = rand() % maxInvadersX;
+				randY = rand() % maxInvadersY;
 			}
-			
-			invaders[otherRandY][otherRandX].active = false;
+
+			bullet.pos.x = invaders[randY][randX].pos.x;
+			bullet.pos.y = invaders[randY][randX].pos.y;
 		}
 	}
 
@@ -107,32 +99,32 @@ using namespace GameManager;
 				switch (i)
 				{
 				case 0:
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/invaders/invader3/invader3_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/invaders/invader3/invader3_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/invaders/invader3/invader3_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/invaders/invader3/invader3_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/invaders/invader3/invader3_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/invaders/invader3/invader3_shot4.png");
+					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader3/invader3_1.png");
+					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader3/invader3_2.png");
+					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader3/invader3_shot1.png");
+					invaders[i][j].bulletTexture[1] = LoadTexture("res/textures/invaders/invader3/invader3_shot2.png");
+					invaders[i][j].bulletTexture[2] = LoadTexture("res/textures/invaders/invader3/invader3_shot3.png");
+					invaders[i][j].bulletTexture[3] = LoadTexture("res/textures/invaders/invader3/invader3_shot4.png");
 					break;
 
 				case 1:
 				case 2:
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/invaders/invader2/invader2_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/invaders/invader2/invader2_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/invaders/invader2/invader2_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/invaders/invader2/invader2_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/invaders/invader2/invader2_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/invaders/invader2/invader2_shot4.png");
+					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader2/invader2_1.png");
+					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader2/invader2_2.png");
+					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader2/invader2_shot1.png");
+					invaders[i][j].bulletTexture[1] = LoadTexture("res/textures/invaders/invader2/invader2_shot2.png");
+					invaders[i][j].bulletTexture[2] = LoadTexture("res/textures/invaders/invader2/invader2_shot3.png");
+					invaders[i][j].bulletTexture[3] = LoadTexture("res/textures/invaders/invader2/invader2_shot4.png");
 					break;
 
 				case 3:
 				case 4:
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/invaders/invader1/invader1_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/invaders/invader1/invader1_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/invaders/invader1/invader1_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/invaders/invader1/invader1_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/invaders/invader1/invader1_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/invaders/invader1/invader1_shot4.png");
+					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader1/invader1_1.png");
+					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader1/invader1_2.png");
+					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader1/invader1_shot1.png");
+					invaders[i][j].bulletTexture[1] = LoadTexture("res/textures/invaders/invader1/invader1_shot2.png");
+					invaders[i][j].bulletTexture[2] = LoadTexture("res/textures/invaders/invader1/invader1_shot3.png");
+					invaders[i][j].bulletTexture[3] = LoadTexture("res/textures/invaders/invader1/invader1_shot4.png");
 					break;
 
 				default:
@@ -155,6 +147,7 @@ using namespace GameManager;
 		{
 			for (int j = 0; j < maxInvadersX; j++)
 			{
+
 				//Body follows the invaderTexture
 				invaders[i][j].body.x = invaders[i][j].pos.x - invaders[i][j].body.width / 2;
 				invaders[i][j].body.y = invaders[i][j].pos.y - invaders[i][j].body.height / 2;
@@ -240,21 +233,16 @@ using namespace GameManager;
 
 				if (bullet.pos.y - bullet.textures[i].height / 2 > screenHeight)
 				{
-					randX = rand() % maxInvadersX;
-					randY = rand() % maxInvadersY;
-
-					while (!invaders[randY][randX].active)
-					{
-						randX = rand() % maxInvadersX;
-						randY = rand() % maxInvadersY;
-					}
-
-					bullet.pos.x = invaders[randY][randX].pos.x;
-					bullet.pos.y = invaders[randY][randX].pos.y;
+					bulletRespawn();
 				}
 			}
 
 			bullet.pos.y += bullet.speed * GetFrameTime();
+		}
+		else
+		{
+			bulletRespawn();
+			bullet.active = true;
 		}
 	}
 

@@ -2,8 +2,7 @@
 
 #include "raylib.h"
 
-#include "player.h"
-#include "invaders.h"
+#include "gameplay.h"
 
 namespace MyGame {
 namespace GameManager {
@@ -35,8 +34,7 @@ namespace GameManager {
 		InitWindow(screenWidth, screenHeight, "Space Invaders - by Ignacio Fernández Lemos");
 		SetExitKey(KEY_F4);
 
-		Player::init();
-		Invaders::init();
+		Gameplay::init();
 	}
 
 	void update() {
@@ -47,8 +45,7 @@ namespace GameManager {
 			break;
 
 		case Gameplay:
-			Player::update();
-			Invaders::update();
+			Gameplay::update();
 			break;
 
 		case Credits:
@@ -71,8 +68,7 @@ namespace GameManager {
 			break;
 
 		case Gameplay:
-			Player::draw();
-			Invaders::draw();
+			Gameplay::draw();
 			break;
 
 		case Credits:
@@ -87,8 +83,7 @@ namespace GameManager {
 
 	void deInit() {
 
-		Player::deInit();
-		Invaders::deInit();
+		Gameplay::deInit();
 		CloseWindow();
 	}
 }

@@ -18,7 +18,15 @@ namespace Player {
 		Color color;
 	};
 
+	struct Bullet {
+		Rectangle rec;
+		float speed;
+		bool active;
+		Color color;
+	};
+
 	extern Player player;
+	extern Bullet bullet;
 
 	void init();
 	void update();
