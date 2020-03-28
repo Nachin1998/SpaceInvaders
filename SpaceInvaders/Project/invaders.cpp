@@ -74,6 +74,8 @@ using namespace GameManager;
 
 			bullet.pos.x = invaders[randY][randX].pos.x;
 			bullet.pos.y = invaders[randY][randX].pos.y;
+
+			bullet.active = true;
 		}
 	}
 
@@ -88,7 +90,7 @@ using namespace GameManager;
 				invaders[i][j].body.width = 40;
 				invaders[i][j].body.height = 30;
 				invaders[i][j].pos.x = ((70 * j)) + invaders[i][j].body.width + 20;
-				invaders[i][j].pos.y = 100 + (60 * i);
+				invaders[i][j].pos.y = 70 + (60 * i);
 				invaders[i][j].body.x = invaders[i][j].pos.x - invaders[i][j].body.width / 2;
 				invaders[i][j].body.y = invaders[i][j].pos.y - invaders[i][j].body.height / 2;
 				invaders[i][j].speed.x = 20;
@@ -99,6 +101,7 @@ using namespace GameManager;
 				switch (i)
 				{
 				case 0:
+					invaders[i][j].pointsToGive = 300;
 					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader3/invader3_1.png");
 					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader3/invader3_2.png");
 					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader3/invader3_shot1.png");
@@ -109,6 +112,7 @@ using namespace GameManager;
 
 				case 1:
 				case 2:
+					invaders[i][j].pointsToGive = 200;
 					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader2/invader2_1.png");
 					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader2/invader2_2.png");
 					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader2/invader2_shot1.png");
@@ -119,6 +123,7 @@ using namespace GameManager;
 
 				case 3:
 				case 4:
+					invaders[i][j].pointsToGive = 100;
 					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader1/invader1_1.png");
 					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader1/invader1_2.png");
 					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader1/invader1_shot1.png");
@@ -208,7 +213,7 @@ using namespace GameManager;
 		bullet.pos.y = invaders[randY][randX].pos.y + 20;
 		bullet.rec.x = bullet.rec.x - bullet.rec.width / 2;
 		bullet.rec.y = bullet.rec.y - bullet.rec.height / 2;
-		bullet.speed = 100.0f;
+		bullet.speed = 300.0f;
 		bullet.active = true;
 		bullet.color = RED;
 	}
@@ -242,7 +247,7 @@ using namespace GameManager;
 		else
 		{
 			bulletRespawn();
-			bullet.active = true;
+			
 		}
 	}
 
@@ -270,7 +275,7 @@ using namespace GameManager;
 				DrawTexture(bullet.textures[3], bullet.pos.x - bullet.textures[3].width / 2, bullet.pos.y - bullet.textures[3].height / 2, WHITE);
 			}
 
-			//DrawRectangleRec(bullet.rec, bullet.color);
+			DrawRectangleRec(bullet.rec, bullet.color);
 		}
 	}
 

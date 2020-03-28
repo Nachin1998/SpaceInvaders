@@ -17,6 +17,7 @@ namespace Invaders {
 		Texture2D bulletTexture[maxBulletTextures];
 		Vector2 pos;
 		Vector2 speed;
+		int pointsToGive;
 		bool active;
 		Color color;
 	};

@@ -109,7 +109,7 @@ using namespace GameManager;
 
 	void drawPlayer() {
 
-		//DrawRectangleRec(player.body, player.color);
+		DrawRectangleRec(player.body, player.color);
 
 		if (textureTimer < 0.1f)
 		{
