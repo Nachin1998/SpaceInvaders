@@ -51,7 +51,7 @@ using namespace GameManager;
 		ufo.pos.x = 0;
 		ufo.pos.y = 25;
 		ufo.rec.width = 72;
-		ufo.rec.height = 5;
+		ufo.rec.height = 15;
 		ufo.rec.x = ufo.pos.x - ufo.rec.width;
 		ufo.rec.y = ufo.pos.y - ufo.rec.height / 2;
 		ufo.speed = 200.0f;
@@ -83,6 +83,8 @@ using namespace GameManager;
 
 		Player::deInit();
 		Invaders::deInit();
+		UnloadTexture(ufo.texture[0]);
+		UnloadTexture(ufo.texture[1]);
 	}
 
 	void updateUFO() {
@@ -90,7 +92,7 @@ using namespace GameManager;
 		ufoMovementTimer += GetFrameTime();
 		ufoTextureTimer += GetFrameTime();
 
-		if (ufoMovementTimer >= 30)
+		if (ufoMovementTimer >= 30.0f)
 		{
 			ufo.active = true;
 		}
@@ -106,16 +108,16 @@ using namespace GameManager;
 		if (ufo.active)
 		{
 			ufo.pos.x += ufo.speed * GetFrameTime();
+
+			if (ufo.pos.x - ufo.rec.width / 2 > screenWidth)
+			{
+				ufo.active = false;
+				ufoMovementTimer = 0;
+			}
 		}
 		else
 		{
 			ufo.pos.x = 0 - ufo.rec.width / 2;
-		}
-
-		if (ufo.pos.x - ufo.rec.width / 2 > screenWidth)
-		{
-			ufo.active = false;
-			ufoMovementTimer = 0;
 		}
 	}
 

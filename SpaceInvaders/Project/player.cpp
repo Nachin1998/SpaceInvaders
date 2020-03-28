@@ -44,7 +44,7 @@ using namespace GameManager;
 		bullet.rec.height = 15;
 		bullet.rec.x = player.pos.x - bullet.rec.width / 2;
 		bullet.rec.y = player.pos.y - bullet.rec.height / 2;
-		bullet.speed = 1200.0f;
+		bullet.speed = 700.0f;
 		bullet.active = false;
 		bullet.color = RED;
 	}
@@ -109,7 +109,7 @@ using namespace GameManager;
 
 	void drawPlayer() {
 
-		DrawRectangleRec(player.body, player.color);
+		//DrawRectangleRec(player.body, player.color);
 
 		if (textureTimer < 0.1f)
 		{

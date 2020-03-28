@@ -14,6 +14,7 @@ using namespace GameManager;
 	static void drawInvader();
 	static void initBullet();
 	static void updateBullet();
+	static void bulletRespawn();
 	static void drawBullet();
 
 	static void deInitInvader();
@@ -57,26 +58,6 @@ using namespace GameManager;
 
 		deInitInvader();
 		deInitBullet();
-	}
-
-	void bulletRespawn() {
-
-		if (activeInvaderCounter != 0)
-		{
-			randX = rand() % maxInvadersX;
-			randY = rand() % maxInvadersY;
-
-			while (!invaders[randY][randX].active)
-			{
-				randX = rand() % maxInvadersX;
-				randY = rand() % maxInvadersY;
-			}
-
-			bullet.pos.x = invaders[randY][randX].pos.x;
-			bullet.pos.y = invaders[randY][randX].pos.y;
-
-			bullet.active = true;
-		}
 	}
 
 	void initInvader() {
@@ -213,7 +194,7 @@ using namespace GameManager;
 		bullet.pos.y = invaders[randY][randX].pos.y + 20;
 		bullet.rec.x = bullet.rec.x - bullet.rec.width / 2;
 		bullet.rec.y = bullet.rec.y - bullet.rec.height / 2;
-		bullet.speed = 300.0f;
+		bullet.speed = 200.0f;
 		bullet.active = true;
 		bullet.color = RED;
 	}
@@ -247,7 +228,26 @@ using namespace GameManager;
 		else
 		{
 			bulletRespawn();
-			
+		}
+	}
+
+	void bulletRespawn() {
+
+		if (activeInvaderCounter != 0)
+		{
+			randX = rand() % maxInvadersX;
+			randY = rand() % maxInvadersY;
+
+			while (!invaders[randY][randX].active)
+			{
+				randX = rand() % maxInvadersX;
+				randY = rand() % maxInvadersY;
+			}
+
+			bullet.pos.x = invaders[randY][randX].pos.x;
+			bullet.pos.y = invaders[randY][randX].pos.y;
+
+			bullet.active = true;
 		}
 	}
 
@@ -275,7 +275,7 @@ using namespace GameManager;
 				DrawTexture(bullet.textures[3], bullet.pos.x - bullet.textures[3].width / 2, bullet.pos.y - bullet.textures[3].height / 2, WHITE);
 			}
 
-			DrawRectangleRec(bullet.rec, bullet.color);
+			//DrawRectangleRec(bullet.rec, bullet.color);
 		}
 	}
 

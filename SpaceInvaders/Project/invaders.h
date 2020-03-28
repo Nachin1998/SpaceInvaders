@@ -40,7 +40,6 @@ namespace Invaders {
 	void update();
 	void draw();
 	void deInit();
-	void bulletRespawn();
 }
 }
 
