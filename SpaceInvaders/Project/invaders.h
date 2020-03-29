@@ -34,6 +34,7 @@ namespace Invaders {
 	extern Invader invaders[maxInvadersY][maxInvadersX];
 	extern Bullet bullet;
 
+	extern float maxTimer;
 	extern int activeInvaderCounter;
 
 	void init();

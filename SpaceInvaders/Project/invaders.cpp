@@ -40,6 +40,7 @@ using namespace GameManager;
 	static float bulletTimer;
 
 	int activeInvaderCounter = maxInvadersX * maxInvadersY;
+	float maxTimer = 1.0f;
 	
 	void init(){
 		
@@ -73,7 +74,7 @@ using namespace GameManager;
 
 		invaderMovementTimer = 0;
 		invaderTextureTimer = 0;
-		movementCounter = 1;
+		movementCounter = 0;
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{
@@ -136,14 +137,9 @@ using namespace GameManager;
 		invaderTextureTimer += GetFrameTime();
 		invaderMovementTimer += GetFrameTime();
 
-		if (invaderTextureTimer >= 2)
+		if (invaderTextureTimer >= maxTimer * 2)
 		{
 			invaderTextureTimer = 0;
-		}
-
-		if (invaderMovementTimer >= 2)
-		{
-			invaderMovementTimer = 0;
 		}
 
 		for (int i = 0; i < maxInvadersY; i++)
@@ -180,24 +176,32 @@ using namespace GameManager;
 
 				if (actualMovement == Horizontal)
 				{
-					if (invaderMovementTimer >= 1)
+					if (invaderMovementTimer >= maxTimer)
 					{
 						for (int k = 0; k < maxInvadersY; k++)
 						{
 							for (int l = 0; l < maxInvadersX; l++)
 							{
 								invaders[k][l].pos.x += invaders[k][l].speed.x;
-								
+								invaderMovementTimer = 0;
 							}
-							invaderMovementTimer = 0;
 						}
-						movementCounter++;
+						//movementCounter++;
+					}
+				}
+
+				if (invaders[i][j].active)
+				{
+					if (invaders[i][j].pos.x + invaders[i][j].body.width + 5 >= screenWidth ||
+						invaders[i][j].pos.x - invaders[i][j].body.width - 5 <= 0)
+					{
+						movementCounter = 1;
 					}
 				}
 
 				if (actualMovement == Vertical)
 				{
-					if (invaderMovementTimer >= 1)
+					if (invaderMovementTimer >= maxTimer)
 					{
 						for (int k = 0; k < maxInvadersY; k++)
 						{
@@ -205,21 +209,20 @@ using namespace GameManager;
 							{
 								invaders[k][l].pos.y += invaders[k][l].speed.y;
 								invaders[k][l].speed.x *= -1;
-								actualMovement == Horizontal;
+								invaders[k][l].pos.x += invaders[k][l].speed.x;
 							}
-							invaderMovementTimer = 0;
 							movementCounter = 0;
 						}
 					}
 				}
 
-				if (movementCounter == 6)
+				if (movementCounter == 0)
 				{
-					actualMovement = Vertical;
+					actualMovement = Horizontal;
 				}
 				else
 				{
-					actualMovement = Horizontal;
+					actualMovement = Vertical;
 				}
 			}
 		}
@@ -234,11 +237,11 @@ using namespace GameManager;
 				//DrawRectangleRec(invaders[i][j].body, invaders[i][j].color);
 				if (invaders[i][j].active)
 				{
-					if (invaderTextureTimer <= 1)
+					if (invaderTextureTimer <= maxTimer)
 					{
 						DrawTexture(invaders[i][j].invaderTexture[0], invaders[i][j].pos.x - invaders[i][j].invaderTexture[0].width / 2, invaders[i][j].pos.y - invaders[i][j].invaderTexture[0].height / 2, invaders[i][j].color);
 					}
-					if (invaderTextureTimer > 1)
+					else
 					{
 						DrawTexture(invaders[i][j].invaderTexture[1], invaders[i][j].pos.x - invaders[i][j].invaderTexture[1].width / 2, invaders[i][j].pos.y - invaders[i][j].invaderTexture[1].height / 2, invaders[i][j].color);
 					}

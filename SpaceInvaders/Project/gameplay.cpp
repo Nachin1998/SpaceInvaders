@@ -67,6 +67,10 @@ using namespace GameManager;
 		Player::update();
 		Invaders::update();
 
+		if (Invaders::activeInvaderCounter == 1)
+		{
+			Invaders::maxTimer = 0.03f;
+		}
 		updateUFO();
 		collisionManager();
 	}
@@ -152,7 +156,7 @@ using namespace GameManager;
 
 						Invaders::invaders[i][j].active = false;
 						Player::bullet.active = false;
-
+						Invaders::maxTimer -= 0.01f;
 						Player::player.points += Invaders::invaders[i][j].pointsToGive;
 
 						std::cout << "Puntos: "<<Player::player.points << std::endl;
