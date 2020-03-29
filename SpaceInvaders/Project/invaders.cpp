@@ -20,6 +20,13 @@ using namespace GameManager;
 	static void deInitInvader();
 	static void deInitBullet();
 
+	enum InvaderMovement {
+		Horizontal,
+		Vertical
+	};
+
+	static InvaderMovement actualMovement = Horizontal;
+
 	Bullet bullet;
 
 	Invader invaders[maxInvadersY][maxInvadersX];
@@ -27,7 +34,9 @@ using namespace GameManager;
 	static int randX;
 	static int randY;
 
-	static float invaderTimer;
+	static int movementCounter;
+	static float invaderMovementTimer;
+	static float invaderTextureTimer;
 	static float bulletTimer;
 
 	int activeInvaderCounter = maxInvadersX * maxInvadersY;
@@ -62,7 +71,9 @@ using namespace GameManager;
 
 	void initInvader() {
 
-		invaderTimer = 0;
+		invaderMovementTimer = 0;
+		invaderTextureTimer = 0;
+		movementCounter = 1;
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{
@@ -122,11 +133,17 @@ using namespace GameManager;
 
 	void updateInvader() {
 
-		invaderTimer += GetFrameTime();
+		invaderTextureTimer += GetFrameTime();
+		invaderMovementTimer += GetFrameTime();
 
-		if (invaderTimer >= 2)
+		if (invaderTextureTimer >= 2)
 		{
-			invaderTimer = 0;
+			invaderTextureTimer = 0;
+		}
+
+		if (invaderMovementTimer >= 2)
+		{
+			invaderMovementTimer = 0;
 		}
 
 		for (int i = 0; i < maxInvadersY; i++)
@@ -158,6 +175,52 @@ using namespace GameManager;
 				{
 					invaders[i][j].pos.x -= invaders[i][j].speed.x;
 				}
+
+				/**/
+
+				if (actualMovement == Horizontal)
+				{
+					if (invaderMovementTimer >= 1)
+					{
+						for (int k = 0; k < maxInvadersY; k++)
+						{
+							for (int l = 0; l < maxInvadersX; l++)
+							{
+								invaders[k][l].pos.x += invaders[k][l].speed.x;
+								
+							}
+							invaderMovementTimer = 0;
+						}
+						movementCounter++;
+					}
+				}
+
+				if (actualMovement == Vertical)
+				{
+					if (invaderMovementTimer >= 1)
+					{
+						for (int k = 0; k < maxInvadersY; k++)
+						{
+							for (int l = 0; l < maxInvadersX; l++)
+							{
+								invaders[k][l].pos.y += invaders[k][l].speed.y;
+								invaders[k][l].speed.x *= -1;
+								actualMovement == Horizontal;
+							}
+							invaderMovementTimer = 0;
+							movementCounter = 0;
+						}
+					}
+				}
+
+				if (movementCounter == 6)
+				{
+					actualMovement = Vertical;
+				}
+				else
+				{
+					actualMovement = Horizontal;
+				}
 			}
 		}
 	}
@@ -171,11 +234,11 @@ using namespace GameManager;
 				//DrawRectangleRec(invaders[i][j].body, invaders[i][j].color);
 				if (invaders[i][j].active)
 				{
-					if (invaderTimer < 1)
+					if (invaderTextureTimer <= 1)
 					{
 						DrawTexture(invaders[i][j].invaderTexture[0], invaders[i][j].pos.x - invaders[i][j].invaderTexture[0].width / 2, invaders[i][j].pos.y - invaders[i][j].invaderTexture[0].height / 2, invaders[i][j].color);
 					}
-					if (invaderTimer >= 1)
+					if (invaderTextureTimer > 1)
 					{
 						DrawTexture(invaders[i][j].invaderTexture[1], invaders[i][j].pos.x - invaders[i][j].invaderTexture[1].width / 2, invaders[i][j].pos.y - invaders[i][j].invaderTexture[1].height / 2, invaders[i][j].color);
 					}
