@@ -22,7 +22,7 @@ using namespace GameManager;
 
 	enum InvaderMovement {
 		Horizontal,
-		Vertical
+		Vertical,
 	};
 
 	static InvaderMovement actualMovement = Horizontal;
@@ -34,6 +34,8 @@ using namespace GameManager;
 	static int randX;
 	static int randY;
 
+	static bool goingRight = true;
+	static bool goingLeft = false;
 	static int movementCounter;
 	static float invaderMovementTimer;
 	static float invaderTextureTimer;
@@ -172,8 +174,6 @@ using namespace GameManager;
 					invaders[i][j].pos.x -= invaders[i][j].speed.x;
 				}
 
-				/**/
-
 				if (actualMovement == Horizontal)
 				{
 					if (invaderMovementTimer >= maxTimer)
@@ -186,16 +186,23 @@ using namespace GameManager;
 								invaderMovementTimer = 0;
 							}
 						}
-						//movementCounter++;
 					}
-				}
 
-				if (invaders[i][j].active)
-				{
-					if (invaders[i][j].pos.x + invaders[i][j].body.width + 5 >= screenWidth ||
-						invaders[i][j].pos.x - invaders[i][j].body.width - 5 <= 0)
+					if (invaders[i][j].active)
 					{
-						movementCounter = 1;
+						if (invaders[i][j].pos.x + invaders[i][j].invaderTexture[0].width / 2 - 10 >= screenWidth && goingRight)
+						{
+							goingLeft = true;
+							goingRight = false;
+							actualMovement = Vertical;
+						}
+
+						if (invaders[i][j].pos.x - invaders[i][j].invaderTexture[0].width / 2 + 10 <= 0 && goingLeft)
+						{
+							goingRight = true;
+							goingLeft = false;
+							actualMovement = Vertical;
+						}
 					}
 				}
 
@@ -209,20 +216,11 @@ using namespace GameManager;
 							{
 								invaders[k][l].pos.y += invaders[k][l].speed.y;
 								invaders[k][l].speed.x *= -1;
-								invaders[k][l].pos.x += invaders[k][l].speed.x;
+								invaderMovementTimer = 0;
 							}
-							movementCounter = 0;
 						}
+						actualMovement = Horizontal;
 					}
-				}
-
-				if (movementCounter == 0)
-				{
-					actualMovement = Horizontal;
-				}
-				else
-				{
-					actualMovement = Vertical;
 				}
 			}
 		}
