@@ -36,7 +36,6 @@ using namespace GameManager;
 
 	static bool goingRight = true;
 	static bool goingLeft = false;
-	static int movementCounter;
 	static float invaderMovementTimer;
 	static float invaderTextureTimer;
 	static float bulletTimer;
@@ -76,20 +75,19 @@ using namespace GameManager;
 
 		invaderMovementTimer = 0;
 		invaderTextureTimer = 0;
-		movementCounter = 0;
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{
 			for (int j = 0; j < maxInvadersX; j++)
 			{
-				invaders[i][j].body.width = 40;
+				invaders[i][j].body.width = 50;
 				invaders[i][j].body.height = 30;
 				invaders[i][j].pos.x = ((70 * j)) + invaders[i][j].body.width + 20;
 				invaders[i][j].pos.y = 70 + (60 * i);
 				invaders[i][j].body.x = invaders[i][j].pos.x - invaders[i][j].body.width / 2;
 				invaders[i][j].body.y = invaders[i][j].pos.y - invaders[i][j].body.height / 2;
 				invaders[i][j].speed.x = 20;
-				invaders[i][j].speed.y = 20;
+				invaders[i][j].speed.y = 30;
 				invaders[i][j].active = true;
 				invaders[i][j].color = WHITE;
 
@@ -148,7 +146,6 @@ using namespace GameManager;
 		{
 			for (int j = 0; j < maxInvadersX; j++)
 			{
-
 				//Body follows the invaderTexture
 				invaders[i][j].body.x = invaders[i][j].pos.x - invaders[i][j].body.width / 2;
 				invaders[i][j].body.y = invaders[i][j].pos.y - invaders[i][j].body.height / 2;
@@ -174,41 +171,20 @@ using namespace GameManager;
 					invaders[i][j].pos.x -= invaders[i][j].speed.x;
 				}
 
-				if (actualMovement == Horizontal)
+				if (invaderMovementTimer >= maxTimer)
 				{
-					if (invaderMovementTimer >= maxTimer)
+					if (actualMovement == Horizontal)
 					{
 						for (int k = 0; k < maxInvadersY; k++)
 						{
 							for (int l = 0; l < maxInvadersX; l++)
 							{
 								invaders[k][l].pos.x += invaders[k][l].speed.x;
-								invaderMovementTimer = 0;
 							}
 						}
 					}
 
-					if (invaders[i][j].active)
-					{
-						if (invaders[i][j].pos.x + invaders[i][j].invaderTexture[0].width / 2 - 10 >= screenWidth && goingRight)
-						{
-							goingLeft = true;
-							goingRight = false;
-							actualMovement = Vertical;
-						}
-
-						if (invaders[i][j].pos.x - invaders[i][j].invaderTexture[0].width / 2 + 10 <= 0 && goingLeft)
-						{
-							goingRight = true;
-							goingLeft = false;
-							actualMovement = Vertical;
-						}
-					}
-				}
-
-				if (actualMovement == Vertical)
-				{
-					if (invaderMovementTimer >= maxTimer)
+					if (actualMovement == Vertical)
 					{
 						for (int k = 0; k < maxInvadersY; k++)
 						{
@@ -216,10 +192,27 @@ using namespace GameManager;
 							{
 								invaders[k][l].pos.y += invaders[k][l].speed.y;
 								invaders[k][l].speed.x *= -1;
-								invaderMovementTimer = 0;
 							}
 						}
 						actualMovement = Horizontal;
+					}
+					invaderMovementTimer = 0;
+				}
+
+				if (invaders[i][j].active)
+				{
+					if ((invaders[i][j].pos.x + invaders[i][j].invaderTexture[0].width / 2 - 10 >= screenWidth) && goingRight)
+					{
+						goingLeft = true;
+						goingRight = false;
+						actualMovement = Vertical;
+					}
+
+					if ((invaders[i][j].pos.x - invaders[i][j].invaderTexture[0].width / 2 + 10 <= 0) && goingLeft)
+					{
+						goingRight = true;
+						goingLeft = false;
+						actualMovement = Vertical;
 					}
 				}
 			}
@@ -252,8 +245,8 @@ using namespace GameManager;
 
 		bulletTimer = 0;
 
-		bullet.rec.width = 55;
-		bullet.rec.height = 55;
+		bullet.rec.width = 45;
+		bullet.rec.height = 50;
 		bullet.pos.x = invaders[randY][randX].pos.x;
 		bullet.pos.y = invaders[randY][randX].pos.y + 20;
 		bullet.rec.x = bullet.rec.x - bullet.rec.width / 2;
