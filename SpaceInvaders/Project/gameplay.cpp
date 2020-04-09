@@ -12,12 +12,26 @@ namespace MyGame {
 namespace Gameplay {
 using namespace GameManager;
 
+	static void initUFO();
 	static void updateUFO();
 	static void drawUFO();
+	static void initWall();
+	static void updateWall();
+	static void drawWall();
 	static void collisionManager();
 
 	const int ufoMaxTextures = 2;
-	static int randLocation;
+	const int MaxWalls = 4;
+	bool paused;
+
+	struct Wall {
+		Rectangle rec;
+		int lives;
+		Vector2 pos;
+		bool active;
+		Color color;
+	};
+	static Wall walls[MaxWalls];
 
 	struct UFO {
 		Rectangle rec;
@@ -28,7 +42,6 @@ using namespace GameManager;
 		bool active;
 		Color color;
 	};
-
 	static UFO ufo;
 
 	static bool win;
@@ -44,9 +57,73 @@ using namespace GameManager;
 		counterFix = 0;
 		ufoMovementTimer = 0;
 		ufoTextureTimer = 0;
-
+		paused = false;
 		Player::init();
 		Invaders::init();
+		initUFO();
+		initWall();
+	}
+
+	void update() {
+
+		if (IsKeyPressed(KEY_P))
+		{
+			if (paused)
+			{
+				paused = false;
+			}
+			else
+			{
+				paused = true;
+			}
+		}
+
+
+		if (!paused)
+		{
+			Player::update();
+			Invaders::update();
+			updateUFO();
+			updateWall();
+			collisionManager();
+
+			if (Invaders::activeInvaderCounter == 1)
+			{
+				Invaders::maxTimer = 0.03f;
+			}
+
+			if (Invaders::activeInvaderCounter == 0)
+			{
+				//win
+			}
+		}
+		
+	}
+
+	void draw() {
+
+		Player::draw();
+		Invaders::draw();
+
+		drawUFO();
+		drawWall();
+		DrawCircle(GetMousePosition().x, GetMousePosition().y, 5, WHITE);
+
+		if (paused)
+		{
+			DrawText("Paused", screenWidth / 2, screenHeight / 2, 100, WHITE);
+		}
+	}
+
+	void deInit() {
+
+		Player::deInit();
+		Invaders::deInit();
+		UnloadTexture(ufo.texture[0]);
+		UnloadTexture(ufo.texture[1]);
+	}
+	
+	void initUFO() {
 
 		ufo.pos.x = 0;
 		ufo.pos.y = 25;
@@ -60,35 +137,6 @@ using namespace GameManager;
 		ufo.texture[0] = LoadTexture("res/textures/ufo/ufo1.png");
 		ufo.texture[1] = LoadTexture("res/textures/ufo/ufo2.png");
 		ufo.color = WHITE;
-	}
-
-	void update() {
-
-		Player::update();
-		Invaders::update();
-
-		if (Invaders::activeInvaderCounter == 1)
-		{
-			Invaders::maxTimer = 0.03f;
-		}
-		updateUFO();
-		collisionManager();
-	}
-
-	void draw() {
-
-		Player::draw();
-		Invaders::draw();
-
-		drawUFO();
-	}
-
-	void deInit() {
-
-		Player::deInit();
-		Invaders::deInit();
-		UnloadTexture(ufo.texture[0]);
-		UnloadTexture(ufo.texture[1]);
 	}
 
 	void updateUFO() {
@@ -138,6 +186,63 @@ using namespace GameManager;
 			else
 			{
 				DrawTexture(ufo.texture[1], ufo.pos.x - ufo.texture[1].width / 2, ufo.pos.y - ufo.texture[1].height / 2, ufo.color);
+			}
+		}
+	}
+
+	void initWall() {
+
+		for (int i = 0; i < MaxWalls; i++)
+		{
+			walls[i].rec.width = 100;
+			walls[i].rec.height = 100;
+			walls[i].pos.x = walls[i].rec.width + 13 + i *(screenWidth / MaxWalls);
+			walls[i].pos.y = 700;
+			walls[i].rec.x = walls[i].pos.x - walls[i].rec.width / 2;
+			walls[i].rec.y = walls[i].pos.y - walls[i].rec.height / 2;
+			walls[i].active = true;
+			walls[i].lives = 5;
+			walls[i].color = DARKGREEN;
+		}
+	}
+
+	void updateWall() {
+
+		for (int i = 0; i < MaxWalls; i++)
+		{
+			switch (walls[i].lives)
+			{
+			case 5:
+				walls[i].color = DARKGREEN;
+				break;
+			case 4:
+				walls[i].color = GREEN;
+				break;
+			case 3:
+				walls[i].color = ORANGE;
+				break;
+			case 2:
+				walls[i].color = YELLOW;
+				break;
+			case 1:
+				walls[i].color = RED;
+				break;
+			case 0:
+				walls[i].active = false;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	void drawWall() {
+
+		for (int i = 0; i < MaxWalls; i++)
+		{
+			if (walls[i].active)
+			{
+				DrawRectangleRec(walls[i].rec, walls[i].color);
 			}
 		}
 	}
@@ -194,6 +299,40 @@ using namespace GameManager;
 			ufoMovementTimer = 0;
 			Player::bullet.active = false;
 			Player::player.points += ufo.pointsToGive;
+		}
+
+		for (int i = 0; i < MaxWalls; i++)
+		{
+			if (walls[i].active)
+			{
+				if (CheckCollisionRecs(Player::bullet.rec, walls[i].rec))
+				{
+					counterFix++;
+
+					if (counterFix > 1)
+					{
+						Player::bullet.active = false;
+						walls[i].lives -= 1;
+						walls[i].rec.width -= 10;
+						walls[i].rec.height -= 10;
+						counterFix = 0;
+					}
+				}
+
+				if (CheckCollisionRecs(Invaders::bullet.rec, walls[i].rec))
+				{
+					counterFix++;
+
+					if (counterFix > 1)
+					{
+						Invaders::bullet.active = false;
+						walls[i].lives -= 1;
+						walls[i].rec.width -= 10;
+						walls[i].rec.height -= 10;
+						counterFix = 0;
+					}
+				}
+			}
 		}
 	}
 }

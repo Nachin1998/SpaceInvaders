@@ -24,7 +24,6 @@ using namespace GameManager;
 		Horizontal,
 		Vertical,
 	};
-
 	static InvaderMovement actualMovement = Horizontal;
 
 	Bullet bullet;

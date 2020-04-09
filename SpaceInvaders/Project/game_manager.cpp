@@ -32,6 +32,7 @@ namespace GameManager {
 	void init() {
 
 		InitWindow(screenWidth, screenHeight, "Space Invaders - by Ignacio Fernández Lemos");
+		SetTargetFPS(60);
 		SetExitKey(KEY_F4);
 
 		Gameplay::init();
