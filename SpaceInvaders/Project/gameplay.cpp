@@ -107,7 +107,6 @@ using namespace GameManager;
 
 		drawUFO();
 		drawWall();
-		DrawCircle(GetMousePosition().x, GetMousePosition().y, 5, WHITE);
 
 		if (paused)
 		{
@@ -210,13 +209,16 @@ using namespace GameManager;
 
 		for (int i = 0; i < MaxWalls; i++)
 		{
+			walls[i].rec.x = walls[i].pos.x - walls[i].rec.width / 2;
+			walls[i].rec.y = walls[i].pos.y - walls[i].rec.height / 2;
+
 			switch (walls[i].lives)
 			{
 			case 5:
-				walls[i].color = DARKGREEN;
+				walls[i].color = GREEN;
 				break;
 			case 4:
-				walls[i].color = GREEN;
+				walls[i].color = DARKGREEN;
 				break;
 			case 3:
 				walls[i].color = ORANGE;

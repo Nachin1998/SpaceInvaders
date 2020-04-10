@@ -35,8 +35,8 @@ using namespace GameManager;
 
 	static bool goingRight = true;
 	static bool goingLeft = false;
+	static bool changeMovementTexture = false;
 	static float invaderMovementTimer;
-	static float invaderTextureTimer;
 	static float bulletTimer;
 
 	int activeInvaderCounter = maxInvadersX * maxInvadersY;
@@ -73,7 +73,6 @@ using namespace GameManager;
 	void initInvader() {
 
 		invaderMovementTimer = 0;
-		invaderTextureTimer = 0;
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{
@@ -133,13 +132,7 @@ using namespace GameManager;
 
 	void updateInvader() {
 
-		invaderTextureTimer += GetFrameTime();
 		invaderMovementTimer += GetFrameTime();
-
-		if (invaderTextureTimer >= maxTimer * 2)
-		{
-			invaderTextureTimer = 0;
-		}
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{
@@ -170,6 +163,7 @@ using namespace GameManager;
 					invaders[i][j].pos.x -= invaders[i][j].speed.x;
 				}
 
+				//Real movement
 				if (invaderMovementTimer >= maxTimer)
 				{
 					if (actualMovement == Horizontal)
@@ -195,6 +189,16 @@ using namespace GameManager;
 						}
 						actualMovement = Horizontal;
 					}
+
+					if (changeMovementTexture) 
+					{
+						changeMovementTexture = false;
+					}
+					else
+					{
+						changeMovementTexture = true;
+					}
+
 					invaderMovementTimer = 0;
 				}
 
@@ -227,7 +231,7 @@ using namespace GameManager;
 				//DrawRectangleRec(invaders[i][j].body, invaders[i][j].color);
 				if (invaders[i][j].active)
 				{
-					if (invaderTextureTimer <= maxTimer)
+					if (!changeMovementTexture)
 					{
 						DrawTexture(invaders[i][j].invaderTexture[0], invaders[i][j].pos.x - invaders[i][j].invaderTexture[0].width / 2, invaders[i][j].pos.y - invaders[i][j].invaderTexture[0].height / 2, invaders[i][j].color);
 					}
@@ -331,7 +335,7 @@ using namespace GameManager;
 				DrawTexture(bullet.textures[3], bullet.pos.x - bullet.textures[3].width / 2, bullet.pos.y - bullet.textures[3].height / 2, WHITE);
 			}
 
-			//DrawRectangleRec(bullet.rec, bullet.color);
+			DrawRectangleRec(bullet.rec, bullet.color);
 		}
 	}
 
