@@ -26,6 +26,7 @@ using namespace GameManager;
 
 	struct Wall {
 		Rectangle rec;
+		Texture2D texture[2];
 		int lives;
 		Vector2 pos;
 		bool active;
@@ -49,15 +50,15 @@ using namespace GameManager;
 
 	static float ufoMovementTimer = 0;
 	static float ufoTextureTimer = 0;
+	static float wallTextureTimer = 0;
 	static int counterFix = 0;
 
 	void init() {
 
-		srand(time(0));
+		srand(time(NULL));
 		counterFix = 0;
-		ufoMovementTimer = 0;
-		ufoTextureTimer = 0;
 		paused = false;
+
 		Player::init();
 		Invaders::init();
 		initUFO();
@@ -78,7 +79,6 @@ using namespace GameManager;
 			}
 		}
 
-
 		if (!paused)
 		{
 			Player::update();
@@ -97,7 +97,6 @@ using namespace GameManager;
 				//win
 			}
 		}
-		
 	}
 
 	void draw() {
@@ -123,6 +122,9 @@ using namespace GameManager;
 	}
 	
 	void initUFO() {
+
+		ufoMovementTimer = 0;
+		ufoTextureTimer = 0;
 
 		ufo.pos.x = 0;
 		ufo.pos.y = 25;
@@ -191,40 +193,48 @@ using namespace GameManager;
 
 	void initWall() {
 
+		wallTextureTimer = 0;
+
 		for (int i = 0; i < MaxWalls; i++)
 		{
-			walls[i].rec.width = 100;
-			walls[i].rec.height = 100;
-			walls[i].pos.x = walls[i].rec.width + 13 + i *(screenWidth / MaxWalls);
+			walls[i].rec.width = 130;
+			walls[i].rec.height = 50;
+			walls[i].pos.x = walls[i].rec.width - 18 + i *(screenWidth / MaxWalls);
 			walls[i].pos.y = 700;
 			walls[i].rec.x = walls[i].pos.x - walls[i].rec.width / 2;
 			walls[i].rec.y = walls[i].pos.y - walls[i].rec.height / 2;
+			walls[i].texture[0] = LoadTexture("res/textures/wall/forcefield_1.png");
+			walls[i].texture[1] = LoadTexture("res/textures/wall/forcefield_2.png");
 			walls[i].active = true;
-			walls[i].lives = 5;
-			walls[i].color = DARKGREEN;
+			walls[i].lives = 4;
+			walls[i].color = GREEN;
 		}
 	}
 
 	void updateWall() {
 
+		wallTextureTimer += GetFrameTime();
+
+		if (wallTextureTimer >= 1)
+		{
+			wallTextureTimer = 0;
+		}
+
 		for (int i = 0; i < MaxWalls; i++)
 		{
 			walls[i].rec.x = walls[i].pos.x - walls[i].rec.width / 2;
 			walls[i].rec.y = walls[i].pos.y - walls[i].rec.height / 2;
-
+			
 			switch (walls[i].lives)
 			{
-			case 5:
-				walls[i].color = GREEN;
-				break;
 			case 4:
-				walls[i].color = DARKGREEN;
+				walls[i].color = SKYBLUE;
 				break;
 			case 3:
-				walls[i].color = ORANGE;
+				walls[i].color = GREEN;
 				break;
 			case 2:
-				walls[i].color = YELLOW;
+				walls[i].color = BROWN;
 				break;
 			case 1:
 				walls[i].color = RED;
@@ -244,7 +254,16 @@ using namespace GameManager;
 		{
 			if (walls[i].active)
 			{
-				DrawRectangleRec(walls[i].rec, walls[i].color);
+				//DrawRectangleRec(walls[i].rec, walls[i].color);
+
+				if (wallTextureTimer < 0.5)
+				{
+					DrawTexture(walls[i].texture[0], walls[i].pos.x - walls[i].texture[0].width / 2, walls[i].pos.y - walls[i].texture[0].height / 2, walls[i].color);
+				}
+				else
+				{
+					DrawTexture(walls[i].texture[1], walls[i].pos.x - walls[i].texture[1].width / 2, walls[i].pos.y - walls[i].texture[1].height / 2, walls[i].color);
+				}
 			}
 		}
 	}
@@ -315,8 +334,6 @@ using namespace GameManager;
 					{
 						Player::bullet.active = false;
 						walls[i].lives -= 1;
-						walls[i].rec.width -= 10;
-						walls[i].rec.height -= 10;
 						counterFix = 0;
 					}
 				}
@@ -329,8 +346,6 @@ using namespace GameManager;
 					{
 						Invaders::bullet.active = false;
 						walls[i].lives -= 1;
-						walls[i].rec.width -= 10;
-						walls[i].rec.height -= 10;
 						counterFix = 0;
 					}
 				}

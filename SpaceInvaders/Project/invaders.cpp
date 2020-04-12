@@ -335,7 +335,7 @@ using namespace GameManager;
 				DrawTexture(bullet.textures[3], bullet.pos.x - bullet.textures[3].width / 2, bullet.pos.y - bullet.textures[3].height / 2, WHITE);
 			}
 
-			DrawRectangleRec(bullet.rec, bullet.color);
+			//DrawRectangleRec(bullet.rec, bullet.color);
 		}
 	}
 
