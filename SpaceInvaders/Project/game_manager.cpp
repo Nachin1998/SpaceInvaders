@@ -61,7 +61,7 @@ namespace GameManager {
 
 		BeginDrawing();
 
-		ClearBackground(BLACK);
+		ClearBackground(WHITE);
 		
 		switch (actualScene)
 		{

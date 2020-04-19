@@ -12,6 +12,9 @@ namespace MyGame {
 namespace Gameplay {
 using namespace GameManager;
 
+	static void initBackground();
+	static void updateBackground();
+	static void drawBackground();
 	static void initUFO();
 	static void updateUFO();
 	static void drawUFO();
@@ -20,9 +23,19 @@ using namespace GameManager;
 	static void drawWall();
 	static void collisionManager();
 
-	const int ufoMaxTextures = 2;
-	const int MaxWalls = 4;
+	static const int ufoMaxTextures = 2;
+	static const int MaxWalls = 4;
+	static const int MaxBackgroundTextures = 8;
 	bool paused;
+
+	struct Background {
+		Vector2 pos;
+		Image image[MaxBackgroundTextures];
+		Texture2D texture[MaxBackgroundTextures];
+		float timer;
+		float timerLimit;
+	};
+	static Background background;
 
 	struct Wall {
 		Rectangle rec;
@@ -59,6 +72,7 @@ using namespace GameManager;
 		counterFix = 0;
 		paused = false;
 
+		initBackground();
 		Player::init();
 		Invaders::init();
 		initUFO();
@@ -83,6 +97,7 @@ using namespace GameManager;
 		{
 			Player::update();
 			Invaders::update();
+			updateBackground();
 			updateUFO();
 			updateWall();
 			collisionManager();
@@ -101,6 +116,7 @@ using namespace GameManager;
 
 	void draw() {
 
+		drawBackground();
 		Player::draw();
 		Invaders::draw();
 
@@ -119,6 +135,90 @@ using namespace GameManager;
 		Invaders::deInit();
 		UnloadTexture(ufo.texture[0]);
 		UnloadTexture(ufo.texture[1]);
+	}
+
+	void initBackground() {
+
+		background.pos.x = 0;
+		background.pos.y = 0;
+		background.timer = 0;
+		background.timerLimit = 16;
+		background.image[0] = LoadImage("res/textures/background/background_1.png");
+		background.image[1] = LoadImage("res/textures/background/background_2.png");
+		background.image[2] = LoadImage("res/textures/background/background_3.png");
+		background.image[3] = LoadImage("res/textures/background/background_4.png");
+		background.image[4] = LoadImage("res/textures/background/background_5.png");
+		background.image[5] = LoadImage("res/textures/background/background_6.png");
+		background.image[6] = LoadImage("res/textures/background/background_7.png");
+		background.image[7] = LoadImage("res/textures/background/background_8.png");
+
+		for (int i = 0; i < MaxBackgroundTextures; i++)
+		{
+			background.texture[i] = LoadTextureFromImage(background.image[i]);
+			UnloadImage(background.image[i]);
+		}
+
+	}
+
+	void updateBackground() {
+
+		background.timer += GetFrameTime();
+
+		if (background.timer > background.timerLimit)
+		{
+			background.timer = 0;
+		}
+	}
+
+	void drawBackground() {
+
+		/*Almost works
+		int timeToWait = 0;
+		int textureCounter = 0;
+		for (int i = 0; i < MaxBackgroundTextures; i++)
+		{
+			if (background.timer > timeToWait && background.timer < timeToWait + 2)
+			{
+				DrawTexture(background.texture[textureCounter], background.pos.x, background.pos.y, WHITE);
+			}
+			else
+			{
+				timeToWait += 2;
+				textureCounter++;
+			}
+		}*/
+		if(background.timer < 2)
+		{
+			DrawTexture(background.texture[0], background.pos.x, background.pos.y, WHITE);
+		}
+		if (background.timer > 2 && background.timer < 4)
+		{
+			DrawTexture(background.texture[1], background.pos.x, background.pos.y, WHITE);
+		}
+		if (background.timer > 4 && background.timer < 6)
+		{
+			DrawTexture(background.texture[2], background.pos.x, background.pos.y, WHITE);
+		}
+		if (background.timer > 6 && background.timer < 8)
+		{
+			DrawTexture(background.texture[3], background.pos.x, background.pos.y, WHITE);
+		}
+		if (background.timer > 8 && background.timer < 10)
+		{
+			DrawTexture(background.texture[4], background.pos.x, background.pos.y, WHITE);
+		}
+		if (background.timer > 10 && background.timer < 12)
+		{
+			DrawTexture(background.texture[5], background.pos.x, background.pos.y, WHITE);
+		}
+		if (background.timer > 12 && background.timer < 14)
+		{
+			DrawTexture(background.texture[6], background.pos.x, background.pos.y, WHITE);
+		}
+		if (background.timer > 14 && background.timer < background.timerLimit)
+		{
+			DrawTexture(background.texture[7], background.pos.x, background.pos.y, WHITE);
+		}
 	}
 	
 	void initUFO() {
