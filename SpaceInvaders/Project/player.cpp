@@ -34,10 +34,10 @@ using namespace GameManager;
 		player.speed.y = 250;
 		player.points = 0;
 		player.lives = 3;
-		player.texture[0] = LoadTexture("res/textures/player/player_spaceship1.png");
-		player.texture[1] = LoadTexture("res/textures/player/player_spaceship2.png");
-		player.texture[2] = LoadTexture("res/textures/player/player_spaceship3.png");
-		player.texture[3] = LoadTexture("res/textures/player/player_spaceship4.png");
+		player.texture[0] = LoadTexture("res/assets/player/player_spaceship1.png");
+		player.texture[1] = LoadTexture("res/assets/player/player_spaceship2.png");
+		player.texture[2] = LoadTexture("res/assets/player/player_spaceship3.png");
+		player.texture[3] = LoadTexture("res/assets/player/player_spaceship4.png");
 		player.color = WHITE;
 
 		bullet.rec.width = 5;
@@ -72,7 +72,7 @@ using namespace GameManager;
 
 	void deInit() {
 
-		for (int i = 0; i < maxTextures; i++)
+		for (int i = 0; i < maxassets; i++)
 		{
 			UnloadTexture(player.texture[i]);
 		}

@@ -6,11 +6,11 @@
 namespace MyGame {
 namespace Player {
 
-	const int maxTextures = 4;
+	const int maxassets = 4;
 
 	struct Player {
 		Rectangle body;
-		Texture2D texture[maxTextures];
+		Texture2D texture[maxassets];
 		Vector2 pos;
 		Vector2 speed;
 		int points;

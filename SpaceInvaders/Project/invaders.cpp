@@ -93,34 +93,34 @@ using namespace GameManager;
 				{
 				case 0:
 					invaders[i][j].pointsToGive = 300;
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader3/invader3_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader3/invader3_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader3/invader3_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/textures/invaders/invader3/invader3_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/textures/invaders/invader3/invader3_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/textures/invaders/invader3/invader3_shot4.png");
+					invaders[i][j].invaderTexture[0] = LoadTexture("res/assets/invaders/invader3/invader3_1.png");
+					invaders[i][j].invaderTexture[1] = LoadTexture("res/assets/invaders/invader3/invader3_2.png");
+					invaders[i][j].bulletTexture[0] = LoadTexture("res/assets/invaders/invader3/invader3_shot1.png");
+					invaders[i][j].bulletTexture[1] = LoadTexture("res/assets/invaders/invader3/invader3_shot2.png");
+					invaders[i][j].bulletTexture[2] = LoadTexture("res/assets/invaders/invader3/invader3_shot3.png");
+					invaders[i][j].bulletTexture[3] = LoadTexture("res/assets/invaders/invader3/invader3_shot4.png");
 					break;
 
 				case 1:
 				case 2:
 					invaders[i][j].pointsToGive = 200;
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader2/invader2_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader2/invader2_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader2/invader2_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/textures/invaders/invader2/invader2_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/textures/invaders/invader2/invader2_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/textures/invaders/invader2/invader2_shot4.png");
+					invaders[i][j].invaderTexture[0] = LoadTexture("res/assets/invaders/invader2/invader2_1.png");
+					invaders[i][j].invaderTexture[1] = LoadTexture("res/assets/invaders/invader2/invader2_2.png");
+					invaders[i][j].bulletTexture[0] = LoadTexture("res/assets/invaders/invader2/invader2_shot1.png");
+					invaders[i][j].bulletTexture[1] = LoadTexture("res/assets/invaders/invader2/invader2_shot2.png");
+					invaders[i][j].bulletTexture[2] = LoadTexture("res/assets/invaders/invader2/invader2_shot3.png");
+					invaders[i][j].bulletTexture[3] = LoadTexture("res/assets/invaders/invader2/invader2_shot4.png");
 					break;
 
 				case 3:
 				case 4:
 					invaders[i][j].pointsToGive = 100;
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/textures/invaders/invader1/invader1_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/textures/invaders/invader1/invader1_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/textures/invaders/invader1/invader1_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/textures/invaders/invader1/invader1_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/textures/invaders/invader1/invader1_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/textures/invaders/invader1/invader1_shot4.png");
+					invaders[i][j].invaderTexture[0] = LoadTexture("res/assets/invaders/invader1/invader1_1.png");
+					invaders[i][j].invaderTexture[1] = LoadTexture("res/assets/invaders/invader1/invader1_2.png");
+					invaders[i][j].bulletTexture[0] = LoadTexture("res/assets/invaders/invader1/invader1_shot1.png");
+					invaders[i][j].bulletTexture[1] = LoadTexture("res/assets/invaders/invader1/invader1_shot2.png");
+					invaders[i][j].bulletTexture[2] = LoadTexture("res/assets/invaders/invader1/invader1_shot3.png");
+					invaders[i][j].bulletTexture[3] = LoadTexture("res/assets/invaders/invader1/invader1_shot4.png");
 					break;
 
 				default:
@@ -273,11 +273,11 @@ using namespace GameManager;
 
 		if (bullet.active)
 		{
-			for (int i = 0; i < maxBulletTextures; i++)
+			for (int i = 0; i < maxBulletassets; i++)
 			{
-				bullet.textures[i] = invaders[randY][randX].bulletTexture[i];
+				bullet.assets[i] = invaders[randY][randX].bulletTexture[i];
 
-				if (bullet.pos.y - bullet.textures[i].height / 2 > screenHeight)
+				if (bullet.pos.y - bullet.assets[i].height / 2 > screenHeight)
 				{
 					bulletRespawn();
 				}
@@ -317,22 +317,22 @@ using namespace GameManager;
 		{
 			if (bulletTimer < 0.1f)
 			{
-				DrawTexture(bullet.textures[0], bullet.pos.x - bullet.textures[0].width / 2, bullet.pos.y - bullet.textures[0].height / 2, WHITE);
+				DrawTexture(bullet.assets[0], bullet.pos.x - bullet.assets[0].width / 2, bullet.pos.y - bullet.assets[0].height / 2, WHITE);
 			}
 
 			if (bulletTimer > 0.1f && bulletTimer < 0.2f)
 			{
-				DrawTexture(bullet.textures[1], bullet.pos.x - bullet.textures[1].width / 2, bullet.pos.y - bullet.textures[1].height / 2, WHITE);
+				DrawTexture(bullet.assets[1], bullet.pos.x - bullet.assets[1].width / 2, bullet.pos.y - bullet.assets[1].height / 2, WHITE);
 			}
 
 			if (bulletTimer > 0.2f && bulletTimer < 0.3f)
 			{
-				DrawTexture(bullet.textures[2], bullet.pos.x - bullet.textures[2].width / 2, bullet.pos.y - bullet.textures[2].height / 2, WHITE);
+				DrawTexture(bullet.assets[2], bullet.pos.x - bullet.assets[2].width / 2, bullet.pos.y - bullet.assets[2].height / 2, WHITE);
 			}
 
 			if (bulletTimer > 0.3f && bulletTimer < 0.4f)
 			{
-				DrawTexture(bullet.textures[3], bullet.pos.x - bullet.textures[3].width / 2, bullet.pos.y - bullet.textures[3].height / 2, WHITE);
+				DrawTexture(bullet.assets[3], bullet.pos.x - bullet.assets[3].width / 2, bullet.pos.y - bullet.assets[3].height / 2, WHITE);
 			}
 
 			//DrawRectangleRec(bullet.rec, bullet.color);
@@ -348,7 +348,7 @@ using namespace GameManager;
 				UnloadTexture(invaders[i][j].invaderTexture[0]);
 				UnloadTexture(invaders[i][j].invaderTexture[1]);
 
-				for (int k = 0; k < maxBulletTextures; k++)
+				for (int k = 0; k < maxBulletassets; k++)
 				{
 					UnloadTexture(invaders[i][j].bulletTexture[k]);
 				}
@@ -358,9 +358,9 @@ using namespace GameManager;
 
 	void deInitBullet() {
 
-		for (int i = 0; i < maxBulletTextures; i++)
+		for (int i = 0; i < maxBulletassets; i++)
 		{
-			UnloadTexture(bullet.textures[i]);
+			UnloadTexture(bullet.assets[i]);
 		}
 	}
 }

@@ -23,15 +23,15 @@ using namespace GameManager;
 	static void drawWall();
 	static void collisionManager();
 
-	static const int ufoMaxTextures = 2;
+	static const int ufoMaxassets = 2;
 	static const int MaxWalls = 4;
-	static const int MaxBackgroundTextures = 8;
+	static const int MaxBackgroundassets = 8;
 	bool paused;
 
 	struct Background {
 		Vector2 pos;
-		Image image[MaxBackgroundTextures];
-		Texture2D texture[MaxBackgroundTextures];
+		Image image[MaxBackgroundassets];
+		Texture2D texture[MaxBackgroundassets];
 		float timer;
 		float timerLimit;
 	};
@@ -49,7 +49,7 @@ using namespace GameManager;
 
 	struct UFO {
 		Rectangle rec;
-		Texture2D texture[ufoMaxTextures];
+		Texture2D texture[ufoMaxassets];
 		Vector2 pos;
 		float speed;
 		int pointsToGive;
@@ -143,16 +143,16 @@ using namespace GameManager;
 		background.pos.y = 0;
 		background.timer = 0;
 		background.timerLimit = 16;
-		background.image[0] = LoadImage("res/textures/background/background_1.png");
-		background.image[1] = LoadImage("res/textures/background/background_2.png");
-		background.image[2] = LoadImage("res/textures/background/background_3.png");
-		background.image[3] = LoadImage("res/textures/background/background_4.png");
-		background.image[4] = LoadImage("res/textures/background/background_5.png");
-		background.image[5] = LoadImage("res/textures/background/background_6.png");
-		background.image[6] = LoadImage("res/textures/background/background_7.png");
-		background.image[7] = LoadImage("res/textures/background/background_8.png");
+		background.image[0] = LoadImage("res/assets/background/background_1.png");
+		background.image[1] = LoadImage("res/assets/background/background_2.png");
+		background.image[2] = LoadImage("res/assets/background/background_3.png");
+		background.image[3] = LoadImage("res/assets/background/background_4.png");
+		background.image[4] = LoadImage("res/assets/background/background_5.png");
+		background.image[5] = LoadImage("res/assets/background/background_6.png");
+		background.image[6] = LoadImage("res/assets/background/background_7.png");
+		background.image[7] = LoadImage("res/assets/background/background_8.png");
 
-		for (int i = 0; i < MaxBackgroundTextures; i++)
+		for (int i = 0; i < MaxBackgroundassets; i++)
 		{
 			background.texture[i] = LoadTextureFromImage(background.image[i]);
 			UnloadImage(background.image[i]);
@@ -175,7 +175,7 @@ using namespace GameManager;
 		/*Almost works
 		int timeToWait = 0;
 		int textureCounter = 0;
-		for (int i = 0; i < MaxBackgroundTextures; i++)
+		for (int i = 0; i < MaxBackgroundassets; i++)
 		{
 			if (background.timer > timeToWait && background.timer < timeToWait + 2)
 			{
@@ -235,8 +235,8 @@ using namespace GameManager;
 		ufo.speed = 200.0f;
 		ufo.pointsToGive = 500;
 		ufo.active = false;
-		ufo.texture[0] = LoadTexture("res/textures/ufo/ufo1.png");
-		ufo.texture[1] = LoadTexture("res/textures/ufo/ufo2.png");
+		ufo.texture[0] = LoadTexture("res/assets/ufo/ufo1.png");
+		ufo.texture[1] = LoadTexture("res/assets/ufo/ufo2.png");
 		ufo.color = WHITE;
 	}
 
@@ -303,8 +303,8 @@ using namespace GameManager;
 			walls[i].pos.y = 700;
 			walls[i].rec.x = walls[i].pos.x - walls[i].rec.width / 2;
 			walls[i].rec.y = walls[i].pos.y - walls[i].rec.height / 2;
-			walls[i].texture[0] = LoadTexture("res/textures/wall/forcefield_1.png");
-			walls[i].texture[1] = LoadTexture("res/textures/wall/forcefield_2.png");
+			walls[i].texture[0] = LoadTexture("res/assets/wall/forcefield_1.png");
+			walls[i].texture[1] = LoadTexture("res/assets/wall/forcefield_2.png");
 			walls[i].active = true;
 			walls[i].lives = 4;
 			walls[i].color = GREEN;
