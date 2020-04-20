@@ -72,7 +72,7 @@ using namespace GameManager;
 
 	void deInit() {
 
-		for (int i = 0; i < maxassets; i++)
+		for (int i = 0; i < maxTextures; i++)
 		{
 			UnloadTexture(player.texture[i]);
 		}

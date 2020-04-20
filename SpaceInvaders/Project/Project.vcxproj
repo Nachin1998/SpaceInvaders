@@ -138,12 +138,14 @@
     <ClCompile Include="invaders.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="ufo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameplay.h" />
     <ClInclude Include="game_manager.h" />
     <ClInclude Include="invaders.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="ufo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

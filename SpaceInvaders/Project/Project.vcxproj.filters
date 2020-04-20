@@ -28,6 +28,9 @@
     <ClCompile Include="gameplay.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
+    <ClCompile Include="ufo.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_manager.h">
@@ -41,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="gameplay.h">
       <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="ufo.h">
+      <Filter>entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

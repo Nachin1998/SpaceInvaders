@@ -7,6 +7,7 @@
 #include "game_manager.h"
 #include "player.h"
 #include "invaders.h"
+#include "ufo.h"
 
 namespace MyGame {
 namespace Gameplay {
@@ -15,24 +16,21 @@ using namespace GameManager;
 	static void initBackground();
 	static void updateBackground();
 	static void drawBackground();
-	static void initUFO();
-	static void updateUFO();
-	static void drawUFO();
 	static void initWall();
 	static void updateWall();
 	static void drawWall();
 	static void collisionManager();
 
-	static const int ufoMaxassets = 2;
-	static const int MaxWalls = 4;
-	static const int MaxBackgroundassets = 8;
+	static const int maxWalls = 4;
+	static const int maxBackgroundTextures = 8;
 	bool paused;
 
 	struct Background {
 		Vector2 pos;
-		Image image[MaxBackgroundassets];
-		Texture2D texture[MaxBackgroundassets];
+		Image image[maxBackgroundTextures];
+		Texture2D texture[maxBackgroundTextures];
 		float timer;
+		float timeToWait;
 		float timerLimit;
 	};
 	static Background background;
@@ -45,24 +43,12 @@ using namespace GameManager;
 		bool active;
 		Color color;
 	};
-	static Wall walls[MaxWalls];
-
-	struct UFO {
-		Rectangle rec;
-		Texture2D texture[ufoMaxassets];
-		Vector2 pos;
-		float speed;
-		int pointsToGive;
-		bool active;
-		Color color;
-	};
-	static UFO ufo;
+	static Wall walls[maxWalls];
 
 	static bool win;
 	static bool lose;
 
-	static float ufoMovementTimer = 0;
-	static float ufoTextureTimer = 0;
+
 	static float wallTextureTimer = 0;
 	static int counterFix = 0;
 
@@ -75,7 +61,7 @@ using namespace GameManager;
 		initBackground();
 		Player::init();
 		Invaders::init();
-		initUFO();
+		Ufo::init();
 		initWall();
 	}
 
@@ -98,7 +84,7 @@ using namespace GameManager;
 			Player::update();
 			Invaders::update();
 			updateBackground();
-			updateUFO();
+			Ufo::update();
 			updateWall();
 			collisionManager();
 
@@ -120,7 +106,7 @@ using namespace GameManager;
 		Player::draw();
 		Invaders::draw();
 
-		drawUFO();
+		Ufo::draw();
 		drawWall();
 
 		if (paused)
@@ -133,8 +119,7 @@ using namespace GameManager;
 
 		Player::deInit();
 		Invaders::deInit();
-		UnloadTexture(ufo.texture[0]);
-		UnloadTexture(ufo.texture[1]);
+		Ufo::deInit();
 	}
 
 	void initBackground() {
@@ -142,7 +127,8 @@ using namespace GameManager;
 		background.pos.x = 0;
 		background.pos.y = 0;
 		background.timer = 0;
-		background.timerLimit = 16;
+		background.timeToWait = 2;
+		background.timerLimit = maxBackgroundTextures * background.timeToWait;
 		background.image[0] = LoadImage("res/assets/background/background_1.png");
 		background.image[1] = LoadImage("res/assets/background/background_2.png");
 		background.image[2] = LoadImage("res/assets/background/background_3.png");
@@ -152,7 +138,7 @@ using namespace GameManager;
 		background.image[6] = LoadImage("res/assets/background/background_7.png");
 		background.image[7] = LoadImage("res/assets/background/background_8.png");
 
-		for (int i = 0; i < MaxBackgroundassets; i++)
+		for (int i = 0; i < maxBackgroundTextures; i++)
 		{
 			background.texture[i] = LoadTextureFromImage(background.image[i]);
 			UnloadImage(background.image[i]);
@@ -173,121 +159,51 @@ using namespace GameManager;
 	void drawBackground() {
 
 		/*Almost works
-		int timeToWait = 0;
+		float timeToWait = 0;
 		int textureCounter = 0;
-		for (int i = 0; i < MaxBackgroundassets; i++)
+		for (int i = 0; i < maxBackgroundTextures; i++)
 		{
-			if (background.timer > timeToWait && background.timer < timeToWait + 2)
+			if (background.timer > timeToWait && background.timer < timeToWait + 7)
 			{
 				DrawTexture(background.texture[textureCounter], background.pos.x, background.pos.y, WHITE);
 			}
 			else
 			{
-				timeToWait += 2;
+				timeToWait += 7;
 				textureCounter++;
 			}
 		}*/
-		if(background.timer < 2)
+		if(background.timer < background.timeToWait)
 		{
 			DrawTexture(background.texture[0], background.pos.x, background.pos.y, WHITE);
 		}
-		if (background.timer > 2 && background.timer < 4)
+		else if (background.timer > background.timeToWait && background.timer < background.timeToWait + background.timeToWait)
 		{
 			DrawTexture(background.texture[1], background.pos.x, background.pos.y, WHITE);
 		}
-		if (background.timer > 4 && background.timer < 6)
+		else if (background.timer > background.timeToWait + background.timeToWait && background.timer < background.timeToWait + background.timeToWait * 2)
 		{
 			DrawTexture(background.texture[2], background.pos.x, background.pos.y, WHITE);
 		}
-		if (background.timer > 6 && background.timer < 8)
+		else if (background.timer > background.timeToWait + background.timeToWait * 2 && background.timer < background.timeToWait + background.timeToWait * 3)
 		{
 			DrawTexture(background.texture[3], background.pos.x, background.pos.y, WHITE);
 		}
-		if (background.timer > 8 && background.timer < 10)
+		else if (background.timer > background.timeToWait + background.timeToWait * 3 && background.timer < background.timeToWait + background.timeToWait * 4)
 		{
 			DrawTexture(background.texture[4], background.pos.x, background.pos.y, WHITE);
 		}
-		if (background.timer > 10 && background.timer < 12)
+		else if (background.timer > background.timeToWait + background.timeToWait * 4 && background.timer < background.timeToWait + background.timeToWait * 5)
 		{
 			DrawTexture(background.texture[5], background.pos.x, background.pos.y, WHITE);
 		}
-		if (background.timer > 12 && background.timer < 14)
+		else if (background.timer > background.timeToWait + background.timeToWait * 5 && background.timer < background.timeToWait + background.timeToWait * 6)
 		{
 			DrawTexture(background.texture[6], background.pos.x, background.pos.y, WHITE);
 		}
-		if (background.timer > 14 && background.timer < background.timerLimit)
+		else if (background.timer > background.timeToWait + background.timeToWait * 6 && background.timer < background.timerLimit)
 		{
 			DrawTexture(background.texture[7], background.pos.x, background.pos.y, WHITE);
-		}
-	}
-	
-	void initUFO() {
-
-		ufoMovementTimer = 0;
-		ufoTextureTimer = 0;
-
-		ufo.pos.x = 0;
-		ufo.pos.y = 25;
-		ufo.rec.width = 72;
-		ufo.rec.height = 15;
-		ufo.rec.x = ufo.pos.x - ufo.rec.width;
-		ufo.rec.y = ufo.pos.y - ufo.rec.height / 2;
-		ufo.speed = 200.0f;
-		ufo.pointsToGive = 500;
-		ufo.active = false;
-		ufo.texture[0] = LoadTexture("res/assets/ufo/ufo1.png");
-		ufo.texture[1] = LoadTexture("res/assets/ufo/ufo2.png");
-		ufo.color = WHITE;
-	}
-
-	void updateUFO() {
-
-		ufoMovementTimer += GetFrameTime();
-		ufoTextureTimer += GetFrameTime();
-
-		if (ufoMovementTimer >= 30.0f)
-		{
-			ufo.active = true;
-		}
-
-		if (ufoTextureTimer >= 0.2f)
-		{
-			ufoTextureTimer = 0;
-		}
-
-		ufo.rec.x = ufo.pos.x - ufo.rec.width / 2;
-		ufo.rec.y = ufo.pos.y - ufo.rec.height / 2;
-
-		if (ufo.active)
-		{
-			ufo.pos.x += ufo.speed * GetFrameTime();
-
-			if (ufo.pos.x - ufo.rec.width / 2 > screenWidth)
-			{
-				ufo.active = false;
-				ufoMovementTimer = 0;
-			}
-		}
-		else
-		{
-			ufo.pos.x = 0 - ufo.rec.width / 2;
-		}
-	}
-
-	void drawUFO() {
-
-		DrawRectangleRec(ufo.rec, ufo.color);
-
-		if (ufo.active)
-		{
-			if (ufoTextureTimer < 0.1f)
-			{
-				DrawTexture(ufo.texture[0], ufo.pos.x - ufo.texture[0].width / 2, ufo.pos.y - ufo.texture[0].height / 2, ufo.color);
-			}
-			else
-			{
-				DrawTexture(ufo.texture[1], ufo.pos.x - ufo.texture[1].width / 2, ufo.pos.y - ufo.texture[1].height / 2, ufo.color);
-			}
 		}
 	}
 
@@ -295,11 +211,11 @@ using namespace GameManager;
 
 		wallTextureTimer = 0;
 
-		for (int i = 0; i < MaxWalls; i++)
+		for (int i = 0; i < maxWalls; i++)
 		{
 			walls[i].rec.width = 130;
 			walls[i].rec.height = 50;
-			walls[i].pos.x = walls[i].rec.width - 18 + i *(screenWidth / MaxWalls);
+			walls[i].pos.x = walls[i].rec.width - 18 + i *(screenWidth / maxWalls);
 			walls[i].pos.y = 700;
 			walls[i].rec.x = walls[i].pos.x - walls[i].rec.width / 2;
 			walls[i].rec.y = walls[i].pos.y - walls[i].rec.height / 2;
@@ -320,7 +236,7 @@ using namespace GameManager;
 			wallTextureTimer = 0;
 		}
 
-		for (int i = 0; i < MaxWalls; i++)
+		for (int i = 0; i < maxWalls; i++)
 		{
 			walls[i].rec.x = walls[i].pos.x - walls[i].rec.width / 2;
 			walls[i].rec.y = walls[i].pos.y - walls[i].rec.height / 2;
@@ -350,7 +266,7 @@ using namespace GameManager;
 
 	void drawWall() {
 
-		for (int i = 0; i < MaxWalls; i++)
+		for (int i = 0; i < maxWalls; i++)
 		{
 			if (walls[i].active)
 			{
@@ -414,15 +330,15 @@ using namespace GameManager;
 			}
 		}
 
-		if (CheckCollisionRecs(Player::bullet.rec, ufo.rec))
+		if (CheckCollisionRecs(Player::bullet.rec, Ufo::ufo.rec))
 		{
-			ufo.active = false;
-			ufoMovementTimer = 0;
+			Ufo::ufo.active = false;
+			Ufo::ufoMovementTimer = 0;
 			Player::bullet.active = false;
-			Player::player.points += ufo.pointsToGive;
+			Player::player.points += Ufo::ufo.pointsToGive;
 		}
 
-		for (int i = 0; i < MaxWalls; i++)
+		for (int i = 0; i < maxWalls; i++)
 		{
 			if (walls[i].active)
 			{
