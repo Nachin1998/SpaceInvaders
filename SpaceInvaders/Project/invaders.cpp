@@ -81,7 +81,7 @@ using namespace GameManager;
 				invaders[i][j].body.width = 50;
 				invaders[i][j].body.height = 30;
 				invaders[i][j].pos.x = ((70 * j)) + invaders[i][j].body.width + 20;
-				invaders[i][j].pos.y = 70 + (60 * i);
+				invaders[i][j].pos.y = 100 + (60 * i);
 				invaders[i][j].body.x = invaders[i][j].pos.x - invaders[i][j].body.width / 2;
 				invaders[i][j].body.y = invaders[i][j].pos.y - invaders[i][j].body.height / 2;
 				invaders[i][j].speed.x = 20;

@@ -6,11 +6,12 @@
 namespace MyGame {
 namespace Ufo {
 	
-	const int ufoMaxTextures = 2;
+	const int ufoMaxTextures = 6;
 
 	struct UFO {
 		Rectangle rec;
-		Texture2D texture[ufoMaxTextures];
+		Texture2D idleTexture[ufoMaxTextures];
+		Texture2D attackingTexture[ufoMaxTextures];
 		Vector2 pos;
 		float speed;
 		int pointsToGive;
@@ -18,8 +19,17 @@ namespace Ufo {
 		bool attacking;
 		Color color;
 	};
+
+	struct Laser {
+		Rectangle rec;
+		Vector2 pos;
+		Texture2D texture;
+		bool active;
+		Color color;
+	};
 	
 	extern UFO ufo;
+	extern Laser laser;
 	extern float ufoMovementTimer;
 	extern float ufoTextureTimer;
 
