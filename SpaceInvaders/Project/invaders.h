@@ -23,7 +23,7 @@ namespace Invaders {
 	};
 
 	struct Bullet {
-		Texture2D assets[maxBulletassets];
+		Texture2D texture[maxBulletassets];
 		Vector2 pos;
 		Rectangle rec;
 		float speed;

@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include "game_manager.h"
+#include "utility.h"
 
 namespace MyGame {
 namespace Player {
@@ -113,22 +114,22 @@ using namespace GameManager;
 
 		if (textureTimer < 0.1f)
 		{
-			DrawTexture(player.texture[0], player.pos.x - player.texture[0].width / 2, player.pos.y - player.texture[0].height / 2, player.color);
+			Textures::drawProTexture(player.texture[0], player.pos.x, player.pos.y, player.color);
 		}
 
 		if (textureTimer > 0.1f && textureTimer < 0.2f)
 		{
-			DrawTexture(player.texture[1], player.pos.x - player.texture[1].width / 2, player.pos.y - player.texture[1].height / 2, player.color);
+			Textures::drawProTexture(player.texture[1], player.pos.x, player.pos.y, player.color);
 		}
 
 		if (textureTimer > 0.2f && textureTimer < 0.3f)
 		{
-			DrawTexture(player.texture[2], player.pos.x - player.texture[2].width / 2, player.pos.y - player.texture[2].height / 2, player.color);
+			Textures::drawProTexture(player.texture[2], player.pos.x, player.pos.y, player.color);
 		}
 
 		if (textureTimer > 0.3f && textureTimer < maxTextureTimer)
 		{
-			DrawTexture(player.texture[3], player.pos.x - player.texture[3].width / 2, player.pos.y - player.texture[3].height / 2, player.color);
+			Textures::drawProTexture(player.texture[3], player.pos.x, player.pos.y, player.color);
 		}
 	}
 
@@ -154,7 +155,7 @@ using namespace GameManager;
 			bullet.active = false;
 		}
 	}
-
+	
 	void drawBullet() {
 
 		if (bullet.active)

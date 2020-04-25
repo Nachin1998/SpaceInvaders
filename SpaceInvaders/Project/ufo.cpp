@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "game_manager.h"
+#include "utility.h"
 
 namespace MyGame {
 namespace Ufo {
@@ -235,27 +236,27 @@ using namespace GameManager;
 
 		if (ufoTextureTimer < 0.1f)
 		{
-			DrawTexture(textures[0], ufo.pos.x - textures[0].width / 2, ufo.pos.y - textures[0].height / 2, ufo.color);
+			Textures::drawProTexture(textures[0], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.1f && ufoTextureTimer < 0.2f)
 		{
-			DrawTexture(textures[1], ufo.pos.x - textures[1].width / 2, ufo.pos.y - textures[1].height / 2, ufo.color);
+			Textures::drawProTexture(textures[1], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.2f && ufoTextureTimer < 0.3f)
 		{
-			DrawTexture(textures[2], ufo.pos.x - textures[2].width / 2, ufo.pos.y - textures[2].height / 2, ufo.color);
+			Textures::drawProTexture(textures[2], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.3f && ufoTextureTimer < 0.4f)
 		{
-			DrawTexture(textures[3], ufo.pos.x - textures[3].width / 2, ufo.pos.y - textures[3].height / 2, ufo.color);
+			Textures::drawProTexture(textures[3], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.4f && ufoTextureTimer < 0.5f)
 		{
-			DrawTexture(textures[4], ufo.pos.x - textures[4].width / 2, ufo.pos.y - textures[4].height / 2, ufo.color);
+			Textures::drawProTexture(textures[4], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.5f && ufoTextureTimer < ufoMaxTextureTimer)
 		{
-			DrawTexture(textures[5], ufo.pos.x - textures[5].width / 2, ufo.pos.y - textures[5].height / 2, ufo.color);
+			Textures::drawProTexture(textures[5], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 	}
 }

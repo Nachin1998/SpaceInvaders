@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "game_manager.h"
+#include "utility.h"
 
 namespace MyGame{
 namespace Invaders{
@@ -233,11 +234,11 @@ using namespace GameManager;
 				{
 					if (!changeMovementTexture)
 					{
-						DrawTexture(invaders[i][j].invaderTexture[0], invaders[i][j].pos.x - invaders[i][j].invaderTexture[0].width / 2, invaders[i][j].pos.y - invaders[i][j].invaderTexture[0].height / 2, invaders[i][j].color);
+						Textures::drawProTexture(invaders[i][j].invaderTexture[0], invaders[i][j].pos.x, invaders[i][j].pos.y, invaders[i][j].color);
 					}
 					else
 					{
-						DrawTexture(invaders[i][j].invaderTexture[1], invaders[i][j].pos.x - invaders[i][j].invaderTexture[1].width / 2, invaders[i][j].pos.y - invaders[i][j].invaderTexture[1].height / 2, invaders[i][j].color);
+						Textures::drawProTexture(invaders[i][j].invaderTexture[1], invaders[i][j].pos.x, invaders[i][j].pos.y, invaders[i][j].color);
 					}
 				}
 			}
@@ -256,7 +257,7 @@ using namespace GameManager;
 		bullet.rec.y = bullet.rec.y - bullet.rec.height / 2;
 		bullet.speed = 200.0f;
 		bullet.active = true;
-		bullet.color = RED;
+		bullet.color = WHITE;
 	}
 
 	void updateBullet() {
@@ -275,9 +276,9 @@ using namespace GameManager;
 		{
 			for (int i = 0; i < maxBulletassets; i++)
 			{
-				bullet.assets[i] = invaders[randY][randX].bulletTexture[i];
+				bullet.texture[i] = invaders[randY][randX].bulletTexture[i];
 
-				if (bullet.pos.y - bullet.assets[i].height / 2 > screenHeight)
+				if (bullet.pos.y - bullet.texture[i].height / 2 > screenHeight)
 				{
 					bulletRespawn();
 				}
@@ -317,22 +318,22 @@ using namespace GameManager;
 		{
 			if (bulletTimer < 0.1f)
 			{
-				DrawTexture(bullet.assets[0], bullet.pos.x - bullet.assets[0].width / 2, bullet.pos.y - bullet.assets[0].height / 2, WHITE);
+				Textures::drawProTexture(bullet.texture[0], bullet.pos.x, bullet.pos.y, bullet.color);
 			}
 
 			if (bulletTimer > 0.1f && bulletTimer < 0.2f)
 			{
-				DrawTexture(bullet.assets[1], bullet.pos.x - bullet.assets[1].width / 2, bullet.pos.y - bullet.assets[1].height / 2, WHITE);
+				Textures::drawProTexture(bullet.texture[1], bullet.pos.x, bullet.pos.y, bullet.color);
 			}
 
 			if (bulletTimer > 0.2f && bulletTimer < 0.3f)
 			{
-				DrawTexture(bullet.assets[2], bullet.pos.x - bullet.assets[2].width / 2, bullet.pos.y - bullet.assets[2].height / 2, WHITE);
+				Textures::drawProTexture(bullet.texture[2], bullet.pos.x, bullet.pos.y, bullet.color);
 			}
 
 			if (bulletTimer > 0.3f && bulletTimer < 0.4f)
 			{
-				DrawTexture(bullet.assets[3], bullet.pos.x - bullet.assets[3].width / 2, bullet.pos.y - bullet.assets[3].height / 2, WHITE);
+				Textures::drawProTexture(bullet.texture[3], bullet.pos.x, bullet.pos.y, bullet.color);
 			}
 
 			//DrawRectangleRec(bullet.rec, bullet.color);
@@ -360,7 +361,7 @@ using namespace GameManager;
 
 		for (int i = 0; i < maxBulletassets; i++)
 		{
-			UnloadTexture(bullet.assets[i]);
+			UnloadTexture(bullet.texture[i]);
 		}
 	}
 }

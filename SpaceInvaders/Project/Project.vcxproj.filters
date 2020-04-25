@@ -34,7 +34,7 @@
     <ClCompile Include="ufo.cpp">
       <Filter>entities</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
+    <ClCompile Include="utility.cpp">
       <Filter>utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -54,7 +54,7 @@
     <ClInclude Include="ufo.h">
       <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
+    <ClInclude Include="utility.h">
       <Filter>utility</Filter>
     </ClInclude>
   </ItemGroup>
