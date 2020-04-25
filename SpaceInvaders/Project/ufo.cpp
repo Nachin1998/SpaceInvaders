@@ -1,23 +1,55 @@
 #include "ufo.h"
 
+#include <iostream>
+#include <time.h>
+
 #include "game_manager.h"
 
 namespace MyGame {
 namespace Ufo {
 using namespace GameManager;
 
+	static void drawUFOTextures(Texture2D textures[]);
+
+	enum UFOState {
+		Idle,
+		Charging,
+		Attacking
+	};
+	static UFOState ufoState = Idle;
+
 	UFO ufo;
 	Laser laser;
-	
-	float ufoMovementTimer;
-	float ufoTextureTimer;
-	float ufoMaxTextureTimer;
+
+	float ufoActivationTimer;
+
+	static float ufoTextureTimer;
+	static float ufoMaxTextureTimer;
+
+	static float ufoChargingTimer;
+	static float ufoMaxChargingTimer;
+
+	static float ufoAttackTimer;
+	static float ufoMaxAttackTimer;
+
+	static int randomPos;
+	static float laserPosFix;
 
 	void init() {
 
-		ufoMovementTimer = 0;
+		srand(time(NULL));
+
+		ufoActivationTimer = 0;
+
 		ufoTextureTimer = 0;
 		ufoMaxTextureTimer = 0.6f;
+
+		ufoChargingTimer = 0;
+		ufoMaxChargingTimer = 0;
+
+		ufoAttackTimer = 0;
+		ufoMaxAttackTimer = 2.5;
+		laserPosFix = 3.0f;
 
 		ufo.pos.x = 0;
 		ufo.pos.y = 35;
@@ -25,7 +57,7 @@ using namespace GameManager;
 		ufo.rec.height = 15;
 		ufo.rec.x = ufo.pos.x - ufo.rec.width;
 		ufo.rec.y = ufo.pos.y - ufo.rec.height / 2;
-		ufo.speed = 200.0f;
+		ufo.speed = 160.0f;
 		ufo.pointsToGive = 500;
 		ufo.active = false;
 		ufo.idleTexture[0] = LoadTexture("res/assets/ufo/ufo_idle_1.png");
@@ -34,6 +66,12 @@ using namespace GameManager;
 		ufo.idleTexture[3] = LoadTexture("res/assets/ufo/ufo_idle_4.png");
 		ufo.idleTexture[4] = LoadTexture("res/assets/ufo/ufo_idle_5.png");
 		ufo.idleTexture[5] = LoadTexture("res/assets/ufo/ufo_idle_6.png");
+		ufo.chargingTexture[0] = LoadTexture("res/assets/ufo/ufo_charging_1.png");
+		ufo.chargingTexture[1] = LoadTexture("res/assets/ufo/ufo_charging_2.png");
+		ufo.chargingTexture[2] = LoadTexture("res/assets/ufo/ufo_charging_3.png");
+		ufo.chargingTexture[3] = LoadTexture("res/assets/ufo/ufo_charging_4.png");
+		ufo.chargingTexture[4] = LoadTexture("res/assets/ufo/ufo_charging_5.png");
+		ufo.chargingTexture[5] = LoadTexture("res/assets/ufo/ufo_charging_6.png");
 		ufo.attackingTexture[0] = LoadTexture("res/assets/ufo/ufo_attacking_1.png");
 		ufo.attackingTexture[1] = LoadTexture("res/assets/ufo/ufo_attacking_2.png");
 		ufo.attackingTexture[2] = LoadTexture("res/assets/ufo/ufo_attacking_3.png");
@@ -49,78 +87,135 @@ using namespace GameManager;
 		laser.rec.x = laser.pos.x - laser.rec.width / 2;
 		laser.rec.y = laser.pos.y;
 		laser.texture = LoadTexture("res/assets/ufo/laserbeam.png");
-		laser.texture.height *= 3;
+		laser.texture.width *= 2;
+		laser.texture.height *= 5;
 		laser.active = false;
 		laser.color = WHITE;
 	}
 
 	void update() {
 
-		ufoMovementTimer += GetFrameTime();
+		ufoActivationTimer += GetFrameTime();
 		ufoTextureTimer += GetFrameTime();
-		laser.pos.x = ufo.pos.x + 3;
-		laser.rec.x = laser.pos.x - laser.rec.width / 2;
 
-		if (ufoMovementTimer >= 1.0f)
-		{
-			ufo.active = true;
-		}
+		ufo.rec.x = ufo.pos.x - ufo.rec.width / 2;
+		ufo.rec.y = ufo.pos.y - ufo.rec.height / 2;
+		laser.pos.x = ufo.pos.x + laserPosFix;
+		laser.rec.x = laser.pos.x - laser.rec.width / 2;
 
 		if (ufoTextureTimer >= ufoMaxTextureTimer)
 		{
 			ufoTextureTimer = 0;
 		}
-		
-		ufo.rec.x = ufo.pos.x - ufo.rec.width / 2;
-		ufo.rec.y = ufo.pos.y - ufo.rec.height / 2;
 
-		if (ufo.active)
+		if (ufoActivationTimer >= 1.0f)
 		{
-			ufo.pos.x += ufo.speed * GetFrameTime();
-
-			if (ufo.pos.x - ufo.rec.width / 2 > screenWidth)
-			{
-				ufo.active = false;
-				ufoMovementTimer = 0;
-			}
+			ufo.active = true;
 		}
 		else
 		{
-			ufo.pos.x = 0 - ufo.rec.width / 2;
+			randomPos = rand() % 2;
+			ufoMaxChargingTimer = rand() % 2 + 1;
 		}
-	}
 
-	void draw() {
-
-		DrawRectangleRec(ufo.rec, ufo.color);
-		//DrawTexture(laser.texture, laser.pos.x - laser.texture.width / 2, laser.pos.y, laser.color);
-		DrawRectangleRec(laser.rec, WHITE);
+		if (ufoState == Attacking)
+		{
+			laser.active = true;
+		}
+		else
+		{
+			laser.active = false;
+		}
 
 		if (ufo.active)
 		{
-			if (ufoTextureTimer < 0.1f)
+			ufoChargingTimer += GetFrameTime();
+
+			if (randomPos == 0)
 			{
-				DrawTexture(ufo.idleTexture[0], ufo.pos.x - ufo.idleTexture[0].width / 2, ufo.pos.y - ufo.idleTexture[0].height / 2, ufo.color);
+				ufo.pos.x += ufo.speed * GetFrameTime();
+				laserPosFix = 2.9f;
+				if (ufo.pos.x - ufo.rec.width / 2 > screenWidth)
+				{
+					ufo.active = false;
+					ufoActivationTimer = 0;
+				}
 			}
-			else if(ufoTextureTimer > 0.1f && ufoTextureTimer < 0.2f)
+
+			if (randomPos == 1)
 			{
-				DrawTexture(ufo.idleTexture[1], ufo.pos.x - ufo.idleTexture[1].width / 2, ufo.pos.y - ufo.idleTexture[1].height / 2, ufo.color);
+				ufo.pos.x -= ufo.speed * GetFrameTime();
+				laserPosFix = -2.9f;
+				if (ufo.pos.x + ufo.rec.width / 2 < 0)
+				{
+					ufo.active = false;
+					ufoActivationTimer = 0;
+				}
 			}
-			else if (ufoTextureTimer > 0.2f && ufoTextureTimer < 0.3f)
+
+			if (ufoChargingTimer < ufoMaxChargingTimer)
 			{
-				DrawTexture(ufo.idleTexture[2], ufo.pos.x - ufo.idleTexture[2].width / 2, ufo.pos.y - ufo.idleTexture[2].height / 2, ufo.color);
+				ufoState = Idle;
 			}
-			else if (ufoTextureTimer > 0.3f && ufoTextureTimer < 0.4f)
+			if (ufoChargingTimer > ufoMaxChargingTimer && ufoChargingTimer < ufoMaxChargingTimer * 2)
 			{
-				DrawTexture(ufo.idleTexture[3], ufo.pos.x - ufo.idleTexture[3].width / 2, ufo.pos.y - ufo.idleTexture[3].height / 2, ufo.color);
+				ufoState = Charging;
 			}
-			else if (ufoTextureTimer > 0.4f && ufoTextureTimer < 0.5f)
+			if (ufoChargingTimer > ufoMaxChargingTimer * 2 && ufoChargingTimer < ufoMaxChargingTimer * 3.5)
 			{
-				DrawTexture(ufo.idleTexture[4], ufo.pos.x - ufo.idleTexture[4].width / 2, ufo.pos.y - ufo.idleTexture[4].height / 2, ufo.color);
+				ufoState = Attacking;
 			}
-			else if (ufoTextureTimer > 0.5f && ufoTextureTimer < ufoMaxTextureTimer)
+			if (ufoChargingTimer > ufoMaxChargingTimer * 3.5)
 			{
-				DrawTexture(ufo.idleTexture[5], ufo.pos.x - ufo.idleTexture[5].width / 2, ufo.pos.y - ufo.idleTexture[5].height / 2, ufo.color);
+				ufoState = Idle;
+			}
+		}
+
+		if (!ufo.active)
+		{
+			if (randomPos == 0)
+			{
+				ufo.pos.x = 0 - ufo.rec.width / 2;
+			}
+
+			if (randomPos == 1)
+			{
+				ufo.pos.x = screenWidth + ufo.rec.width / 2;
+			}
+
+			ufoChargingTimer = 0;
+		}
+	}
+
+
+	void draw() {
+
+		//DrawRectangleRec(ufo.rec, ufo.color);
+		//DrawRectangleRec(laser.rec, WHITE);
+
+		if (laser.active)
+		{
+			DrawTexture(laser.texture, laser.pos.x - laser.texture.width / 2, laser.pos.y, laser.color);
+		}
+
+		if (ufo.active)
+		{
+			switch (ufoState)
+			{
+			case Idle:
+				drawUFOTextures(ufo.idleTexture);
+				break;
+
+			case Charging:
+				drawUFOTextures(ufo.chargingTexture);
+				break;
+
+			case Attacking:
+				drawUFOTextures(ufo.attackingTexture);
+				break;
+
+			default:
+				break;
 			}
 		}
 	}
@@ -130,9 +225,38 @@ using namespace GameManager;
 		for (int i = 0; i < ufoMaxTextures; i++)
 		{
 			UnloadTexture(ufo.idleTexture[i]);
+			UnloadTexture(ufo.chargingTexture[i]);
 			UnloadTexture(ufo.attackingTexture[i]);
 		}
 		UnloadTexture(laser.texture);
+	}
+
+	void drawUFOTextures(Texture2D textures[]) {
+
+		if (ufoTextureTimer < 0.1f)
+		{
+			DrawTexture(textures[0], ufo.pos.x - textures[0].width / 2, ufo.pos.y - textures[0].height / 2, ufo.color);
+		}
+		else if (ufoTextureTimer > 0.1f && ufoTextureTimer < 0.2f)
+		{
+			DrawTexture(textures[1], ufo.pos.x - textures[1].width / 2, ufo.pos.y - textures[1].height / 2, ufo.color);
+		}
+		else if (ufoTextureTimer > 0.2f && ufoTextureTimer < 0.3f)
+		{
+			DrawTexture(textures[2], ufo.pos.x - textures[2].width / 2, ufo.pos.y - textures[2].height / 2, ufo.color);
+		}
+		else if (ufoTextureTimer > 0.3f && ufoTextureTimer < 0.4f)
+		{
+			DrawTexture(textures[3], ufo.pos.x - textures[3].width / 2, ufo.pos.y - textures[3].height / 2, ufo.color);
+		}
+		else if (ufoTextureTimer > 0.4f && ufoTextureTimer < 0.5f)
+		{
+			DrawTexture(textures[4], ufo.pos.x - textures[4].width / 2, ufo.pos.y - textures[4].height / 2, ufo.color);
+		}
+		else if (ufoTextureTimer > 0.5f && ufoTextureTimer < ufoMaxTextureTimer)
+		{
+			DrawTexture(textures[5], ufo.pos.x - textures[5].width / 2, ufo.pos.y - textures[5].height / 2, ufo.color);
+		}
 	}
 }
 }

@@ -49,6 +49,9 @@ namespace GameManager {
 			Gameplay::update();
 			break;
 
+		case GameOver:
+			break;
+
 		case Credits:
 			break;
 
@@ -72,6 +75,9 @@ namespace GameManager {
 			Gameplay::draw();
 			break;
 
+		case GameOver:
+			break;
+		
 		case Credits:
 			break;
 

@@ -45,9 +45,9 @@ using namespace GameManager;
 	};
 	static Wall walls[maxWalls];
 
+	static bool endGame;
 	static bool win;
 	static bool lose;
-
 
 	static float wallTextureTimer = 0;
 	static int counterFix = 0;
@@ -129,14 +129,6 @@ using namespace GameManager;
 		background.timer = 0;
 		background.timeToWait = 2;
 		background.timerLimit = maxBackgroundTextures * background.timeToWait;
-		//background.image[0] = LoadImage("res/assets/background/background_1.png");
-		//background.image[1] = LoadImage("res/assets/background/background_2.png");
-		//background.image[2] = LoadImage("res/assets/background/background_3.png");
-		//background.image[3] = LoadImage("res/assets/background/background_4.png");
-		//background.image[4] = LoadImage("res/assets/background/background_5.png");
-		//background.image[5] = LoadImage("res/assets/background/background_6.png");
-		//background.image[6] = LoadImage("res/assets/background/background_7.png");
-		//background.image[7] = LoadImage("res/assets/background/background_8.png");
 		background.image[0] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_1.png");
 		background.image[1] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_2.png");
 		background.image[2] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_3.png");
@@ -221,9 +213,9 @@ using namespace GameManager;
 
 		for (int i = 0; i < maxWalls; i++)
 		{
-			walls[i].rec.width = 130;
+			walls[i].rec.width = 150;
 			walls[i].rec.height = 50;
-			walls[i].pos.x = walls[i].rec.width - 18 + i *(screenWidth / maxWalls);
+			walls[i].pos.x = walls[i].rec.width - 38 + i *(screenWidth / maxWalls);
 			walls[i].pos.y = 700;
 			walls[i].rec.x = walls[i].pos.x - walls[i].rec.width / 2;
 			walls[i].rec.y = walls[i].pos.y - walls[i].rec.height / 2;
@@ -278,7 +270,7 @@ using namespace GameManager;
 		{
 			if (walls[i].active)
 			{
-				//DrawRectangleRec(walls[i].rec, walls[i].color);
+				DrawRectangleRec(walls[i].rec, walls[i].color);
 
 				if (wallTextureTimer < 0.5)
 				{
@@ -298,9 +290,9 @@ using namespace GameManager;
 		{
 			for (int j = 0; j < Invaders::maxInvadersX; j++)
 			{
-				if (CheckCollisionRecs(Player::bullet.rec, Invaders::invaders[i][j].body))
+				if (Invaders::invaders[i][j].active && Player::bullet.active)
 				{
-					if (Invaders::invaders[i][j].active && Player::bullet.active)
+					if (CheckCollisionRecs(Player::bullet.rec, Invaders::invaders[i][j].body))
 					{
 						Invaders::activeInvaderCounter--;
 
@@ -309,7 +301,7 @@ using namespace GameManager;
 						Invaders::maxTimer -= 0.01f;
 						Player::player.points += Invaders::invaders[i][j].pointsToGive;
 
-						std::cout << "Puntos: "<<Player::player.points << std::endl;
+						std::cout << "Puntos: " << Player::player.points << std::endl;
 						std::cout << "Invaders active: "<<Invaders::activeInvaderCounter << std::endl;
 					}
 				}
@@ -338,12 +330,29 @@ using namespace GameManager;
 			}
 		}
 
-		if (CheckCollisionRecs(Player::bullet.rec, Ufo::ufo.rec))
+		if (Ufo::ufo.active)
 		{
-			Ufo::ufo.active = false;
-			Ufo::ufoMovementTimer = 0;
-			Player::bullet.active = false;
-			Player::player.points += Ufo::ufo.pointsToGive;
+			if (CheckCollisionRecs(Player::bullet.rec, Ufo::ufo.rec))
+			{
+				Ufo::ufo.active = false;
+				Ufo::ufoActivationTimer = 0;
+				Player::bullet.active = false;
+				Player::player.points += Ufo::ufo.pointsToGive;
+			}
+		}
+
+		if (Ufo::laser.active)
+		{
+			if (CheckCollisionRecs(Ufo::laser.rec, Player::player.body))
+			{
+				counterFix++;
+				if (counterFix > 20)
+				{
+					Player::player.lives -= 1;
+					std::cout << Player::player.lives << std::endl;
+					counterFix = 0;
+				}
+			}
 		}
 
 		for (int i = 0; i < maxWalls; i++)

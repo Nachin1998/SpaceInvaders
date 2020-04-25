@@ -11,12 +11,12 @@ namespace Ufo {
 	struct UFO {
 		Rectangle rec;
 		Texture2D idleTexture[ufoMaxTextures];
+		Texture2D chargingTexture[ufoMaxTextures];
 		Texture2D attackingTexture[ufoMaxTextures];
 		Vector2 pos;
 		float speed;
 		int pointsToGive;
 		bool active;
-		bool attacking;
 		Color color;
 	};
 
@@ -30,8 +30,7 @@ namespace Ufo {
 	
 	extern UFO ufo;
 	extern Laser laser;
-	extern float ufoMovementTimer;
-	extern float ufoTextureTimer;
+	extern float ufoActivationTimer;
 
 	void init();
 	void update();

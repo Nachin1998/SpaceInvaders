@@ -13,6 +13,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{be707ca7-6410-4096-a8cd-fb464ed9fa8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -31,6 +34,9 @@
     <ClCompile Include="ufo.cpp">
       <Filter>entities</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_manager.h">
@@ -47,6 +53,9 @@
     </ClInclude>
     <ClInclude Include="ufo.h">
       <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
