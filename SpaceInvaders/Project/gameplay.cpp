@@ -129,14 +129,14 @@ using namespace GameManager;
 		background.timer = 0;
 		background.timeToWait = 2;
 		background.timerLimit = maxBackgroundTextures * background.timeToWait;
-		background.image[0] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_1.png");
-		background.image[1] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_2.png");
-		background.image[2] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_3.png");
-		background.image[3] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_4.png");
-		background.image[4] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_5.png");
-		background.image[5] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_6.png");
-		background.image[6] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_7.png");
-		background.image[7] = LoadImage("res/assets/background/spaceLvls/pixelated/lvl4_8.png");
+		background.image[0] = LoadImage("res/assets/background/pixelated/lvl4_1.png");
+		background.image[1] = LoadImage("res/assets/background/pixelated/lvl4_2.png");
+		background.image[2] = LoadImage("res/assets/background/pixelated/lvl4_3.png");
+		background.image[3] = LoadImage("res/assets/background/pixelated/lvl4_4.png");
+		background.image[4] = LoadImage("res/assets/background/pixelated/lvl4_5.png");
+		background.image[5] = LoadImage("res/assets/background/pixelated/lvl4_6.png");
+		background.image[6] = LoadImage("res/assets/background/pixelated/lvl4_7.png");
+		background.image[7] = LoadImage("res/assets/background/pixelated/lvl4_8.png");
 
 		for (int i = 0; i < maxBackgroundTextures; i++)
 		{

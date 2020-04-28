@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 
+#include "menu_manager.h"
 #include "gameplay.h"
 
 namespace MyGame {
@@ -14,7 +15,7 @@ namespace GameManager {
 
 	bool endGame = false;
 
-	SpaceInvadersScenes actualScene = Gameplay;
+	SpaceInvadersScenes actualScene = MainMenu;
 
 	void runGame() {
 
@@ -35,6 +36,7 @@ namespace GameManager {
 		SetTargetFPS(60);
 		SetExitKey(KEY_F4);
 
+		MenuManager::init();
 		Gameplay::init();
 	}
 
@@ -43,6 +45,7 @@ namespace GameManager {
 		switch (actualScene)
 		{
 		case MainMenu:
+			MenuManager::update();
 			break;
 
 		case Gameplay:
@@ -69,6 +72,7 @@ namespace GameManager {
 		switch (actualScene)
 		{
 		case MainMenu:
+			MenuManager::draw();
 			break;
 
 		case Gameplay:
@@ -90,6 +94,7 @@ namespace GameManager {
 
 	void deInit() {
 
+		MenuManager::deInit();
 		Gameplay::deInit();
 		CloseWindow();
 	}

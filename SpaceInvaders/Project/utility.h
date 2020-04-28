@@ -11,12 +11,11 @@ namespace UI {
 		int lineThick;
 		int fontSize;
 		Color buttonColor;
-		Color edgesColor;
-		Color textColor;
+		Color secondaryColor;
 	};
 
-	void initButton(Button button, Rectangle buttonRec, int lineThick, int fontSize, Color buttonColor, Color edgesColor, Color textColor);
-	void updateButton(Button &button, Color mouseOverButton, Color mouseOutOfButton);
+	void initButton(Button &button, Rectangle buttonRec, int lineThick, int fontSize, Color primaryColor, Color secondaryColor);
+	void updateButton(Button &button, Color mouseOutOfButton, Color mouseOverButton);
 	void drawButton(const char *text, Button button);
 
 	void drawProText(const char *text, int posX, int posY, int fontSize, Color textColor);
