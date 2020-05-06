@@ -95,8 +95,13 @@ using namespace GameManager;
 
 			if (Invaders::activeInvaderCounter == 0)
 			{
-				//win
+				actualScene = GameOver;
 			}
+		}
+
+		if (IsKeyPressed(KEY_L)) 
+		{
+			actualScene = GameOver;
 		}
 	}
 

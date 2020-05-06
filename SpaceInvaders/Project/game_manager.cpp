@@ -4,6 +4,7 @@
 
 #include "menu_manager.h"
 #include "gameplay.h"
+#include "game_over.h"
 
 namespace MyGame {
 namespace GameManager {
@@ -38,6 +39,7 @@ namespace GameManager {
 
 		MenuManager::init();
 		Gameplay::init();
+		GameOver::init();
 	}
 
 	void update() {
@@ -53,9 +55,7 @@ namespace GameManager {
 			break;
 
 		case GameOver:
-			break;
-
-		case Credits:
+			GameOver::update();
 			break;
 
 		default:
@@ -67,7 +67,7 @@ namespace GameManager {
 
 		BeginDrawing();
 
-		ClearBackground(WHITE);
+		ClearBackground(BLACK);
 		
 		switch (actualScene)
 		{
@@ -80,9 +80,7 @@ namespace GameManager {
 			break;
 
 		case GameOver:
-			break;
-		
-		case Credits:
+			GameOver::draw();
 			break;
 
 		default:

@@ -46,6 +46,12 @@
     <ClCompile Include="controls.cpp">
       <Filter>scenes</Filter>
     </ClCompile>
+    <ClCompile Include="credits.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="game_over.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_manager.h">
@@ -73,6 +79,12 @@
       <Filter>managers</Filter>
     </ClInclude>
     <ClInclude Include="controls.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="credits.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="game_over.h">
       <Filter>scenes</Filter>
     </ClInclude>
   </ItemGroup>

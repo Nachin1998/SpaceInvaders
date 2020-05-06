@@ -1,29 +1,41 @@
 #include "menu_manager.h"
 
+#include "raylib.h"
+
 #include "gameplay.h"
 
 #include "main_menu.h"
 #include "controls.h"
+#include "credits.h"
 
 namespace MyGame {
 namespace MenuManager{
 
 	MenuScene actualMenuScene = LevelSelection;
 
+	static Texture2D background;
+
+	bool mainMenuActive = true;
 	bool optionsActive = false;
 	bool controlsActive = false;
-	bool CreditsActive = false;
+	bool creditsActive = false;
 
 	void init() {
 
+		background = LoadTexture("res/assets/background/main_menu/main_menu_background.png");
+
 		MainMenu::init();
 		Controls::init();
+		Credits::init();
 		Gameplay::init();
 	}
 
 	void update() {
 
-		MainMenu::update();
+		if (mainMenuActive)
+		{
+			MainMenu::update();
+		}
 
 		switch (actualMenuScene)
 		{
@@ -41,7 +53,10 @@ namespace MenuManager{
 			break;
 
 		case Credits:
-			Gameplay::update();
+			if (creditsActive)
+			{
+				Credits::update();
+			}
 			break;
 
 		default:
@@ -51,7 +66,12 @@ namespace MenuManager{
 
 	void draw() {
 
-		MainMenu::draw();
+		DrawTexture(background, 0, 0, WHITE);
+
+		if (mainMenuActive) 
+		{
+			MainMenu::draw();
+		}
 
 		switch (actualMenuScene)
 		{
@@ -69,7 +89,10 @@ namespace MenuManager{
 			break;
 
 		case Credits:
-			Gameplay::draw();
+			if (creditsActive)
+			{
+				Credits::draw();
+			}
 			break;
 
 		default:
@@ -79,7 +102,7 @@ namespace MenuManager{
 
 	void deInit() {
 
-		MainMenu::deInit();
+		UnloadTexture(background);
 	}
 }
 }

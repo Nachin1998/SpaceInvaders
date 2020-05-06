@@ -1,8 +1,8 @@
-#ifndef MAIN_MENU_H
-#define MAIN_MENU_H
+#ifndef CREDITS_H
+#define CREDITS_H
 
 namespace MyGame {
-namespace MainMenu {
+namespace Credits {
 	
 	void init();
 	void update();

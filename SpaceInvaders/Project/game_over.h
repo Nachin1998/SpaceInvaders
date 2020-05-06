@@ -1,8 +1,8 @@
-#ifndef MAIN_MENU_H
-#define MAIN_MENU_H
+#ifndef GAME_OVER_H
+#define GAME_OVER_H
 
 namespace MyGame {
-namespace MainMenu {
+namespace GameOver {
 	
 	void init();
 	void update();

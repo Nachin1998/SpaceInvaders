@@ -10,8 +10,7 @@ namespace GameManager {
 	enum SpaceInvadersScenes {
 		MainMenu,
 		Gameplay,
-		GameOver,
-		Credits
+		GameOver
 	};
 
 	extern SpaceInvadersScenes actualScene;

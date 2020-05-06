@@ -12,14 +12,12 @@ using namespace UI;
 
 	static const int maxButtons = 5;
 
-	UI::Button title;
-	UI::Button menuButton[maxButtons];
-
-	static Texture2D background;
+	static Button title;
+	static Button menuButton[maxButtons];
 
 	void init() {
 
-		title.rec.width = 700;
+		title.rec.width = 800;
 		title.rec.height = 100;
 		title.rec.x = screenWidth / 2 - title.rec.width / 2;
 		title.rec.y = 100 - title.rec.height / 2;
@@ -29,12 +27,10 @@ using namespace UI;
 		{
 			menuButton[i].rec.width = 250;
 			menuButton[i].rec.height = 70;
-			menuButton[i].rec.x = 170 - menuButton[i].rec.width / 2;;
+			menuButton[i].rec.x = 170 - menuButton[i].rec.width / 2;
 			menuButton[i].rec.y = screenHeight / 2 - 100 + (120 * i) - menuButton[i].rec.height / 2;
 			initButton(menuButton[i], menuButton[i].rec, 3, 50, BLANK, GREEN);
 		}
-
-		background = LoadTexture("res/assets/background/main_menu/main_menu_background.png");
 	}
 
 	void update() {
@@ -72,6 +68,18 @@ using namespace UI;
 						break;
 
 					case 3:
+						MenuManager::controlsActive = false;
+						if (MenuManager::creditsActive)
+						{
+							MenuManager::mainMenuActive = true;
+							MenuManager::creditsActive = false;
+						}
+						else
+						{
+							MenuManager::mainMenuActive = false;
+							MenuManager::creditsActive = true;
+						}
+						MenuManager::actualMenuScene = MenuManager::Credits;
 						break;
 
 					case 4:
@@ -88,19 +96,12 @@ using namespace UI;
 
 	void draw() {
 
-		DrawTexture(background, 0, 0, WHITE);
-
-		drawButton("Space Conquerors", title);
+		drawButton("SPACE CONQUERORS", title);
 		drawButton("Start", menuButton[0]);
 		drawButton("Options", menuButton[1]);
 		drawButton("Controls", menuButton[2]);
 		drawButton("Credits", menuButton[3]);
 		drawButton("Exit", menuButton[4]);
-	}
-
-	void deInit() {
-
-		UnloadTexture(background);
 	}
 }
 }

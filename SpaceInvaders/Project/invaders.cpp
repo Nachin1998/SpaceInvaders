@@ -40,8 +40,8 @@ using namespace GameManager;
 	static float invaderMovementTimer;
 	static float bulletTimer;
 
-	int activeInvaderCounter = maxInvadersX * maxInvadersY;
-	float maxTimer = 1.0f;
+	int activeInvaderCounter;
+	float maxTimer;
 	
 	void init(){
 		
@@ -74,6 +74,8 @@ using namespace GameManager;
 	void initInvader() {
 
 		invaderMovementTimer = 0;
+		activeInvaderCounter = maxInvadersX * maxInvadersY;
+		maxTimer = 1.0f;
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{
@@ -229,7 +231,7 @@ using namespace GameManager;
 		{
 			for (int j = 0; j < maxInvadersX; j++)
 			{
-				//DrawRectangleRec(invaders[i][j].body, invaders[i][j].color);
+				DrawRectangleRec(invaders[i][j].body, invaders[i][j].color);
 				if (invaders[i][j].active)
 				{
 					if (!changeMovementTexture)

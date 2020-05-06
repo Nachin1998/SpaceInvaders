@@ -9,10 +9,10 @@ namespace Controls {
 using namespace GameManager;
 using namespace UI;
 
-	static UI::Button title;
-	static UI::Button subTitle1;
-	static UI::Button subTitle2;
-	static UI::Button close;
+	static Button title;
+	static Button subTitle1;
+	static Button subTitle2;
+	static Button close;
 
 	static Rectangle menuBox;
 	
@@ -30,7 +30,7 @@ using namespace UI;
 		menuBox.x = screenWidth / 2 + 155 - menuBox.width / 2;
 		menuBox.y = screenHeight / 2 + 70 - menuBox.height / 2;
 
-		title.rec.width = 250;
+		title.rec.width = 310;
 		title.rec.height = 70;
 		title.rec.x = screenWidth / 2 + 155 - title.rec.width / 2;
 		title.rec.y = screenHeight / 2 - 250 - title.rec.height / 2;
@@ -73,7 +73,7 @@ using namespace UI;
 
 		DrawRectangleLinesEx(menuBox, 6, GREEN);
 
-		drawButton("Controls", title);
+		drawButton("CONTROLS", title);
 		drawButton("Actions", subTitle1);
 		drawButton("Rules", subTitle2);
 		drawButton("Close", close);
