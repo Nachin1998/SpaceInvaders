@@ -175,7 +175,10 @@ using namespace GameManager;
 						{
 							for (int l = 0; l < maxInvadersX; l++)
 							{
-								invaders[k][l].pos.x += invaders[k][l].speed.x;
+								if (invaders[k][l].active)
+								{
+									invaders[k][l].pos.x += invaders[k][l].speed.x;
+								}
 							}
 						}
 					}
@@ -186,8 +189,11 @@ using namespace GameManager;
 						{
 							for (int l = 0; l < maxInvadersX; l++)
 							{
-								invaders[k][l].pos.y += invaders[k][l].speed.y;
-								invaders[k][l].speed.x *= -1;
+								if (invaders[k][l].active)
+								{
+									invaders[k][l].pos.y += invaders[k][l].speed.y;
+									invaders[k][l].speed.x *= -1;
+								}
 							}
 						}
 						actualMovement = Horizontal;

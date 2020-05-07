@@ -17,6 +17,9 @@ using namespace UI;
 	
 	void init() {
 
+		Gameplay::deInit();
+		Gameplay::init();
+
 		title.rec.width = 420;
 		title.rec.height = 80;
 		title.rec.x = screenWidth / 2 - title.rec.width / 2;
@@ -51,8 +54,6 @@ using namespace UI;
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
-				Gameplay::deInit();
-				Gameplay::init();
 				GameManager::actualScene = GameManager::Gameplay;
 			}
 		}
@@ -74,8 +75,6 @@ using namespace UI;
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
-				Gameplay::deInit();
-				Gameplay::init();
 				GameManager::actualScene = GameManager::MainMenu;
 			}
 		}
