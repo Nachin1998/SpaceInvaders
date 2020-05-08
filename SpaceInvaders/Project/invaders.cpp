@@ -25,7 +25,7 @@ using namespace GameManager;
 		Horizontal,
 		Vertical,
 	};
-	static InvaderMovement actualMovement = Horizontal;
+	static InvaderMovement actualMovement;
 
 	Bullet bullet;
 
@@ -48,6 +48,7 @@ using namespace GameManager;
 		srand(time(0));
 		randX = rand() % maxInvadersX;
 		randY = rand() % maxInvadersY;
+		actualMovement = Horizontal;
 
 		initInvader();
 		initBullet();
