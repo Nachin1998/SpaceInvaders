@@ -1,4 +1,4 @@
-#include "game_over.h"
+ #include "game_over.h"
 
 #include "game_manager.h"
 #include "menu_manager.h"
@@ -51,8 +51,6 @@ using namespace UI;
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
-				Gameplay::deInit();
-				Gameplay::init();
 				GameManager::actualScene = GameManager::Gameplay;
 			}
 		}
@@ -62,8 +60,6 @@ using namespace UI;
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
-				Gameplay::deInit();
-				Gameplay::init();
 				MenuManager::mainMenuActive = false;
 				GameManager::actualScene = GameManager::MainMenu;
 				MenuManager::creditsActive = true;
@@ -76,8 +72,6 @@ using namespace UI;
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
-				Gameplay::deInit();
-				Gameplay::init();
 				GameManager::actualScene = GameManager::MainMenu;
 			}
 		}

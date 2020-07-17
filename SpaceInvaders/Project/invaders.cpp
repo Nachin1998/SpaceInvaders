@@ -34,8 +34,8 @@ using namespace GameManager;
 	static int randX;
 	static int randY;
 
-	static bool goingRight = true;
-	static bool goingLeft = false;
+	static bool goingRight;
+	static bool goingLeft;
 	static bool changeMovementTexture = false;
 	static float invaderMovementTimer;
 	static float bulletTimer;
@@ -48,7 +48,6 @@ using namespace GameManager;
 		srand(time(0));
 		randX = rand() % maxInvadersX;
 		randY = rand() % maxInvadersY;
-		actualMovement = Horizontal;
 
 		initInvader();
 		initBullet();
@@ -74,7 +73,10 @@ using namespace GameManager;
 
 	void initInvader() {
 
+		actualMovement = Horizontal;
 		invaderMovementTimer = 0;
+		goingRight = true;
+		goingLeft = false;
 		activeInvaderCounter = maxInvadersX * maxInvadersY;
 		maxTimer = 1.0f;
 
@@ -137,6 +139,22 @@ using namespace GameManager;
 	void updateInvader() {
 
 		invaderMovementTimer += GetFrameTime();
+
+		if (IsKeyPressed(KEY_K))
+		{
+			int otherRandX = rand() % maxInvadersX;
+			int otherRandY = rand() % maxInvadersY;
+
+			while (!invaders[otherRandY][otherRandX].active)
+			{
+				otherRandX = rand() % maxInvadersX;
+				otherRandY = rand() % maxInvadersY;
+			}
+
+			activeInvaderCounter--;
+			maxTimer -= 0.01f;
+			invaders[otherRandY][otherRandX].active = false;
+		}
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{

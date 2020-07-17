@@ -9,9 +9,12 @@
 #include "invaders.h"
 #include "ufo.h"
 
+#include "utility.h"
+
 namespace MyGame {
 namespace Gameplay {
 using namespace GameManager;
+using namespace UI;
 
 	static void initBackground();
 	static void updateBackground();
@@ -19,15 +22,24 @@ using namespace GameManager;
 	static void initWall();
 	static void updateWall();
 	static void drawWall();
+	static void initPauseMenu();
+	static void updatePauseMenu();
+	static void drawPauseMenu();
 	static void collisionManager();
+	static void gameOver();
 
 	static const int maxWalls = 4;
+	static const int maxWallsTextures = 2;
 	static const int maxBackgroundTextures = 8;
-	bool paused;
+	static bool paused;
+
+	static Button pauseBackground;
+	static Button resume;
+	static Button restart;
+	static Button toMenu;
 
 	struct Background {
 		Vector2 pos;
-		Image image[maxBackgroundTextures];
 		Texture2D texture[maxBackgroundTextures];
 		float timer;
 		float timeToWait;
@@ -37,7 +49,7 @@ using namespace GameManager;
 
 	struct Wall {
 		Rectangle rec;
-		Texture2D texture[2];
+		Texture2D texture[maxWallsTextures];
 		int lives;
 		Vector2 pos;
 		bool active;
@@ -63,11 +75,12 @@ using namespace GameManager;
 		Invaders::init();
 		Ufo::init();
 		initWall();
+		initPauseMenu();
 	}
 
 	void update() {
 
-		if (IsKeyPressed(KEY_P))
+		if (IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_P))
 		{
 			if (paused)
 			{
@@ -95,13 +108,17 @@ using namespace GameManager;
 
 			if (Invaders::activeInvaderCounter == 0)
 			{
-				actualScene = GameOver;
+				gameOver();
 			}
+		}
+		else 
+		{
+			updatePauseMenu();
 		}
 
 		if (IsKeyPressed(KEY_L)) 
 		{
-			actualScene = GameOver;
+			gameOver();
 		}
 	}
 
@@ -116,7 +133,7 @@ using namespace GameManager;
 
 		if (paused)
 		{
-			DrawText("Paused", screenWidth / 2, screenHeight / 2, 100, WHITE);
+			drawPauseMenu();
 		}
 	}
 
@@ -125,6 +142,19 @@ using namespace GameManager;
 		Player::deInit();
 		Invaders::deInit();
 		Ufo::deInit();
+		
+		for (int i = 0; i < maxBackgroundTextures; i++)
+		{
+			UnloadTexture(background.texture[i]);
+		}
+
+		for (int i = 0; i < maxWalls; i++)
+		{
+			for (int j = 0; j < maxWallsTextures; j++)
+			{
+				UnloadTexture(walls[i].texture[j]);
+			}
+		}
 	}
 
 	void initBackground() {
@@ -134,21 +164,14 @@ using namespace GameManager;
 		background.timer = 0;
 		background.timeToWait = 2;
 		background.timerLimit = maxBackgroundTextures * background.timeToWait;
-		background.image[0] = LoadImage("res/assets/background/pixelated/lvl4_1.png");
-		background.image[1] = LoadImage("res/assets/background/pixelated/lvl4_2.png");
-		background.image[2] = LoadImage("res/assets/background/pixelated/lvl4_3.png");
-		background.image[3] = LoadImage("res/assets/background/pixelated/lvl4_4.png");
-		background.image[4] = LoadImage("res/assets/background/pixelated/lvl4_5.png");
-		background.image[5] = LoadImage("res/assets/background/pixelated/lvl4_6.png");
-		background.image[6] = LoadImage("res/assets/background/pixelated/lvl4_7.png");
-		background.image[7] = LoadImage("res/assets/background/pixelated/lvl4_8.png");
-
-		for (int i = 0; i < maxBackgroundTextures; i++)
-		{
-			background.texture[i] = LoadTextureFromImage(background.image[i]);
-			UnloadImage(background.image[i]);
-		}
-
+		background.texture[0] = LoadTexture("res/assets/background/pixelated/lvl4_1.png");
+		background.texture[1] = LoadTexture("res/assets/background/pixelated/lvl4_2.png");
+		background.texture[2] = LoadTexture("res/assets/background/pixelated/lvl4_3.png");
+		background.texture[3] = LoadTexture("res/assets/background/pixelated/lvl4_4.png");
+		background.texture[4] = LoadTexture("res/assets/background/pixelated/lvl4_5.png");
+		background.texture[5] = LoadTexture("res/assets/background/pixelated/lvl4_6.png");
+		background.texture[6] = LoadTexture("res/assets/background/pixelated/lvl4_7.png");
+		background.texture[7] = LoadTexture("res/assets/background/pixelated/lvl4_8.png");
 	}
 
 	void updateBackground() {
@@ -163,21 +186,7 @@ using namespace GameManager;
 
 	void drawBackground() {
 
-		/*Almost works
-		float timeToWait = 0;
-		int textureCounter = 0;
-		for (int i = 0; i < maxBackgroundTextures; i++)
-		{
-			if (background.timer > timeToWait && background.timer < timeToWait + 7)
-			{
-				DrawTexture(background.texture[textureCounter], background.pos.x, background.pos.y, WHITE);
-			}
-			else
-			{
-				timeToWait += 7;
-				textureCounter++;
-			}
-		}*/
+		
 		if(background.timer < background.timeToWait)
 		{
 			DrawTexture(background.texture[0], background.pos.x, background.pos.y, WHITE);
@@ -289,6 +298,75 @@ using namespace GameManager;
 		}
 	}
 
+	void initPauseMenu() {
+
+		pauseBackground.rec.width = 350;
+		pauseBackground.rec.height = 500;
+		pauseBackground.rec.x = screenWidth / 2 - pauseBackground.rec.width / 2;
+		pauseBackground.rec.y = screenHeight / 2 - pauseBackground.rec.height / 2;
+		initButton(pauseBackground, pauseBackground.rec, 3, 0, DARKGREEN, GREEN);
+
+		resume.rec.width = 270;
+		resume.rec.height = 50;
+		resume.rec.x = screenWidth / 2 - resume.rec.width / 2;
+		resume.rec.y = 425 - resume.rec.height / 2;
+		initButton(resume, resume.rec, 3, 30, BLANK, GREEN);
+
+		restart.rec.width = 270;
+		restart.rec.height = 50;
+		restart.rec.x = screenWidth / 2 - restart.rec.width / 2;
+		restart.rec.y = 525 - restart.rec.height / 2;
+		initButton(restart, restart.rec, 3, 30, BLANK, GREEN);
+
+		toMenu.rec.width = 270;
+		toMenu.rec.height = 50;
+		toMenu.rec.x = screenWidth / 2 - toMenu.rec.width / 2;
+		toMenu.rec.y = 625 - toMenu.rec.height / 2;
+		initButton(toMenu, toMenu.rec, 3, 25, BLANK, GREEN);
+	}
+
+	void updatePauseMenu() {
+
+		Vector2 mousePos = GetMousePosition();
+
+		updateButton(resume, BLANK, DARKGRAY);
+		if (CheckCollisionPointRec(mousePos, resume.rec))
+		{
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				paused = false;
+			}
+		}
+
+		updateButton(restart, BLANK, DARKGRAY);
+		if (CheckCollisionPointRec(mousePos, restart.rec))
+		{
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				init();
+			}
+		}		
+
+		updateButton(toMenu, BLANK, DARKGRAY);
+		if (CheckCollisionPointRec(mousePos, toMenu.rec))
+		{
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				init();
+				GameManager::actualScene = GameManager::MainMenu;
+			}
+		}
+	}
+
+	void drawPauseMenu() {
+
+		drawButton("", pauseBackground);
+		drawProText("Paused", screenWidth / 2, screenHeight / 2 - 200, 60, GREEN);
+		drawButton("Resume", resume);
+		drawButton("Play Again", restart);
+		drawButton("Back to Main Menu", toMenu);
+	}
+
 	void collisionManager() {
 
 		for (int i = 0; i < Invaders::maxInvadersY; i++)
@@ -308,6 +386,14 @@ using namespace GameManager;
 
 						std::cout << "Puntos: " << Player::player.points << std::endl;
 						std::cout << "Invaders active: "<<Invaders::activeInvaderCounter << std::endl;
+					}
+				}
+
+				if (Invaders::invaders[i][j].active && Player::player.lives > 0)
+				{
+					if (CheckCollisionRecs(Player::player.body, Invaders::invaders[i][j].body))
+					{
+						gameOver();
 					}
 				}
 			}
@@ -389,6 +475,13 @@ using namespace GameManager;
 				}
 			}
 		}
+	}
+
+	void gameOver() {
+
+		Gameplay::deInit();
+		Gameplay::init();
+		actualScene = GameOver;
 	}
 }
 }
