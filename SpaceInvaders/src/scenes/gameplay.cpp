@@ -2,16 +2,16 @@
 
 #include "raylib.h"
 #include <iostream>
-#include <time.h>
+#include <ctime>
 
-#include "game_manager.h"
-#include "player.h"
-#include "invaders.h"
-#include "ufo.h"
-#include "wall.h"
-#include "pause_menu.h"
+#include "managers\game_manager.h"
+#include "entities\player.h"
+#include "entities\invaders.h"
+#include "entities\ufo.h"
+#include "entities\wall.h"
+#include "scenes\pause_menu.h"
 
-#include "utility.h"
+#include "utility\utility.h"
 
 namespace MyGame {
 namespace Gameplay {

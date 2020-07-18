@@ -1,10 +1,10 @@
 #include "ufo.h"
 
 #include <iostream>
-#include <time.h>
+#include <ctime>
 
-#include "game_manager.h"
-#include "utility.h"
+#include "managers\game_manager.h"
+#include "utility\utility.h"
 
 namespace MyGame {
 namespace Ufo {

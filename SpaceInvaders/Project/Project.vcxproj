@@ -22,32 +22,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{1D50B2FE-C073-4ADA-A173-6326537EFAF5}</ProjectGuid>
     <RootNamespace>Project</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\raylib-2.5.0-Win32-msvc15\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)libs\raylib-2.5.0-Win32-msvc15\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\raylib-2.5.0-Win32-msvc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -105,6 +105,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,7 +116,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\raylib-2.5.0-Win32-msvc15\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)libs\raylib-2.5.0-Win32-msvc15\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -134,6 +135,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -141,35 +143,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="controls.cpp" />
-    <ClCompile Include="credits.cpp" />
-    <ClCompile Include="gameplay.cpp" />
-    <ClCompile Include="game_manager.cpp" />
-    <ClCompile Include="game_over.cpp" />
-    <ClCompile Include="invaders.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="main_menu.cpp" />
-    <ClCompile Include="menu_manager.cpp" />
-    <ClCompile Include="pause_menu.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="ufo.cpp" />
-    <ClCompile Include="utility.cpp" />
-    <ClCompile Include="wall.cpp" />
+    <ClCompile Include="..\src\entities\invaders.cpp" />
+    <ClCompile Include="..\src\entities\player.cpp" />
+    <ClCompile Include="..\src\entities\ufo.cpp" />
+    <ClCompile Include="..\src\entities\wall.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\managers\game_manager.cpp" />
+    <ClCompile Include="..\src\managers\menu_manager.cpp" />
+    <ClCompile Include="..\src\scenes\controls.cpp" />
+    <ClCompile Include="..\src\scenes\credits.cpp" />
+    <ClCompile Include="..\src\scenes\gameplay.cpp" />
+    <ClCompile Include="..\src\scenes\game_over.cpp" />
+    <ClCompile Include="..\src\scenes\main_menu.cpp" />
+    <ClCompile Include="..\src\scenes\pause_menu.cpp" />
+    <ClCompile Include="..\src\utility\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="controls.h" />
-    <ClInclude Include="credits.h" />
-    <ClInclude Include="gameplay.h" />
-    <ClInclude Include="game_manager.h" />
-    <ClInclude Include="game_over.h" />
-    <ClInclude Include="invaders.h" />
-    <ClInclude Include="main_menu.h" />
-    <ClInclude Include="menu_manager.h" />
-    <ClInclude Include="pause_menu.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="ufo.h" />
-    <ClInclude Include="utility.h" />
-    <ClInclude Include="wall.h" />
+    <ClInclude Include="..\src\entities\invaders.h" />
+    <ClInclude Include="..\src\entities\player.h" />
+    <ClInclude Include="..\src\entities\ufo.h" />
+    <ClInclude Include="..\src\entities\wall.h" />
+    <ClInclude Include="..\src\managers\game_manager.h" />
+    <ClInclude Include="..\src\managers\menu_manager.h" />
+    <ClInclude Include="..\src\scenes\controls.h" />
+    <ClInclude Include="..\src\scenes\credits.h" />
+    <ClInclude Include="..\src\scenes\gameplay.h" />
+    <ClInclude Include="..\src\scenes\game_over.h" />
+    <ClInclude Include="..\src\scenes\main_menu.h" />
+    <ClInclude Include="..\src\scenes\pause_menu.h" />
+    <ClInclude Include="..\src\utility\utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

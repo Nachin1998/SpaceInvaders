@@ -1,9 +1,9 @@
 #include "main_menu.h"
 
-#include "menu_manager.h"
-#include "game_manager.h"
-#include "gameplay.h"
-#include "utility.h"
+#include "managers\menu_manager.h"
+#include "managers\game_manager.h"
+#include "scenes\gameplay.h"
+#include "utility\utility.h"
 
 namespace MyGame {
 namespace MainMenu {

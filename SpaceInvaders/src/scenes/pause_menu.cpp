@@ -1,8 +1,8 @@
 #include "pause_menu.h"
-#include "game_manager.h"
-#include "gameplay.h"
+#include "managers\game_manager.h"
+#include "scenes\gameplay.h"
 
-#include "utility.h"
+#include "utility\utility.h"
 
 namespace MyGame {
 namespace PauseMenu {

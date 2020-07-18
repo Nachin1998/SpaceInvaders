@@ -1,12 +1,12 @@
  #include "game_over.h"
 
-#include "game_manager.h"
-#include "menu_manager.h"
-#include "gameplay.h"
+#include "managers\game_manager.h"
+#include "managers\menu_manager.h"
+#include "scenes\gameplay.h"
 
-#include "player.h"
+#include "entities\player.h"
 
-#include "utility.h"
+#include "utility\utility.h"
 
 namespace MyGame {
 namespace GameOver {

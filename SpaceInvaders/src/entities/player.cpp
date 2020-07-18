@@ -1,7 +1,7 @@
 #include "player.h"
 
-#include "game_manager.h"
-#include "utility.h"
+#include "managers\game_manager.h"
+#include "utility\utility.h"
 
 namespace MyGame {
 namespace Player {

@@ -1,9 +1,9 @@
 #include "credits.h"
 
-#include "menu_manager.h"
-#include "game_manager.h"
+#include "managers\menu_manager.h"
+#include "managers\game_manager.h"
 
-#include "utility.h"
+#include "utility\utility.h"
 
 namespace MyGame {
 namespace Credits {

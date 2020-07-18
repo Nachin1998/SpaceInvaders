@@ -1,4 +1,4 @@
-#include "game_manager.h"
+#include "managers\game_manager.h"
 
 using namespace MyGame;
 int main() {

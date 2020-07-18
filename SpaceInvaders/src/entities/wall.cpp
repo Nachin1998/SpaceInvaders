@@ -1,5 +1,6 @@
 #include "wall.h"
-#include "game_manager.h"
+
+#include "managers\game_manager.h"
 
 namespace MyGame {
 namespace Wall {

@@ -2,9 +2,9 @@
 
 #include "raylib.h"
 
-#include "menu_manager.h"
-#include "gameplay.h"
-#include "game_over.h"
+#include "managers\menu_manager.h"
+#include "scenes\gameplay.h"
+#include "scenes\game_over.h"
 
 namespace MyGame {
 namespace GameManager {

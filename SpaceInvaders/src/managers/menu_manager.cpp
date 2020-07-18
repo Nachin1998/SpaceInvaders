@@ -2,11 +2,11 @@
 
 #include "raylib.h"
 
-#include "gameplay.h"
+#include "scenes\gameplay.h"
 
-#include "main_menu.h"
-#include "controls.h"
-#include "credits.h"
+#include "scenes\main_menu.h"
+#include "scenes\controls.h"
+#include "scenes\credits.h"
 
 namespace MyGame {
 namespace MenuManager{
