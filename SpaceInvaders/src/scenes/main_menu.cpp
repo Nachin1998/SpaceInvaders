@@ -114,6 +114,8 @@ using namespace UI;
 		drawButton("Controls", menuButton[2]);
 		drawButton("Credits", menuButton[3]);
 		drawButton("Exit", menuButton[4]);
+
+		drawProText("V1.0", screenWidth - 50, screenHeight - 50, 30, GREEN);
 	}
 }
 }
