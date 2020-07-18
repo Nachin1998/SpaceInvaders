@@ -116,7 +116,7 @@ using namespace UI;
 			updatePauseMenu();
 		}
 
-		if (IsKeyPressed(KEY_L)) 
+		if (Player::player.isDead || IsKeyPressed(KEY_R)) 
 		{
 			gameOver();
 		}
@@ -164,6 +164,7 @@ using namespace UI;
 		background.timer = 0;
 		background.timeToWait = 2;
 		background.timerLimit = maxBackgroundTextures * background.timeToWait;
+
 		background.texture[0] = LoadTexture("res/assets/background/pixelated/lvl4_1.png");
 		background.texture[1] = LoadTexture("res/assets/background/pixelated/lvl4_2.png");
 		background.texture[2] = LoadTexture("res/assets/background/pixelated/lvl4_3.png");
@@ -480,7 +481,6 @@ using namespace UI;
 	void gameOver() {
 
 		Gameplay::deInit();
-		Gameplay::init();
 		actualScene = GameOver;
 	}
 }

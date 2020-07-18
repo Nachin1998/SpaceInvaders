@@ -16,6 +16,8 @@ namespace GameManager {
 
 	bool endGame = false;
 
+	static Music backgroundMusic;
+
 	SpaceInvadersScenes actualScene = MainMenu;
 
 	void runGame() {
@@ -36,14 +38,20 @@ namespace GameManager {
 		InitWindow(screenWidth, screenHeight, "Space Invaders - by Ignacio Fernández Lemos");
 		SetTargetFPS(60);
 		SetExitKey(KEY_F4);
+		InitAudioDevice();
 
+		backgroundMusic = LoadMusicStream("res/music/BaseMusic.ogg");
 		MenuManager::init();
 		Gameplay::init();
 		GameOver::init();
+
+		PlayMusicStream(backgroundMusic);
+		SetMusicVolume(backgroundMusic, 1.0f);
 	}
 
 	void update() {
 
+		UpdateMusicStream(backgroundMusic);
 		switch (actualScene)
 		{
 		case MainMenu:
@@ -94,6 +102,8 @@ namespace GameManager {
 
 		MenuManager::deInit();
 		Gameplay::deInit();
+		UnloadMusicStream(backgroundMusic);
+		CloseAudioDevice();
 		CloseWindow();
 	}
 }

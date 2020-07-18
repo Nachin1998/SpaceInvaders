@@ -16,6 +16,8 @@ using namespace GameManager;
 
 	Player player;
 
+	static Sound laserShot;
+
 	static float textureTimer;
 	static float maxTextureTimer = 0.4f;
 
@@ -35,6 +37,7 @@ using namespace GameManager;
 		player.speed.y = 250;
 		player.points = 0;
 		player.lives = 3;
+		player.isDead = false;
 		player.texture[0] = LoadTexture("res/assets/player/player_spaceship1.png");
 		player.texture[1] = LoadTexture("res/assets/player/player_spaceship2.png");
 		player.texture[2] = LoadTexture("res/assets/player/player_spaceship3.png");
@@ -48,18 +51,18 @@ using namespace GameManager;
 		bullet.speed = 700.0f;
 		bullet.active = false;
 		bullet.color = RED;
+
+		laserShot = LoadSound("res/sounds/LaserShot.ogg");
+		SetSoundVolume(laserShot, 0.3f);
 	}
 
 	void update() {
-		textureTimer += GetFrameTime();
 
+		textureTimer += GetFrameTime();
 		if (textureTimer >= maxTextureTimer)
 		{
 			textureTimer = 0;
 		}
-
-		player.body.x = player.pos.x - player.body.width / 2;
-		player.body.y = player.pos.y - player.body.height / 2;
 
 		updatePlayer();
 		updateBullet();
@@ -77,9 +80,13 @@ using namespace GameManager;
 		{
 			UnloadTexture(player.texture[i]);
 		}
+		UnloadSound(laserShot);
 	}
 
 	void updatePlayer() {
+
+		player.body.x = player.pos.x - player.body.width / 2;
+		player.body.y = player.pos.y - player.body.height / 2;
 
 		if (IsKeyDown(KEY_W))
 		{
@@ -106,12 +113,15 @@ using namespace GameManager;
 				player.pos.x += player.speed.y * GetFrameTime();
 			}
 		}
+
+		if (player.lives <= 0) 
+		{
+			player.isDead = true;
+		}
 	}
 
 	void drawPlayer() {
-
-		//DrawRectangleRec(player.body, player.color);
-
+		
 		if (textureTimer < 0.1f)
 		{
 			Textures::drawProTexture(player.texture[0], player.pos.x, player.pos.y, player.color);
@@ -137,7 +147,11 @@ using namespace GameManager;
 
 		if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			bullet.active = true;
+			if (!bullet.active) 
+			{
+				PlaySound(laserShot);
+				bullet.active = true;
+			}			
 		}
 
 		if (bullet.active)

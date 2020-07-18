@@ -22,6 +22,8 @@ using namespace GameManager;
 	UFO ufo;
 	Laser laser;
 
+	Sound sounds[maxSounds];
+
 	float ufoActivationTimer;
 
 	static float ufoTextureTimer;
@@ -81,6 +83,14 @@ using namespace GameManager;
 		ufo.attackingTexture[5] = LoadTexture("res/assets/ufo/ufo_attacking_6.png");
 		ufo.color = WHITE;
 
+		sounds[0] = LoadSound("res/sounds/UFOactive.ogg");
+		sounds[1] = LoadSound("res/sounds/chargingBeam.ogg");
+		sounds[2] = LoadSound("res/sounds/laserBeam.ogg");
+
+		SetSoundVolume(sounds[0], 0.3);
+		SetSoundVolume(sounds[1], 1);
+		SetSoundVolume(sounds[2], 0.5f);				
+
 		laser.rec.width = 46;
 		laser.rec.height = 965;
 		laser.pos.x = ufo.pos.x;
@@ -109,7 +119,7 @@ using namespace GameManager;
 			ufoTextureTimer = 0;
 		}
 
-		if (ufoActivationTimer >= 1.0f)
+		if (ufoActivationTimer >= 10.0f)
 		{
 			ufo.active = true;
 		}
@@ -132,8 +142,30 @@ using namespace GameManager;
 		{
 			ufoChargingTimer += GetFrameTime();
 
-			if (randomPos == 0)
+			if (!IsSoundPlaying(sounds[0])) 
 			{
+				PlaySound(sounds[0]);
+			}
+			
+			switch (ufoState)
+			{
+			case Charging:
+				if (!IsSoundPlaying(sounds[1])) 
+				{
+					PlaySound(sounds[1]);
+				}
+				break;
+			case Attacking:
+				if (!IsSoundPlaying(sounds[2]))
+				{
+					PlaySound(sounds[2]);
+				}
+				break;
+			}
+
+			switch (randomPos)
+			{
+			case 0:
 				ufo.pos.x += ufo.speed * GetFrameTime();
 				laserPosFix = 2.9f;
 				if (ufo.pos.x - ufo.rec.width / 2 > screenWidth)
@@ -141,10 +173,9 @@ using namespace GameManager;
 					ufo.active = false;
 					ufoActivationTimer = 0;
 				}
-			}
+				break;
 
-			if (randomPos == 1)
-			{
+			case 1:
 				ufo.pos.x -= ufo.speed * GetFrameTime();
 				laserPosFix = -2.9f;
 				if (ufo.pos.x + ufo.rec.width / 2 < 0)
@@ -152,6 +183,7 @@ using namespace GameManager;
 					ufo.active = false;
 					ufoActivationTimer = 0;
 				}
+				break;
 			}
 
 			if (ufoChargingTimer < ufoMaxChargingTimer)
@@ -164,16 +196,20 @@ using namespace GameManager;
 			}
 			if (ufoChargingTimer > ufoMaxChargingTimer * 2 && ufoChargingTimer < ufoMaxChargingTimer * 3.5)
 			{
+				StopSound(sounds[1]);
 				ufoState = Attacking;
 			}
 			if (ufoChargingTimer > ufoMaxChargingTimer * 3.5)
 			{
+				PauseSound(sounds[2]);
 				ufoState = Idle;
 			}
 		}
-
-		if (!ufo.active)
+		else
 		{
+			ufoState = Idle;
+			StopSound(sounds[0]);
+
 			if (randomPos == 0)
 			{
 				ufo.pos.x = 0 - ufo.rec.width / 2;
@@ -190,9 +226,6 @@ using namespace GameManager;
 
 
 	void draw() {
-
-		//DrawRectangleRec(ufo.rec, ufo.color);
-		//DrawRectangleRec(laser.rec, WHITE);
 
 		if (laser.active)
 		{
@@ -228,6 +261,11 @@ using namespace GameManager;
 			UnloadTexture(ufo.idleTexture[i]);
 			UnloadTexture(ufo.chargingTexture[i]);
 			UnloadTexture(ufo.attackingTexture[i]);
+		}
+
+		for (int i = 0; i < maxSounds; i++)
+		{
+			UnloadSound(sounds[i]);
 		}
 		UnloadTexture(laser.texture);
 	}

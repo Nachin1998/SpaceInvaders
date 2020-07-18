@@ -256,7 +256,6 @@ using namespace GameManager;
 		{
 			for (int j = 0; j < maxInvadersX; j++)
 			{
-				DrawRectangleRec(invaders[i][j].body, invaders[i][j].color);
 				if (invaders[i][j].active)
 				{
 					if (!changeMovementTexture)

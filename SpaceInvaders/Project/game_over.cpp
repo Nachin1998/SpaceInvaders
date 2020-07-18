@@ -3,6 +3,9 @@
 #include "game_manager.h"
 #include "menu_manager.h"
 #include "gameplay.h"
+
+#include "player.h"
+
 #include "utility.h"
 
 namespace MyGame {
@@ -51,6 +54,7 @@ using namespace UI;
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
+				Gameplay::init();
 				GameManager::actualScene = GameManager::Gameplay;
 			}
 		}
@@ -78,8 +82,15 @@ using namespace UI;
 	}
 
 	void draw() {
-
-		drawButton("Game Over", title);
+		if (!Player::player.isDead) 
+		{
+			drawButton("You won!", title);
+		}
+		else 
+		{
+			drawButton("You lost!", title);
+		}
+		
 		drawButton("Play Again", restart);
 		drawButton("Credits", toCredits);
 		drawButton("Back to Main Menu", toMenu);

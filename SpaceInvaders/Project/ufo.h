@@ -28,8 +28,11 @@ namespace Ufo {
 		Color color;
 	};
 	
+	const int maxSounds = 3;
+
 	extern UFO ufo;
 	extern Laser laser;
+	extern Sound sounds[maxSounds];
 	extern float ufoActivationTimer;
 
 	void init();

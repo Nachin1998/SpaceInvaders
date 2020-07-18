@@ -15,6 +15,7 @@ namespace Player {
 		Vector2 speed;
 		int points;
 		int lives;
+		bool isDead;
 		Color color;
 	};
 
