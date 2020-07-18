@@ -90,6 +90,8 @@ using namespace UI;
 		{
 			drawButton("You lost!", title);
 		}
+
+		drawProText(FormatText("Points: %i", Player::player.points), screenWidth / 2, screenHeight / 2 - 200, 50, GREEN);
 		
 		drawButton("Play Again", restart);
 		drawButton("Credits", toCredits);

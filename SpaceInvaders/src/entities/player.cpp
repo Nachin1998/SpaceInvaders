@@ -22,7 +22,7 @@ using namespace GameManager;
 	static float maxTextureTimer = 0.4f;
 
 	static int mapLimit = 10;
-
+	static Color healthColor;
 	void init() {
 
 		textureTimer = 0;
@@ -112,6 +112,23 @@ using namespace GameManager;
 		{
 			player.isDead = true;
 		}
+
+		switch (player.lives)
+		{
+		case 3:
+			healthColor = GREEN;
+			break;
+		case 2:
+			healthColor = YELLOW;
+			break;
+		case 1:
+			healthColor = RED;
+			break;
+
+		default:
+			healthColor = BLACK;
+			break;
+		}
 	}
 
 	void drawPlayer() {
@@ -136,7 +153,7 @@ using namespace GameManager;
 			Textures::drawProTexture(player.texture[3], player.pos.x, player.pos.y, player.color);
 		}
 
-		DrawRectangleLinesEx(player.healthRec, 5, GREEN);
+		DrawRectangleLinesEx(player.healthRec, 5, healthColor);
 	}
 
 	void updateBullet() {

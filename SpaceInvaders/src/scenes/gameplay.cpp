@@ -292,6 +292,7 @@ using namespace UI;
 				{
 					if (CheckCollisionRecs(Player::player.body, Invaders::invaders[i][j].body))
 					{
+						PlaySound(hit);
 						Player::player.isDead = true;
 						gameOver();
 					}
@@ -314,6 +315,7 @@ using namespace UI;
 			
 			if (counterFix > 1)
 			{
+				PlaySound(hit);
 				Invaders::bullet.active = false;
 				Player::player.lives -= 1;
 				counterFix = 0;
