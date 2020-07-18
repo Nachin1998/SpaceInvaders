@@ -31,9 +31,9 @@ namespace UI {
 		drawProText(text, button.rec.x + button.rec.width / 2, button.rec.y + button.rec.height / 2, button.fontSize, button.secondaryColor);
 	}
 
-	void drawProText(const char *text, int posX, int posY, int fontSize, Color textColor) {
+	void drawProText(const char *text, float posX, float posY, int fontSize, Color textColor) {
 
-		DrawText(text, posX - (MeasureText(text, fontSize) / 2), posY - fontSize / 2, fontSize, textColor);
+		DrawText(text, static_cast<int>(posX - (MeasureText(text, fontSize) / 2)), static_cast<int>(posY - fontSize / 2), fontSize, textColor);
 	}
 }
 
@@ -41,7 +41,7 @@ namespace Textures {
 
 	void drawProTexture(Texture2D texture, float posX, float posY, Color color) {
 
-		DrawTexture(texture, posX - texture.width / 2, posY - texture.height / 2, color);
+		DrawTexture(texture, static_cast<int>(posX - texture.width / 2), static_cast<int>(posY - texture.height / 2), color);
 	}
 }
 }

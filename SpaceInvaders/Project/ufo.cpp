@@ -25,12 +25,13 @@ using namespace GameManager;
 	Sound sounds[maxSounds];
 
 	float ufoActivationTimer;
+	float timeUntillActive = 20.0f;
 
 	static float ufoTextureTimer;
 	static float ufoMaxTextureTimer;
 
 	static float ufoChargingTimer;
-	static float ufoMaxChargingTimer;
+	static int ufoMaxChargingTimer;
 
 	static float ufoAttackTimer;
 	static float ufoMaxAttackTimer;
@@ -40,7 +41,7 @@ using namespace GameManager;
 
 	void init() {
 
-		srand(time(NULL));
+		srand(static_cast<int>(time(NULL)));
 
 		ufoActivationTimer = 0;
 
@@ -87,7 +88,7 @@ using namespace GameManager;
 		sounds[1] = LoadSound("res/sounds/chargingBeam.ogg");
 		sounds[2] = LoadSound("res/sounds/laserBeam.ogg");
 
-		SetSoundVolume(sounds[0], 0.3);
+		SetSoundVolume(sounds[0], 0.3f);
 		SetSoundVolume(sounds[1], 1);
 		SetSoundVolume(sounds[2], 0.5f);				
 
@@ -119,7 +120,7 @@ using namespace GameManager;
 			ufoTextureTimer = 0;
 		}
 
-		if (ufoActivationTimer >= 10.0f)
+		if (ufoActivationTimer >= timeUntillActive)
 		{
 			ufo.active = true;
 		}
@@ -229,7 +230,7 @@ using namespace GameManager;
 
 		if (laser.active)
 		{
-			DrawTexture(laser.texture, laser.pos.x - laser.texture.width / 2, laser.pos.y, laser.color);
+			DrawTexture(laser.texture, static_cast<int>(laser.pos.x - laser.texture.width / 2), static_cast<int>(laser.pos.y), laser.color);
 		}
 
 		if (ufo.active)

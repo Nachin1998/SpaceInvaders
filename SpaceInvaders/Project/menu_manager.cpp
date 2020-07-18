@@ -11,12 +11,11 @@
 namespace MyGame {
 namespace MenuManager{
 
-	MenuScene actualMenuScene = LevelSelection;
+	MenuScene actualMenuScene = Menu;
 
 	static Texture2D background;
 
 	bool mainMenuActive = true;
-	bool optionsActive = false;
 	bool controlsActive = false;
 	bool creditsActive = false;
 
@@ -27,7 +26,6 @@ namespace MenuManager{
 		MainMenu::init();
 		Controls::init();
 		Credits::init();
-		Gameplay::init();
 	}
 
 	void update() {
@@ -39,10 +37,7 @@ namespace MenuManager{
 
 		switch (actualMenuScene)
 		{
-		case LevelSelection:
-			break;
-
-		case Options:
+		case Menu:
 			break;
 
 		case Controls:
@@ -75,10 +70,7 @@ namespace MenuManager{
 
 		switch (actualMenuScene)
 		{
-		case LevelSelection:
-			break;
-
-		case Options:
+		case Menu:
 			break;
 
 		case Controls:

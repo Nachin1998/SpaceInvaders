@@ -10,6 +10,7 @@ namespace Player {
 
 	struct Player {
 		Rectangle body;
+		Rectangle healthRec;
 		Texture2D texture[maxTextures];
 		Vector2 pos;
 		Vector2 speed;

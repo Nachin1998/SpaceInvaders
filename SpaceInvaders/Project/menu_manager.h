@@ -5,8 +5,7 @@ namespace MyGame {
 namespace MenuManager{
 
 	enum MenuScene {
-		LevelSelection,
-		Options,
+		Menu,
 		Controls,
 		Credits,
 	};
@@ -14,7 +13,6 @@ namespace MenuManager{
 	extern MenuScene actualMenuScene;
 
 	extern bool mainMenuActive;
-	extern bool optionsActive;
 	extern bool controlsActive;
 	extern bool creditsActive;
 

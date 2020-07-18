@@ -32,7 +32,11 @@ using namespace GameManager;
 		player.body.width = 80;
 		player.body.height = 80;
 		player.body.x = player.pos.x - player.body.width / 2;
-		player.body.y = player.pos.y - player.body.height / 2;
+		player.body.y = player.pos.y - player.body.height / 2;		
+		player.healthRec.width = screenWidth;
+		player.healthRec.height = screenHeight;
+		player.healthRec.x = screenWidth / 2 - player.healthRec.width / 2;
+		player.healthRec.y = screenHeight / 2 - player.healthRec.height / 2;
 		player.speed.x = 250;
 		player.speed.y = 250;
 		player.points = 0;
@@ -88,16 +92,6 @@ using namespace GameManager;
 		player.body.x = player.pos.x - player.body.width / 2;
 		player.body.y = player.pos.y - player.body.height / 2;
 
-		if (IsKeyDown(KEY_W))
-		{
-			player.pos.y -= player.speed.x * GetFrameTime();
-		}
-
-		if (IsKeyDown(KEY_S))
-		{
-			player.pos.y += player.speed.x * GetFrameTime();
-		}
-
 		if(player.body.x - mapLimit > 0)
 		{
 			if (IsKeyDown(KEY_A))
@@ -141,6 +135,8 @@ using namespace GameManager;
 		{
 			Textures::drawProTexture(player.texture[3], player.pos.x, player.pos.y, player.color);
 		}
+
+		DrawRectangleLinesEx(player.healthRec, 5, GREEN);
 	}
 
 	void updateBullet() {

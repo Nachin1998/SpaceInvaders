@@ -2,7 +2,7 @@
 
 #include "menu_manager.h"
 #include "game_manager.h"
-
+#include "gameplay.h"
 #include "utility.h"
 
 namespace MyGame {
@@ -10,7 +10,7 @@ namespace MainMenu {
 using namespace GameManager;
 using namespace UI;
 
-	static const int maxButtons = 5;
+	static const int maxButtons = 4;
 
 	static Button title;
 	static Button menuButton[maxButtons];
@@ -48,14 +48,12 @@ using namespace UI;
 					switch (i)
 					{
 					case 0:
-						MenuManager::actualMenuScene = MenuManager::LevelSelection;
-						actualScene = Gameplay;
+						Gameplay::init();
+						MenuManager::actualMenuScene = MenuManager::Menu;
+						actualScene = GameManager::Gameplay;
 						break;
 
 					case 1:
-						break;
-
-					case 2:
 						if (MenuManager::controlsActive)
 						{
 							MenuManager::controlsActive = false;
@@ -67,7 +65,7 @@ using namespace UI;
 						MenuManager::actualMenuScene = MenuManager::Controls;
 						break;
 
-					case 3:
+					case 2:
 						MenuManager::controlsActive = false;
 						if (MenuManager::creditsActive)
 						{
@@ -82,7 +80,7 @@ using namespace UI;
 						MenuManager::actualMenuScene = MenuManager::Credits;
 						break;
 
-					case 4:
+					case 3:
 						endGame = true;
 						break;
 
@@ -98,10 +96,9 @@ using namespace UI;
 
 		drawButton("SPACE CONQUERORS", title);
 		drawButton("Start", menuButton[0]);
-		drawButton("Options", menuButton[1]);
-		drawButton("Controls", menuButton[2]);
-		drawButton("Credits", menuButton[3]);
-		drawButton("Exit", menuButton[4]);
+		drawButton("Controls", menuButton[1]);
+		drawButton("Credits", menuButton[2]);
+		drawButton("Exit", menuButton[3]);
 	}
 }
 }

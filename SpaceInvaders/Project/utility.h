@@ -18,7 +18,7 @@ namespace UI {
 	void updateButton(Button &button, Color mouseOutOfButton, Color mouseOverButton);
 	void drawButton(const char *text, Button button);
 
-	void drawProText(const char *text, int posX, int posY, int fontSize, Color textColor);
+	void drawProText(const char *text, float posX, float posY, int fontSize, Color textColor);
 
 }
 

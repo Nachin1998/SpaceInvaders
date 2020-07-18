@@ -34,6 +34,7 @@ namespace Ufo {
 	extern Laser laser;
 	extern Sound sounds[maxSounds];
 	extern float ufoActivationTimer;
+	extern float timeUntillActive;
 
 	void init();
 	void update();

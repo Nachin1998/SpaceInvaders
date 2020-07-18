@@ -27,15 +27,6 @@ using namespace UI;
 		title.rec.y = 80 - title.rec.height / 2;
 		initButton(title, title.rec, 3, 60, GREEN, DARKGRAY);
 
-		/*for (int i = 0; i < maxSubtitles; i++)
-		{
-			subTitle[i].rec.width = 300;
-			subTitle[i].rec.height = 60;
-			subTitle[i].rec.x = screenWidth / 2 - subTitle[i].rec.width / 2;
-			subTitle[i].rec.y = 170 + (i * 200) - subTitle[i].rec.height / 2;
-			initButton(subTitle[i], subTitle[i].rec, 3, 30, GREEN, DARKGRAY);
-		}*/
-
 		for (int i = 0; i < maxSubtitles; i++)
 		{
 			subTitle[i].rec.width = 300;
@@ -60,16 +51,6 @@ using namespace UI;
 			initButton(subTitle[i], subTitle[i].rec, 3, subtitleFontSize, GREEN, DARKGRAY);
 		}
 
-		/*subTitle[0].rec.y = 190 - subTitle[0].rec.height / 2;
-		subTitle[1].rec.y = 190 - subTitle[1].rec.height / 2;
-		subTitle[2].rec.y = 190 + 300 - subTitle[2].rec.height / 2;
-		subTitle[3].rec.y = 190 + 300 - subTitle[3].rec.height / 2;*/
-
-		/*for (int i = 0; i < maxSubtitles; i++)
-		{
-			initButton(subTitle[i], subTitle[i].rec, 3, 30, GREEN, DARKGRAY);
-		}*/
-
 		back.rec.width = 200;
 		back.rec.height = 70;
 		back.rec.x = screenWidth / 2 - back.rec.width / 2;
@@ -85,7 +66,7 @@ using namespace UI;
 		if (CheckCollisionPointRec(mousePos, back.rec))
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-			{
+			{				
 				MenuManager::creditsActive = false;
 				MenuManager::mainMenuActive = true;
 			}
