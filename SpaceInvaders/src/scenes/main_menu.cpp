@@ -10,7 +10,7 @@ namespace MainMenu {
 using namespace GameManager;
 using namespace UI;
 
-	static const int maxButtons = 4;
+	static const int maxButtons = 5;
 
 	static Button title;
 	static Button menuButton[maxButtons];
@@ -54,18 +54,32 @@ using namespace UI;
 						break;
 
 					case 1:
+						if (MenuManager::optionsActive)
+						{
+							MenuManager::optionsActive = false;
+						}
+						else
+						{
+							MenuManager::controlsActive = false;
+							MenuManager::optionsActive = true;
+						}
+						MenuManager::actualMenuScene = MenuManager::Options;
+						break;
+
+					case 2:
 						if (MenuManager::controlsActive)
 						{
 							MenuManager::controlsActive = false;
 						}
 						else
 						{
+							MenuManager::optionsActive = false;
 							MenuManager::controlsActive = true;
 						}
 						MenuManager::actualMenuScene = MenuManager::Controls;
 						break;
 
-					case 2:
+					case 3:
 						MenuManager::controlsActive = false;
 						if (MenuManager::creditsActive)
 						{
@@ -80,7 +94,7 @@ using namespace UI;
 						MenuManager::actualMenuScene = MenuManager::Credits;
 						break;
 
-					case 3:
+					case 4:
 						endGame = true;
 						break;
 
@@ -96,9 +110,10 @@ using namespace UI;
 
 		drawButton("SPACE CONQUERORS", title);
 		drawButton("Start", menuButton[0]);
-		drawButton("Controls", menuButton[1]);
-		drawButton("Credits", menuButton[2]);
-		drawButton("Exit", menuButton[3]);
+		drawButton("Options", menuButton[1]);
+		drawButton("Controls", menuButton[2]);
+		drawButton("Credits", menuButton[3]);
+		drawButton("Exit", menuButton[4]);
 	}
 }
 }

@@ -58,6 +58,9 @@
       <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\scenes\options.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\entities\invaders.h">
@@ -98,6 +101,9 @@
     </ClInclude>
     <ClInclude Include="..\src\utility\utility.h">
       <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scenes\options.h">
+      <Filter>scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

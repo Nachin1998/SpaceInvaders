@@ -16,7 +16,7 @@ namespace GameManager {
 
 	bool endGame = false;
 
-	static Music backgroundMusic;
+	Music backgroundMusic;
 
 	SpaceInvadersScenes actualScene = MainMenu;
 

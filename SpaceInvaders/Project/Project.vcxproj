@@ -167,6 +167,7 @@
     <ClCompile Include="..\src\scenes\gameplay.cpp" />
     <ClCompile Include="..\src\scenes\game_over.cpp" />
     <ClCompile Include="..\src\scenes\main_menu.cpp" />
+    <ClCompile Include="..\src\scenes\options.cpp" />
     <ClCompile Include="..\src\scenes\pause_menu.cpp" />
     <ClCompile Include="..\src\utility\utility.cpp" />
   </ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="..\src\scenes\gameplay.h" />
     <ClInclude Include="..\src\scenes\game_over.h" />
     <ClInclude Include="..\src\scenes\main_menu.h" />
+    <ClInclude Include="..\src\scenes\options.h" />
     <ClInclude Include="..\src\scenes\pause_menu.h" />
     <ClInclude Include="..\src\utility\utility.h" />
   </ItemGroup>

@@ -14,6 +14,19 @@ namespace UI {
 		Color secondaryColor;
 	};
 
+	struct TickBox {
+		Rectangle outerRec;
+		Rectangle innerRec;
+		float linesThick;
+		bool active;
+		Color outerColor;
+		Color innerColor;
+	};
+
+	void initTickBox(TickBox &tickBox, float size, float posX, float posY, float edgeThick, bool active, Color linesColor);
+	void tickBoxCollision(TickBox &tickBox);
+	void drawTickBox(TickBox tickBox);
+
 	void initButton(Button &button, Rectangle buttonRec, int lineThick, int fontSize, Color primaryColor, Color secondaryColor);
 	void updateButton(Button &button, Color mouseOutOfButton, Color mouseOverButton);
 	void drawButton(const char *text, Button button);

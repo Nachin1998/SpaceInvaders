@@ -6,6 +6,7 @@ namespace MenuManager{
 
 	enum MenuScene {
 		Menu,
+		Options, 
 		Controls,
 		Credits,
 	};
@@ -13,6 +14,7 @@ namespace MenuManager{
 	extern MenuScene actualMenuScene;
 
 	extern bool mainMenuActive;
+	extern bool optionsActive;
 	extern bool controlsActive;
 	extern bool creditsActive;
 

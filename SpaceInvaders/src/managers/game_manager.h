@@ -1,6 +1,8 @@
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
+#include "raylib.h"
+
 namespace MyGame {
 namespace GameManager {
 
@@ -14,7 +16,7 @@ namespace GameManager {
 	};
 
 	extern SpaceInvadersScenes actualScene;
-
+	extern Music backgroundMusic;
 	extern bool endGame;
 	void runGame();
 }
