@@ -10,108 +10,93 @@
 #include "scenes\credits.h"
 
 namespace MyGame {
-namespace MenuManager{
+	namespace MenuManager {
 
-	MenuScene actualMenuScene = Menu;
+		MenuScene actualMenuScene = Menu;
 
-	static Texture2D background;
+		static Texture2D background;
 
-	bool mainMenuActive = true;
-	bool optionsActive = false;
-	bool controlsActive = false;
-	bool creditsActive = false;
+		bool creditsActive = false;
 
-	void init() {
+		void init() {
 
-		background = LoadTexture("res/assets/background/main_menu/main_menu_background.png");
+			background = LoadTexture("res/assets/background/main_menu/main_menu_background.png");
 
-		MainMenu::init();
-		Options::init();
-		Controls::init();
-		Credits::init();
-	}
-
-	void update() {
-
-		if (mainMenuActive)
-		{
-			MainMenu::update();
+			MainMenu::init();
+			Options::init();
+			Controls::init();
+			Credits::init();
 		}
 
-		switch (actualMenuScene)
-		{
-		case Menu:
-			break;
+		void update() {
 
-		case Options:
-			if (optionsActive)
+			if (!creditsActive)
 			{
+				MainMenu::update();
+			}
+
+			switch (actualMenuScene)
+			{
+			case Menu:
+				break;
+
+			case Options:
 				Options::update();
-			}
-			break;
+				break;
 
-		case Controls:
-			if (controlsActive)
-			{
+			case Controls:
 				Controls::update();
+				break;
+
+			case Credits:
+				if (creditsActive)
+				{
+					Credits::update();
+				}
+				break;
+
+			default:
+				break;
 			}
-			break;
-
-		case Credits:
-			if (creditsActive)
-			{
-				Credits::update();
-			}
-			break;
-
-		default:
-			break;
-		}
-	}
-
-	void draw() {
-
-		DrawTexture(background, 0, 0, WHITE);
-
-		if (mainMenuActive) 
-		{
-			MainMenu::draw();
 		}
 
-		switch (actualMenuScene)
-		{
-		case Menu:
-			break;
+		void draw() {
 
-		case Options:
-			if (optionsActive)
+			DrawTexture(background, 0, 0, WHITE);
+
+			if (!creditsActive)
 			{
+				MainMenu::draw();
+			}
+
+			switch (actualMenuScene)
+			{
+			case Menu:
+				break;
+
+			case Options:
 				Options::draw();
-			}
-			break;
+				break;
 
-		case Controls:
-			if (controlsActive)
-			{
+			case Controls:
 				Controls::draw();
-			}
-			break;
+				break;
 
-		case Credits:
-			if (creditsActive)
-			{
-				Credits::draw();
-			}
-			break;
+			case Credits:
+				if (creditsActive)
+				{
+					Credits::draw();
+				}
+				break;
 
-		default:
-			break;
+			default:
+				break;
+			}
+		}
+
+		void deInit() {
+
+			UnloadTexture(background);
 		}
 	}
-
-	void deInit() {
-
-		UnloadTexture(background);
-	}
-}
 }

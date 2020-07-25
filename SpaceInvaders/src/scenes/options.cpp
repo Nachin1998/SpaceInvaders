@@ -47,7 +47,7 @@ namespace Options {
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
-				MenuManager::optionsActive = false;
+				MenuManager::actualMenuScene = MenuManager::Menu;
 			}
 		}
 

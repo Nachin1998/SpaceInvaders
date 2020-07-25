@@ -70,9 +70,7 @@ using namespace GameManager;
 		for (int i = 0; i < maxWalls; i++)
 		{
 			if (walls[i].active)
-			{
-				DrawRectangleRec(walls[i].rec, walls[i].color);
-
+			{			
 				if (wallTextureTimer < 0.5)
 				{
 					DrawTexture(walls[i].texture[0], static_cast<int>(walls[i].pos.x - walls[i].texture[0].width / 2), static_cast<int>(walls[i].pos.y - walls[i].texture[0].height / 2), walls[i].color);

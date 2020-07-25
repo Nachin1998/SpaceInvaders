@@ -67,8 +67,8 @@ using namespace UI;
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{				
+				MenuManager::actualMenuScene = MenuManager::Menu;
 				MenuManager::creditsActive = false;
-				MenuManager::mainMenuActive = true;
 			}
 		}
 	}

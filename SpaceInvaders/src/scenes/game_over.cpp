@@ -1,4 +1,4 @@
- #include "game_over.h"
+#include "game_over.h"
 
 #include "managers\game_manager.h"
 #include "managers\menu_manager.h"
@@ -7,95 +7,123 @@
 #include "entities\player.h"
 
 #include "utility\utility.h"
+#include <iostream>
 
 namespace MyGame {
-namespace GameOver {
-using namespace GameManager;
-using namespace UI;
+	namespace GameOver {
+		using namespace GameManager;
+		using namespace UI;
 
-	static Button title;
-	static Button restart;
-	static Button toCredits;
-	static Button toMenu;
-	
-	void init() {
+		static const int maxButtons = 4;
 
-		title.rec.width = 420;
-		title.rec.height = 80;
-		title.rec.x = screenWidth / 2 - title.rec.width / 2;
-		title.rec.y = 80 - title.rec.height / 2;
-		initButton(title, title.rec, 3, 60, GREEN, DARKGRAY);
+		static Button title;
+		static Button gameOverButtons[maxButtons];
 
-		restart.rec.width = 420;
-		restart.rec.height = 80;
-		restart.rec.x = screenWidth / 2 - restart.rec.width / 2;
-		restart.rec.y = 500 - restart.rec.height / 2;
-		initButton(restart, restart.rec, 3, 40, BLANK, GREEN);
+		static bool levelsOver = false;
 
-		toCredits.rec.width = 420;
-		toCredits.rec.height = 80;
-		toCredits.rec.x = screenWidth / 2 - toCredits.rec.width / 2;
-		toCredits.rec.y = 600 - toCredits.rec.height / 2;
-		initButton(toCredits, toCredits.rec, 3, 40, BLANK, GREEN);
+		void init() {
 
-		toMenu.rec.width = 420;
-		toMenu.rec.height = 80;
-		toMenu.rec.x = screenWidth / 2 - toMenu.rec.width / 2;
-		toMenu.rec.y = 700 - toMenu.rec.height / 2;
-		initButton(toMenu, toMenu.rec, 3, 40, BLANK, GREEN);
-	}
+			title.rec.width = 420;
+			title.rec.height = 80;
+			title.rec.x = screenWidth / 2 - title.rec.width / 2;
+			title.rec.y = 80 - title.rec.height / 2;
+			initButton(title, title.rec, 3, 60, GREEN, DARKGRAY);
 
-	void update() {
-
-		Vector2 mousePos = GetMousePosition();
-
-		updateButton(restart, BLANK, DARKGRAY);
-		if (CheckCollisionPointRec(mousePos, restart.rec))
-		{
-			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			for (int i = 0; i < maxButtons; i++)
 			{
-				Gameplay::init();
-				GameManager::actualScene = GameManager::Gameplay;
+				gameOverButtons[i].rec.width = 420;
+				gameOverButtons[i].rec.height = 80;
+				gameOverButtons[i].rec.x = screenWidth / 2 - gameOverButtons[i].rec.width / 2;
+				gameOverButtons[i].rec.y = 500 + (i * 100) - gameOverButtons[i].rec.height / 2;
+				initButton(gameOverButtons[i], gameOverButtons[i].rec, 3, 40, BLANK, GREEN);
 			}
 		}
 
-		updateButton(toCredits, BLANK, DARKGRAY);
-		if (CheckCollisionPointRec(mousePos, toCredits.rec))
-		{
-			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		void update() {
+
+			Vector2 mousePos = GetMousePosition();
+
+			if (Gameplay::level != Gameplay::Four)
 			{
-				MenuManager::mainMenuActive = false;
-				GameManager::actualScene = GameManager::MainMenu;
-				MenuManager::creditsActive = true;
-				MenuManager::actualMenuScene = MenuManager::Credits;
+				levelsOver = false;
+			}
+			int level = static_cast<int>(Gameplay::level);
+
+			for (int i = 0; i < maxButtons; i++)
+			{
+				updateButton(gameOverButtons[i], BLANK, DARKGRAY);
+
+				if (CheckCollisionPointRec(mousePos, gameOverButtons[i].rec))
+				{
+					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+					{
+						switch (i)
+						{
+						case 0:
+							Gameplay::init();
+							GameManager::actualScene = GameManager::Gameplay;
+							break;
+
+						case 1:
+							
+							if (!levelsOver)
+							{								
+								if (level == 3)
+								{
+									levelsOver = true;
+								}
+								else
+								{
+									level++;
+								}
+
+								Gameplay::level = static_cast<Gameplay::Levels>(level);
+								GameManager::actualScene = GameManager::Gameplay;
+								Gameplay::init();
+							}
+
+							break;
+
+						case 2:
+							Gameplay::init();
+							GameManager::actualScene = GameManager::MainMenu;
+							MenuManager::creditsActive = true;
+							MenuManager::actualMenuScene = MenuManager::Credits;
+							break;
+
+						case 3:
+							Gameplay::init();
+							GameManager::actualScene = GameManager::MainMenu;
+							break;
+
+						default:
+							break;
+						}						
+					}
+				}
 			}
 		}
 
-		updateButton(toMenu, BLANK, DARKGRAY);
-		if (CheckCollisionPointRec(mousePos, toMenu.rec))
-		{
-			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		void draw() {
+
+			if (!Player::player.isDead)
 			{
-				GameManager::actualScene = GameManager::MainMenu;
+				drawButton("You won!", title);
 			}
+			else
+			{
+				drawButton("You lost!", title);
+			}
+
+			drawProText(FormatText("Points: %i", Player::player.points), screenWidth / 2, screenHeight / 2 - 200, 50, GREEN);
+
+			drawButton("Play Again", gameOverButtons[0]);
+			if (!levelsOver)
+			{
+				drawButton("Next Level", gameOverButtons[1]);
+			}
+			drawButton("Credits", gameOverButtons[2]);
+			drawButton("Back to Main Menu", gameOverButtons[3]);
 		}
 	}
-
-	void draw() {
-		if (!Player::player.isDead) 
-		{
-			drawButton("You won!", title);
-		}
-		else 
-		{
-			drawButton("You lost!", title);
-		}
-
-		drawProText(FormatText("Points: %i", Player::player.points), screenWidth / 2, screenHeight / 2 - 200, 50, GREEN);
-		
-		drawButton("Play Again", restart);
-		drawButton("Credits", toCredits);
-		drawButton("Back to Main Menu", toMenu);
-	}
-}
 }

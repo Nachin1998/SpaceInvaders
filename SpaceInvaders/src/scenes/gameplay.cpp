@@ -337,14 +337,21 @@ using namespace UI;
 		if (Ufo::laser.active)
 		{
 			if (CheckCollisionRecs(Ufo::laser.rec, Player::player.body))
-			{
-				counterFix++;
-				if (counterFix > 20)
+			{				
+				if (counterFix == 0)
 				{
-					Player::player.lives -= 1;
-					std::cout << Player::player.lives << std::endl;
+					PlaySound(hit);
+					Player::player.lives -= 1;				
+				}
+				counterFix++;
+				if (counterFix >= 20)
+				{
 					counterFix = 0;
 				}
+			}
+			else
+			{
+				counterFix = 0;
 			}
 		}
 

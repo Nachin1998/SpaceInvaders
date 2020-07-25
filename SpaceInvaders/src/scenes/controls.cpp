@@ -64,7 +64,7 @@ using namespace UI;
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
-				MenuManager::controlsActive = false;
+				MenuManager::actualMenuScene = MenuManager::Menu;
 			}
 		}
 	}
@@ -85,9 +85,9 @@ using namespace UI;
 
 		drawProText("Destoy all the aliens before", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60, textFontSize, textColor);
 		drawProText("they overwhelm you", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60 + lineBelowDistance, textFontSize, textColor);
-		drawProText("and shoot you down", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60 + lineBelowDistance * 2, textFontSize, textColor);
+		drawProText("and shoot you down!", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60 + lineBelowDistance * 2, textFontSize, textColor);
 		drawProText("Take them down before", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 70 + lineBelowDistance * 3, textFontSize, textColor);
-		drawProText("they get to close", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 70 + lineBelowDistance * 4, textFontSize, textColor);
+		drawProText("they get too close!", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 70 + lineBelowDistance * 4, textFontSize, textColor);
 	}
 }
 }

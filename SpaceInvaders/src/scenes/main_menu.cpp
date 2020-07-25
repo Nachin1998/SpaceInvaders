@@ -48,49 +48,35 @@ using namespace UI;
 					switch (i)
 					{
 					case 0:
-						Gameplay::init();
+						Gameplay::level = Gameplay::One;
 						MenuManager::actualMenuScene = MenuManager::Menu;
 						actualScene = GameManager::Gameplay;
 						break;
 
 					case 1:
-						if (MenuManager::optionsActive)
+						if (MenuManager::actualMenuScene == MenuManager::Options)
 						{
-							MenuManager::optionsActive = false;
+							MenuManager::actualMenuScene = MenuManager::Menu;
 						}
 						else
 						{
-							MenuManager::controlsActive = false;
-							MenuManager::optionsActive = true;
+							MenuManager::actualMenuScene = MenuManager::Options;
 						}
-						MenuManager::actualMenuScene = MenuManager::Options;
 						break;
 
 					case 2:
-						if (MenuManager::controlsActive)
+						if (MenuManager::actualMenuScene == MenuManager::Controls)
 						{
-							MenuManager::controlsActive = false;
+							MenuManager::actualMenuScene = MenuManager::Menu;
 						}
 						else
 						{
-							MenuManager::optionsActive = false;
-							MenuManager::controlsActive = true;
+							MenuManager::actualMenuScene = MenuManager::Controls;
 						}
-						MenuManager::actualMenuScene = MenuManager::Controls;
 						break;
 
 					case 3:
-						MenuManager::controlsActive = false;
-						if (MenuManager::creditsActive)
-						{
-							MenuManager::mainMenuActive = true;
-							MenuManager::creditsActive = false;
-						}
-						else
-						{
-							MenuManager::mainMenuActive = false;
-							MenuManager::creditsActive = true;
-						}
+						MenuManager::creditsActive = true;
 						MenuManager::actualMenuScene = MenuManager::Credits;
 						break;
 

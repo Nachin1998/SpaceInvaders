@@ -18,6 +18,7 @@ namespace GameManager {
 	extern SpaceInvadersScenes actualScene;
 	extern Music backgroundMusic;
 	extern bool endGame;
+
 	void runGame();
 }
 }

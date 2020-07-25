@@ -13,9 +13,6 @@ namespace MenuManager{
 
 	extern MenuScene actualMenuScene;
 
-	extern bool mainMenuActive;
-	extern bool optionsActive;
-	extern bool controlsActive;
 	extern bool creditsActive;
 
 	void init();
