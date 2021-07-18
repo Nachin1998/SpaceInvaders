@@ -6,15 +6,15 @@
 namespace MyGame {
 namespace Invaders {
 	
-	const int maxInvaderassets = 2;
-	const int maxBulletassets = 4;
+	const int maxInvaderAssets = 2;
+	const int maxBulletAssets = 4;
 	const int maxInvadersX = 11;
 	const int maxInvadersY = 5;
 
 	struct Invader {
 		Rectangle body;
-		Texture2D invaderTexture[maxInvaderassets];
-		Texture2D bulletTexture[maxBulletassets];
+		Texture2D invaderTexture[maxInvaderAssets];
+		Texture2D bulletTexture[maxBulletAssets];
 		Vector2 pos;
 		Vector2 speed;
 		int pointsToGive;
@@ -23,7 +23,7 @@ namespace Invaders {
 	};
 
 	struct Bullet {
-		Texture2D texture[maxBulletassets];
+		Texture2D texture[maxBulletAssets];
 		Vector2 pos;
 		Rectangle rec;
 		float speed;
@@ -37,10 +37,10 @@ namespace Invaders {
 	extern float maxTimer;
 	extern int activeInvaderCounter;
 
-	void init();
-	void update();
-	void draw();
-	void deInit();
+	void Init();
+	void Update();
+	void Draw();
+	void DeInit();
 }
 }
 

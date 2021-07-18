@@ -21,13 +21,13 @@ namespace MyGame {
 
 		static bool levelsOver = false;
 
-		void init() {
+		void Init() {
 
 			title.rec.width = 420;
 			title.rec.height = 80;
 			title.rec.x = screenWidth / 2 - title.rec.width / 2;
 			title.rec.y = 80 - title.rec.height / 2;
-			initButton(title, title.rec, 3, 60, GREEN, DARKGRAY);
+			InitButton(title, title.rec, 3, 60, GREEN, DARKGRAY);
 
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -35,11 +35,11 @@ namespace MyGame {
 				gameOverButtons[i].rec.height = 80;
 				gameOverButtons[i].rec.x = screenWidth / 2 - gameOverButtons[i].rec.width / 2;
 				gameOverButtons[i].rec.y = 500 + (i * 100) - gameOverButtons[i].rec.height / 2;
-				initButton(gameOverButtons[i], gameOverButtons[i].rec, 3, 40, BLANK, GREEN);
+				InitButton(gameOverButtons[i], gameOverButtons[i].rec, 3, 40, BLANK, GREEN);
 			}
 		}
 
-		void update() {
+		void Update() {
 
 			Vector2 mousePos = GetMousePosition();
 
@@ -51,7 +51,7 @@ namespace MyGame {
 
 			for (int i = 0; i < maxButtons; i++)
 			{
-				updateButton(gameOverButtons[i], BLANK, DARKGRAY);
+				UpdateButton(gameOverButtons[i], BLANK, DARKGRAY);
 
 				if (CheckCollisionPointRec(mousePos, gameOverButtons[i].rec))
 				{
@@ -60,7 +60,7 @@ namespace MyGame {
 						switch (i)
 						{
 						case 0:
-							Gameplay::init();
+							Gameplay::Init();
 							GameManager::actualScene = GameManager::Gameplay;
 							break;
 
@@ -79,20 +79,20 @@ namespace MyGame {
 
 								Gameplay::level = static_cast<Gameplay::Levels>(level);
 								GameManager::actualScene = GameManager::Gameplay;
-								Gameplay::init();
+								Gameplay::Init();
 							}
 
 							break;
 
 						case 2:
-							Gameplay::init();
+							Gameplay::Init();
 							GameManager::actualScene = GameManager::MainMenu;
 							MenuManager::creditsActive = true;
 							MenuManager::actualMenuScene = MenuManager::Credits;
 							break;
 
 						case 3:
-							Gameplay::init();
+							Gameplay::Init();
 							GameManager::actualScene = GameManager::MainMenu;
 							break;
 
@@ -104,26 +104,26 @@ namespace MyGame {
 			}
 		}
 
-		void draw() {
+		void Draw() {
 
 			if (!Player::player.isDead)
 			{
-				drawButton("You won!", title);
+				DrawButton("You won!", title);
 			}
 			else
 			{
-				drawButton("You lost!", title);
+				DrawButton("You lost!", title);
 			}
 
-			drawProText(FormatText("Points: %i", Player::player.points), screenWidth / 2, screenHeight / 2 - 200, 50, GREEN);
+			DrawProText(FormatText("Points: %i", Player::player.points), screenWidth / 2, screenHeight / 2 - 200, 50, GREEN);
 
-			drawButton("Play Again", gameOverButtons[0]);
+			DrawButton("Play Again", gameOverButtons[0]);
 			if (!levelsOver)
 			{
-				drawButton("Next Level", gameOverButtons[1]);
+				DrawButton("Next Level", gameOverButtons[1]);
 			}
-			drawButton("Credits", gameOverButtons[2]);
-			drawButton("Back to Main Menu", gameOverButtons[3]);
+			DrawButton("Credits", gameOverButtons[2]);
+			DrawButton("Back to Main Menu", gameOverButtons[3]);
 		}
 	}
 }

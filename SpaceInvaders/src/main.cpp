@@ -1,6 +1,6 @@
 #include "managers\game_manager.h"
 
-using namespace MyGame;
-int main() {
-	GameManager::runGame();
+int main() 
+{
+	MyGame::GameManager::RunGame();
 }

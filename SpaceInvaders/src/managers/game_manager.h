@@ -19,7 +19,7 @@ namespace GameManager {
 	extern Music backgroundMusic;
 	extern bool endGame;
 
-	void runGame();
+	void RunGame();
 }
 }
 

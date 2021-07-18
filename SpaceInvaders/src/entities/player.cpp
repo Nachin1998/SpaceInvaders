@@ -7,10 +7,10 @@ namespace MyGame {
 namespace Player {
 using namespace GameManager;
 
-	static void updatePlayer();
-	static void drawPlayer();
-	static void updateBullet();
-	static void drawBullet();
+	static void UpdatePlayer();
+	static void DrawPlayer();
+	static void UpdateBullet();
+	static void DrawBullet();
 	
 	Bullet bullet;
 
@@ -23,7 +23,7 @@ using namespace GameManager;
 
 	static int mapLimit = 10;
 	static Color healthColor;
-	void init() {
+	void Init() {
 
 		textureTimer = 0;
 
@@ -60,7 +60,7 @@ using namespace GameManager;
 		SetSoundVolume(laserShot, 0.3f);
 	}
 
-	void update() {
+	void Update() {
 
 		textureTimer += GetFrameTime();
 		if (textureTimer >= maxTextureTimer)
@@ -68,17 +68,17 @@ using namespace GameManager;
 			textureTimer = 0;
 		}
 
-		updatePlayer();
-		updateBullet();
+		UpdatePlayer();
+		UpdateBullet();
 	}
 	
-	void draw() {
+	void Draw() {
 
-		drawBullet();
-		drawPlayer();
+		DrawBullet();
+		DrawPlayer();
 	}
 
-	void deInit() {
+	void DeInit() {
 
 		for (int i = 0; i < maxTextures; i++)
 		{
@@ -87,7 +87,7 @@ using namespace GameManager;
 		UnloadSound(laserShot);
 	}
 
-	void updatePlayer() {
+	void UpdatePlayer() {
 
 		player.body.x = player.pos.x - player.body.width / 2;
 		player.body.y = player.pos.y - player.body.height / 2;
@@ -131,32 +131,32 @@ using namespace GameManager;
 		}
 	}
 
-	void drawPlayer() {
+	void DrawPlayer() {
 		
 		if (textureTimer < 0.1f)
 		{
-			Textures::drawProTexture(player.texture[0], player.pos.x, player.pos.y, player.color);
+			Textures::DrawProTexture(player.texture[0], player.pos.x, player.pos.y, player.color);
 		}
 
 		if (textureTimer > 0.1f && textureTimer < 0.2f)
 		{
-			Textures::drawProTexture(player.texture[1], player.pos.x, player.pos.y, player.color);
+			Textures::DrawProTexture(player.texture[1], player.pos.x, player.pos.y, player.color);
 		}
 
 		if (textureTimer > 0.2f && textureTimer < 0.3f)
 		{
-			Textures::drawProTexture(player.texture[2], player.pos.x, player.pos.y, player.color);
+			Textures::DrawProTexture(player.texture[2], player.pos.x, player.pos.y, player.color);
 		}
 
 		if (textureTimer > 0.3f && textureTimer < maxTextureTimer)
 		{
-			Textures::drawProTexture(player.texture[3], player.pos.x, player.pos.y, player.color);
+			Textures::DrawProTexture(player.texture[3], player.pos.x, player.pos.y, player.color);
 		}
 
 		DrawRectangleLinesEx(player.healthRec, 5, healthColor);
 	}
 
-	void updateBullet() {
+	void UpdateBullet() {
 
 		if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
@@ -183,7 +183,7 @@ using namespace GameManager;
 		}
 	}
 	
-	void drawBullet() {
+	void DrawBullet() {
 
 		if (bullet.active)
 		{

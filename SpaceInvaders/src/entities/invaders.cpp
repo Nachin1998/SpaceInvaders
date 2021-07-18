@@ -1,6 +1,7 @@
 #include "invaders.h"
 
 #include <iostream>
+#include <string>
 #include <ctime>
 
 #include "managers\game_manager.h"
@@ -10,16 +11,16 @@ namespace MyGame{
 namespace Invaders{
 using namespace GameManager;
 	
-	static void initInvader();
-	static void updateInvader();
-	static void drawInvader();
-	static void initBullet();
-	static void updateBullet();
+	static void InitInvader();
+	static void UpdateInvader();
+	static void DrawInvader();
+	static void InitBullet();
+	static void UpdateBullet();
 	static void bulletRespawn();
-	static void drawBullet();
+	static void DrawBullet();
 
-	static void deInitInvader();
-	static void deInitBullet();
+	static void DeInitInvader();
+	static void DeInitBullet();
 
 	enum InvaderMovement {
 		Horizontal,
@@ -43,35 +44,35 @@ using namespace GameManager;
 	int activeInvaderCounter;
 	float maxTimer;
 	
-	void init(){
+	void Init(){
 		
 		srand(static_cast<int>(time(NULL)));
 		randX = rand() % maxInvadersX;
 		randY = rand() % maxInvadersY;
 
-		initInvader();
-		initBullet();
+		InitInvader();
+		InitBullet();
 	}
 
-	void update() {
+	void Update() {
 
-		updateInvader();
-		updateBullet();
+		UpdateInvader();
+		UpdateBullet();
 	}
 
-	void draw() {
+	void Draw() {
 
-		drawInvader();
-		drawBullet();
+		DrawInvader();
+		DrawBullet();
 	}
 
-	void deInit() {
+	void DeInit() {
 
-		deInitInvader();
-		deInitBullet();
+		DeInitInvader();
+		DeInitBullet();
 	}
 
-	void initInvader() {
+	void InitInvader() {
 
 		actualMovement = Horizontal;
 		invaderMovementTimer = 0;
@@ -80,8 +81,11 @@ using namespace GameManager;
 		activeInvaderCounter = maxInvadersX * maxInvadersY;
 		maxTimer = 1.0f;
 
+		std::string mainPath = "res/assets/invaders/";
+
 		for (int i = 0; i < maxInvadersY; i++)
 		{
+			std::string currentInvaderString = FormatText("invader%i", i + 1);
 			for (int j = 0; j < maxInvadersX; j++)
 			{
 				invaders[i][j].body.width = 50;
@@ -94,49 +98,35 @@ using namespace GameManager;
 				invaders[i][j].speed.y = 30;
 				invaders[i][j].active = true;
 				invaders[i][j].color = WHITE;
+				invaders[i][j].pointsToGive = 100 * i;
+			    
+				std::string semiCompletePath = mainPath + currentInvaderString + "/" + currentInvaderString;
+				std::string currentTextureString;
+				std::string fullPath; 
+				const char* charPath;
 
-				switch (i)
+				for (int k = 0; k < maxInvaderAssets; k++)
 				{
-				case 0:
-					invaders[i][j].pointsToGive = 300;
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/assets/invaders/invader3/invader3_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/assets/invaders/invader3/invader3_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/assets/invaders/invader3/invader3_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/assets/invaders/invader3/invader3_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/assets/invaders/invader3/invader3_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/assets/invaders/invader3/invader3_shot4.png");
-					break;
-
-				case 1:
-				case 2:
-					invaders[i][j].pointsToGive = 200;
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/assets/invaders/invader2/invader2_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/assets/invaders/invader2/invader2_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/assets/invaders/invader2/invader2_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/assets/invaders/invader2/invader2_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/assets/invaders/invader2/invader2_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/assets/invaders/invader2/invader2_shot4.png");
-					break;
-
-				case 3:
-				case 4:
-					invaders[i][j].pointsToGive = 100;
-					invaders[i][j].invaderTexture[0] = LoadTexture("res/assets/invaders/invader1/invader1_1.png");
-					invaders[i][j].invaderTexture[1] = LoadTexture("res/assets/invaders/invader1/invader1_2.png");
-					invaders[i][j].bulletTexture[0] = LoadTexture("res/assets/invaders/invader1/invader1_shot1.png");
-					invaders[i][j].bulletTexture[1] = LoadTexture("res/assets/invaders/invader1/invader1_shot2.png");
-					invaders[i][j].bulletTexture[2] = LoadTexture("res/assets/invaders/invader1/invader1_shot3.png");
-					invaders[i][j].bulletTexture[3] = LoadTexture("res/assets/invaders/invader1/invader1_shot4.png");
-					break;
-
-				default:
-					break;
+					currentTextureString = FormatText("_%i.png", k + 1);
+					fullPath = semiCompletePath + currentTextureString;
+					charPath = fullPath.c_str();
+					std::cout << charPath << std::endl;
+					invaders[i][j].invaderTexture[k] = LoadTexture(charPath);
 				}
+				
+				for (int k = 0; k < maxBulletAssets; k++)
+				{
+					currentTextureString = FormatText("_shot%i.png", k + 1);
+					fullPath = semiCompletePath + currentTextureString;
+					charPath = fullPath.c_str();
+					std::cout << charPath << std::endl;
+					invaders[i][j].bulletTexture[k] = LoadTexture(charPath);
+				}				
 			}
 		}
 	}
 
-	void updateInvader() {
+	void UpdateInvader() {
 
 		invaderMovementTimer += GetFrameTime();
 
@@ -250,7 +240,7 @@ using namespace GameManager;
 		}
 	}
 
-	void drawInvader() {
+	void DrawInvader() {
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{
@@ -260,18 +250,18 @@ using namespace GameManager;
 				{
 					if (!changeMovementTexture)
 					{
-						Textures::drawProTexture(invaders[i][j].invaderTexture[0], invaders[i][j].pos.x, invaders[i][j].pos.y, invaders[i][j].color);
+						Textures::DrawProTexture(invaders[i][j].invaderTexture[0], invaders[i][j].pos.x, invaders[i][j].pos.y, invaders[i][j].color);
 					}
 					else
 					{
-						Textures::drawProTexture(invaders[i][j].invaderTexture[1], invaders[i][j].pos.x, invaders[i][j].pos.y, invaders[i][j].color);
+						Textures::DrawProTexture(invaders[i][j].invaderTexture[1], invaders[i][j].pos.x, invaders[i][j].pos.y, invaders[i][j].color);
 					}
 				}
 			}
 		}
 	}
 
-	void initBullet() {
+	void InitBullet() {
 
 		bulletTimer = 0;
 
@@ -286,7 +276,7 @@ using namespace GameManager;
 		bullet.color = WHITE;
 	}
 
-	void updateBullet() {
+	void UpdateBullet() {
 
 		bulletTimer += GetFrameTime();
 
@@ -300,7 +290,7 @@ using namespace GameManager;
 
 		if (bullet.active)
 		{
-			for (int i = 0; i < maxBulletassets; i++)
+			for (int i = 0; i < maxBulletAssets; i++)
 			{
 				bullet.texture[i] = invaders[randY][randX].bulletTexture[i];
 
@@ -338,35 +328,35 @@ using namespace GameManager;
 		}
 	}
 
-	void drawBullet() {
+	void DrawBullet() {
 
 		if (bullet.active)
 		{
 			if (bulletTimer < 0.1f)
 			{
-				Textures::drawProTexture(bullet.texture[0], bullet.pos.x, bullet.pos.y, bullet.color);
+				Textures::DrawProTexture(bullet.texture[0], bullet.pos.x, bullet.pos.y, bullet.color);
 			}
 
 			if (bulletTimer > 0.1f && bulletTimer < 0.2f)
 			{
-				Textures::drawProTexture(bullet.texture[1], bullet.pos.x, bullet.pos.y, bullet.color);
+				Textures::DrawProTexture(bullet.texture[1], bullet.pos.x, bullet.pos.y, bullet.color);
 			}
 
 			if (bulletTimer > 0.2f && bulletTimer < 0.3f)
 			{
-				Textures::drawProTexture(bullet.texture[2], bullet.pos.x, bullet.pos.y, bullet.color);
+				Textures::DrawProTexture(bullet.texture[2], bullet.pos.x, bullet.pos.y, bullet.color);
 			}
 
 			if (bulletTimer > 0.3f && bulletTimer < 0.4f)
 			{
-				Textures::drawProTexture(bullet.texture[3], bullet.pos.x, bullet.pos.y, bullet.color);
+				Textures::DrawProTexture(bullet.texture[3], bullet.pos.x, bullet.pos.y, bullet.color);
 			}
 
 			//DrawRectangleRec(bullet.rec, bullet.color);
 		}
 	}
 
-	void deInitInvader() {
+	void DeInitInvader() {
 
 		for (int i = 0; i < maxInvadersY; i++)
 		{
@@ -375,7 +365,7 @@ using namespace GameManager;
 				UnloadTexture(invaders[i][j].invaderTexture[0]);
 				UnloadTexture(invaders[i][j].invaderTexture[1]);
 
-				for (int k = 0; k < maxBulletassets; k++)
+				for (int k = 0; k < maxBulletAssets; k++)
 				{
 					UnloadTexture(invaders[i][j].bulletTexture[k]);
 				}
@@ -383,9 +373,9 @@ using namespace GameManager;
 		}
 	}
 
-	void deInitBullet() {
+	void DeInitBullet() {
 
-		for (int i = 0; i < maxBulletassets; i++)
+		for (int i = 0; i < maxBulletAssets; i++)
 		{
 			UnloadTexture(bullet.texture[i]);
 		}

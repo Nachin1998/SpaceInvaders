@@ -18,21 +18,21 @@ namespace MyGame {
 
 		bool creditsActive = false;
 
-		void init() {
+		void Init() {
 
 			background = LoadTexture("res/assets/background/main_menu/main_menu_background.png");
 
-			MainMenu::init();
-			Options::init();
-			Controls::init();
-			Credits::init();
+			MainMenu::Init();
+			Options::Init();
+			Controls::Init();
+			Credits::Init();
 		}
 
-		void update() {
+		void Update() {
 
 			if (!creditsActive)
 			{
-				MainMenu::update();
+				MainMenu::Update();
 			}
 
 			switch (actualMenuScene)
@@ -41,17 +41,17 @@ namespace MyGame {
 				break;
 
 			case Options:
-				Options::update();
+				Options::Update();
 				break;
 
 			case Controls:
-				Controls::update();
+				Controls::Update();
 				break;
 
 			case Credits:
 				if (creditsActive)
 				{
-					Credits::update();
+					Credits::Update();
 				}
 				break;
 
@@ -60,13 +60,13 @@ namespace MyGame {
 			}
 		}
 
-		void draw() {
+		void Draw() {
 
 			DrawTexture(background, 0, 0, WHITE);
 
 			if (!creditsActive)
 			{
-				MainMenu::draw();
+				MainMenu::Draw();
 			}
 
 			switch (actualMenuScene)
@@ -75,17 +75,17 @@ namespace MyGame {
 				break;
 
 			case Options:
-				Options::draw();
+				Options::Draw();
 				break;
 
 			case Controls:
-				Controls::draw();
+				Controls::Draw();
 				break;
 
 			case Credits:
 				if (creditsActive)
 				{
-					Credits::draw();
+					Credits::Draw();
 				}
 				break;
 
@@ -94,7 +94,7 @@ namespace MyGame {
 			}
 		}
 
-		void deInit() {
+		void DeInit() {
 
 			UnloadTexture(background);
 		}

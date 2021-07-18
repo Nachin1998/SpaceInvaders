@@ -22,27 +22,27 @@ namespace Options {
 	static Color titleSecondaryColor = DARKGRAY;
 	static Color textColor = GREEN;
 
-	void init() {
+	void Init() {
 
 		menuBox.width = 500;
 		menuBox.height = 800;
 		menuBox.x = screenWidth / 2 + 155 - menuBox.width / 2;
 		menuBox.y = screenHeight / 2 + 70 - menuBox.height / 2;
 
-		UI::initTickBox(muteGame, 50.0f, screenWidth / 2 + 250, screenHeight / 2 - 25, 5, false, LIGHTGRAY);
+		UI::InitTickBox(muteGame, 50.0f, screenWidth / 2 + 250, screenHeight / 2 - 25, 5, false, LIGHTGRAY);
 
 		close.rec.width = 200;
 		close.rec.height = 70;
 		close.rec.x = screenWidth / 2 + 155 - close.rec.width / 2;
 		close.rec.y = screenHeight / 2 + 400 - close.rec.height / 2;
-		initButton(close, close.rec, 3, 50, BLANK, titleColor);
+		InitButton(close, close.rec, 3, 50, BLANK, titleColor);
 	}
 
-	void update() {
+	void Update() {
 
 		Vector2 mousePos = GetMousePosition();
 
-		updateButton(close, BLANK, DARKGRAY);
+		UpdateButton(close, BLANK, DARKGRAY);
 		if (CheckCollisionPointRec(mousePos, close.rec))
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -54,16 +54,16 @@ namespace Options {
 		muteButtonUpdate();
 	}
 
-	void draw() {
+	void Draw() {
 
 		DrawRectangleLinesEx(menuBox, 6, GREEN);
 
-		drawProText("Options", menuBox.x + menuBox.width / 2, menuBox.y + 50, textFontSize  * 2, textColor);
+		DrawProText("Options", menuBox.x + menuBox.width / 2, menuBox.y + 50, textFontSize  * 2, textColor);
 
-		drawProText("Mute sound", muteGame.innerRec.x - 130, muteGame.innerRec.y + muteGame.innerRec.height / 2, textFontSize, textColor);
-		drawTickBox(muteGame);		
+		DrawProText("Mute sound", muteGame.innerRec.x - 130, muteGame.innerRec.y + muteGame.innerRec.height / 2, textFontSize, textColor);
+		DrawTickBox(muteGame);		
 
-		drawButton("Close", close);
+		DrawButton("Close", close);
 	}
 
 	void muteButtonUpdate() {

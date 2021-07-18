@@ -14,13 +14,13 @@ namespace PauseMenu {
 	static Button pauseMenu;
 	static Button pauseButtons[maxButtons];
 
-	void init() {
+	void Init() {
 
 		pauseMenu.rec.width = 350;
 		pauseMenu.rec.height = 500;
 		pauseMenu.rec.x = screenWidth / 2 - pauseMenu.rec.width / 2;
 		pauseMenu.rec.y = screenHeight / 2 - pauseMenu.rec.height / 2;
-		initButton(pauseMenu, pauseMenu.rec, 3, 0, DARKGREEN, GREEN);
+		InitButton(pauseMenu, pauseMenu.rec, 3, 0, DARKGREEN, GREEN);
 
 		for (int i = 0; i < maxButtons; i++)
 		{
@@ -28,16 +28,16 @@ namespace PauseMenu {
 			pauseButtons[i].rec.height = 50;
 			pauseButtons[i].rec.x = screenWidth / 2 - pauseButtons[i].rec.width / 2;
 			pauseButtons[i].rec.y = 390 + (i * 90) - pauseButtons[i].rec.height / 2;
-			initButton(pauseButtons[i], pauseButtons[i].rec, 3, 30, BLANK, GREEN);
+			InitButton(pauseButtons[i], pauseButtons[i].rec, 3, 30, BLANK, GREEN);
 		}
 	}
 
-	void update() {
+	void Update() {
 		Vector2 mousePos = GetMousePosition();
 
 		for (int i = 0; i < maxButtons; i++)
 		{
-			updateButton(pauseButtons[i], BLANK, DARKGRAY);
+			UpdateButton(pauseButtons[i], BLANK, DARKGRAY);
 
 			if (CheckCollisionPointRec(mousePos, pauseButtons[i].rec))
 			{
@@ -62,15 +62,15 @@ namespace PauseMenu {
 
 						Gameplay::level = static_cast<Gameplay::Levels>(nextLevel);
 
-						Gameplay::init();
+						Gameplay::Init();
 						break;
 
 					case 2:
-						Gameplay::init();
+						Gameplay::Init();
 						break;
 
 					case 3:
-						Gameplay::init();
+						Gameplay::Init();
 						GameManager::actualScene = GameManager::MainMenu;
 						break;
 					}
@@ -79,15 +79,15 @@ namespace PauseMenu {
 		}
 	}
 
-	void draw() {
+	void Draw() {
 
-		drawButton("", pauseMenu);
-		drawProText("Paused", screenWidth / 2, screenHeight / 2 - 200, 60, GREEN);
+		DrawButton("", pauseMenu);
+		DrawProText("Paused", screenWidth / 2, screenHeight / 2 - 200, 60, GREEN);
 
-		drawButton("Resume", pauseButtons[0]);
-		drawButton("Next Level", pauseButtons[1]);
-		drawButton("Play Again", pauseButtons[2]);
-		drawButton("Back to Main Menu", pauseButtons[3]);
+		DrawButton("Resume", pauseButtons[0]);
+		DrawButton("Next Level", pauseButtons[1]);
+		DrawButton("Play Again", pauseButtons[2]);
+		DrawButton("Back to Main Menu", pauseButtons[3]);
 	}
 }
 }

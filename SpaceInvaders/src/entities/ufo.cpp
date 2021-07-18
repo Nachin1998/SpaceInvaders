@@ -10,7 +10,7 @@ namespace MyGame {
 namespace Ufo {
 using namespace GameManager;
 
-	static void drawUFOTextures(Texture2D textures[]);
+	static void DrawUFOTextures(Texture2D textures[]);
 
 	enum UFOState {
 		Idle,
@@ -39,7 +39,7 @@ using namespace GameManager;
 	static int randomPos;
 	static float laserPosFix;
 
-	void init() {
+	void Init() {
 
 		srand(static_cast<int>(time(NULL)));
 
@@ -105,7 +105,7 @@ using namespace GameManager;
 		laser.color = WHITE;
 	}
 
-	void update() {
+	void Update() {
 
 		ufoActivationTimer += GetFrameTime();
 		ufoTextureTimer += GetFrameTime();
@@ -226,7 +226,7 @@ using namespace GameManager;
 	}
 
 
-	void draw() {
+	void Draw() {
 
 		if (laser.active)
 		{
@@ -238,15 +238,15 @@ using namespace GameManager;
 			switch (ufoState)
 			{
 			case Idle:
-				drawUFOTextures(ufo.idleTexture);
+				DrawUFOTextures(ufo.idleTexture);
 				break;
 
 			case Charging:
-				drawUFOTextures(ufo.chargingTexture);
+				DrawUFOTextures(ufo.chargingTexture);
 				break;
 
 			case Attacking:
-				drawUFOTextures(ufo.attackingTexture);
+				DrawUFOTextures(ufo.attackingTexture);
 				break;
 
 			default:
@@ -255,7 +255,7 @@ using namespace GameManager;
 		}
 	}
 
-	void deInit() {
+	void DeInit() {
 
 		for (int i = 0; i < ufoMaxTextures; i++)
 		{
@@ -271,31 +271,31 @@ using namespace GameManager;
 		UnloadTexture(laser.texture);
 	}
 
-	void drawUFOTextures(Texture2D textures[]) {
+	void DrawUFOTextures(Texture2D textures[]) {
 
 		if (ufoTextureTimer < 0.1f)
 		{
-			Textures::drawProTexture(textures[0], ufo.pos.x, ufo.pos.y, ufo.color);
+			Textures::DrawProTexture(textures[0], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.1f && ufoTextureTimer < 0.2f)
 		{
-			Textures::drawProTexture(textures[1], ufo.pos.x, ufo.pos.y, ufo.color);
+			Textures::DrawProTexture(textures[1], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.2f && ufoTextureTimer < 0.3f)
 		{
-			Textures::drawProTexture(textures[2], ufo.pos.x, ufo.pos.y, ufo.color);
+			Textures::DrawProTexture(textures[2], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.3f && ufoTextureTimer < 0.4f)
 		{
-			Textures::drawProTexture(textures[3], ufo.pos.x, ufo.pos.y, ufo.color);
+			Textures::DrawProTexture(textures[3], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.4f && ufoTextureTimer < 0.5f)
 		{
-			Textures::drawProTexture(textures[4], ufo.pos.x, ufo.pos.y, ufo.color);
+			Textures::DrawProTexture(textures[4], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 		else if (ufoTextureTimer > 0.5f && ufoTextureTimer < ufoMaxTextureTimer)
 		{
-			Textures::drawProTexture(textures[5], ufo.pos.x, ufo.pos.y, ufo.color);
+			Textures::DrawProTexture(textures[5], ufo.pos.x, ufo.pos.y, ufo.color);
 		}
 	}
 }

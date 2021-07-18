@@ -23,7 +23,7 @@ using namespace UI;
 	static Color titleSecondaryColor = DARKGRAY;
 	static Color textColor = GREEN;
 
-	void init() {
+	void Init() {
 
 		menuBox.width = 500;
 		menuBox.height = 800;
@@ -34,32 +34,32 @@ using namespace UI;
 		title.rec.height = 70;
 		title.rec.x = screenWidth / 2 + 155 - title.rec.width / 2;
 		title.rec.y = screenHeight / 2 - 250 - title.rec.height / 2;
-		initButton(title, title.rec, 3, 50, titleColor, titleSecondaryColor);
+		InitButton(title, title.rec, 3, 50, titleColor, titleSecondaryColor);
 
 		subTitle1.rec.width = 180;
 		subTitle1.rec.height = 50;
 		subTitle1.rec.x = screenWidth / 2 + 155 - subTitle1.rec.width / 2;
 		subTitle1.rec.y = screenHeight / 2 - 160 - subTitle1.rec.height / 2;
-		initButton(subTitle1, subTitle1.rec, 3, 35, titleColor, titleSecondaryColor);
+		InitButton(subTitle1, subTitle1.rec, 3, 35, titleColor, titleSecondaryColor);
 
 		subTitle2.rec.width = 180;
 		subTitle2.rec.height = 50;
 		subTitle2.rec.x = screenWidth / 2 + 155 - subTitle2.rec.width / 2;
 		subTitle2.rec.y = screenHeight / 2 + 100 - subTitle2.rec.height / 2;
-		initButton(subTitle2, subTitle2.rec, 3, 35, titleColor, titleSecondaryColor);
+		InitButton(subTitle2, subTitle2.rec, 3, 35, titleColor, titleSecondaryColor);
 
 		close.rec.width = 200;
 		close.rec.height = 70;
 		close.rec.x = screenWidth / 2 + 155 - close.rec.width / 2;
 		close.rec.y = screenHeight / 2 + 400 - close.rec.height / 2;
-		initButton(close, close.rec, 3, 50, BLANK, titleColor);
+		InitButton(close, close.rec, 3, 50, BLANK, titleColor);
 	}
 
-	void update() {
+	void Update() {
 
 		Vector2 mousePos = GetMousePosition();
 
-		updateButton(close, BLANK, DARKGRAY);
+		UpdateButton(close, BLANK, DARKGRAY);
 		if (CheckCollisionPointRec(mousePos, close.rec))
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -69,25 +69,25 @@ using namespace UI;
 		}
 	}
 
-	void draw() {
+	void Draw() {
 
 		DrawRectangleLinesEx(menuBox, 6, GREEN);
 
-		drawButton("CONTROLS", title);
-		drawButton("Actions", subTitle1);
-		drawButton("Rules", subTitle2);
-		drawButton("Close", close);
+		DrawButton("CONTROLS", title);
+		DrawButton("Actions", subTitle1);
+		DrawButton("Rules", subTitle2);
+		DrawButton("Close", close);
 
-		drawProText("Press A/D to move", subTitle1.rec.x + subTitle1.rec.width / 2, subTitle1.rec.y + subTitle1.rec.height / 2 + 60, textFontSize, textColor);
-		drawProText("sideways", subTitle1.rec.x + subTitle1.rec.width / 2, subTitle1.rec.y + subTitle1.rec.height / 2 + 60 + lineBelowDistance, textFontSize, textColor);
-		drawProText("Press 'Space' to", subTitle1.rec.x + subTitle1.rec.width / 2, subTitle1.rec.y + subTitle1.rec.height / 2 + 70 + lineBelowDistance * 2, textFontSize, textColor);
-		drawProText("shoot lasers", subTitle1.rec.x + subTitle1.rec.width / 2, subTitle1.rec.y + subTitle1.rec.height / 2 + 70 + lineBelowDistance * 3, textFontSize, textColor);
+		DrawProText("Press A/D to move", subTitle1.rec.x + subTitle1.rec.width / 2, subTitle1.rec.y + subTitle1.rec.height / 2 + 60, textFontSize, textColor);
+		DrawProText("sideways", subTitle1.rec.x + subTitle1.rec.width / 2, subTitle1.rec.y + subTitle1.rec.height / 2 + 60 + lineBelowDistance, textFontSize, textColor);
+		DrawProText("Press 'Space' to", subTitle1.rec.x + subTitle1.rec.width / 2, subTitle1.rec.y + subTitle1.rec.height / 2 + 70 + lineBelowDistance * 2, textFontSize, textColor);
+		DrawProText("shoot lasers", subTitle1.rec.x + subTitle1.rec.width / 2, subTitle1.rec.y + subTitle1.rec.height / 2 + 70 + lineBelowDistance * 3, textFontSize, textColor);
 
-		drawProText("Destoy all the aliens before", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60, textFontSize, textColor);
-		drawProText("they overwhelm you", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60 + lineBelowDistance, textFontSize, textColor);
-		drawProText("and shoot you down!", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60 + lineBelowDistance * 2, textFontSize, textColor);
-		drawProText("Take them down before", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 70 + lineBelowDistance * 3, textFontSize, textColor);
-		drawProText("they get too close!", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 70 + lineBelowDistance * 4, textFontSize, textColor);
+		DrawProText("Destoy all the aliens before", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60, textFontSize, textColor);
+		DrawProText("they overwhelm you", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60 + lineBelowDistance, textFontSize, textColor);
+		DrawProText("and shoot you down!", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 60 + lineBelowDistance * 2, textFontSize, textColor);
+		DrawProText("Take them down before", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 70 + lineBelowDistance * 3, textFontSize, textColor);
+		DrawProText("they get too close!", subTitle2.rec.x + subTitle2.rec.width / 2, subTitle2.rec.y + subTitle2.rec.height / 2 + 70 + lineBelowDistance * 4, textFontSize, textColor);
 	}
 }
 }

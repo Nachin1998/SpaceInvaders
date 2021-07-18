@@ -18,9 +18,9 @@ namespace Gameplay {
 using namespace GameManager;
 using namespace UI;
 
-	static void initBackground();
-	static void updateBackground();
-	static void drawBackground(int actualLevel);
+	static void InitBackground();
+	static void UpdateBackground();
+	static void DrawBackground(int actualLevel);
 	static void collisionManager();
 	static void gameOver();
 
@@ -46,7 +46,7 @@ using namespace UI;
 
 	static int counterFix = 0;
 
-	void init() {
+	void Init() {
 
 		srand(static_cast<int>(time(NULL)));
 		counterFix = 0;
@@ -55,15 +55,15 @@ using namespace UI;
 		hit = LoadSound("res/sounds/hit.ogg");
 		SetSoundVolume(hit, 1);
 
-		initBackground();
-		Player::init();
-		Invaders::init();
-		Ufo::init();
-		Wall::init();
-		PauseMenu::init();
+		InitBackground();
+		Player::Init();
+		Invaders::Init();
+		Ufo::Init();
+		Wall::Init();
+		PauseMenu::Init();
 	}
 
-	void update() {
+	void Update() {
 
 		if (IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_P))
 		{
@@ -79,11 +79,11 @@ using namespace UI;
 
 		if (!paused)
 		{
-			Player::update();
-			Invaders::update();
-			updateBackground();
-			Ufo::update();
-			Wall::update();
+			Player::Update();
+			Invaders::Update();
+			UpdateBackground();
+			Ufo::Update();
+			Wall::Update();
 			collisionManager();
 
 			if (Invaders::activeInvaderCounter == 1)
@@ -98,7 +98,7 @@ using namespace UI;
 		}
 		else 
 		{
-			PauseMenu::update();
+			PauseMenu::Update();
 		}
 
 		if (Player::player.isDead || IsKeyPressed(KEY_R)) 
@@ -125,44 +125,44 @@ using namespace UI;
 		}
 	}
 
-	void draw() {
+	void Draw() {
 
 		switch (level)
 		{
 		case One:
-			drawBackground(0);
+			DrawBackground(0);
 			break;
 		case Two:
-			drawBackground(1);
+			DrawBackground(1);
 			break;
 		case Three:
-			drawBackground(2);
+			DrawBackground(2);
 			break;
 		case Four:
-			drawBackground(3);
+			DrawBackground(3);
 			break;
 		default:
 			break;
 		}
 		
-		Player::draw();
-		Invaders::draw();
+		Player::Draw();
+		Invaders::Draw();
 
-		Ufo::draw();
-		Wall::draw();
+		Ufo::Draw();
+		Wall::Draw();
 
 		if (paused)
 		{
-			PauseMenu::draw();
+			PauseMenu::Draw();
 		}
 	}
 
-	void deInit() {
+	void DeInit() {
 
-		Player::deInit();
-		Invaders::deInit();
-		Ufo::deInit();
-		Wall::deInit();
+		Player::DeInit();
+		Invaders::DeInit();
+		Ufo::DeInit();
+		Wall::DeInit();
 
 		for (int i = 0; i < maxLevels; i++)
 		{
@@ -173,7 +173,7 @@ using namespace UI;
 		}				
 	}
 
-	void initBackground() {
+	void InitBackground() {
 
 		background.pos.x = 0;
 		background.pos.y = 0;
@@ -221,7 +221,7 @@ using namespace UI;
 		background.texture[3][7] = LoadTexture("res/assets/background/Level4/lvl4_8.png");
 	}
 
-	void updateBackground() {
+	void UpdateBackground() {
 
 		background.timer += GetFrameTime();
 
@@ -231,7 +231,7 @@ using namespace UI;
 		}
 	}
 
-	void drawBackground(int activeLevel) {
+	void DrawBackground(int activeLevel) {
 
 		
 		if(background.timer < background.timeToWait)
@@ -388,7 +388,7 @@ using namespace UI;
 
 	void gameOver() {
 
-		Gameplay::deInit();
+		Gameplay::DeInit();
 		actualScene = GameOver;
 	}
 }

@@ -9,10 +9,10 @@
 namespace MyGame {
 namespace GameManager {
 
-	static void init();
-	static void update();
-	static void draw();
-	static void deInit();
+	static void Init();
+	static void Update();
+	static void Draw();
+	static void DeInit();
 
 	bool endGame = false;
 
@@ -20,20 +20,20 @@ namespace GameManager {
 
 	SpaceInvadersScenes actualScene = MainMenu;
 
-	void runGame() {
+	void RunGame() {
 
-		init();
+		Init();
 
 		while (!WindowShouldClose() && !endGame)
 		{
-			update();
-			draw();
+			Update();
+			Draw();
 		}
 
-		deInit();
+		DeInit();
 	}
 
-	void init() {
+	void Init() {
 
 		InitWindow(screenWidth, screenHeight, "Space Invaders - by Ignacio Fernández Lemos");
 		SetTargetFPS(60);
@@ -41,29 +41,29 @@ namespace GameManager {
 		InitAudioDevice();
 
 		backgroundMusic = LoadMusicStream("res/music/BaseMusic.ogg");
-		MenuManager::init();
-		Gameplay::init();
-		GameOver::init();
+		MenuManager::Init();
+		Gameplay::Init();
+		GameOver::Init();
 
 		PlayMusicStream(backgroundMusic);
 		SetMusicVolume(backgroundMusic, 1.0f);
 	}
 
-	void update() {
+	void Update() {
 
 		UpdateMusicStream(backgroundMusic);
 		switch (actualScene)
 		{
 		case MainMenu:
-			MenuManager::update();
+			MenuManager::Update();
 			break;
 
 		case Gameplay:
-			Gameplay::update();
+			Gameplay::Update();
 			break;
 
 		case GameOver:
-			GameOver::update();
+			GameOver::Update();
 			break;
 
 		default:
@@ -71,7 +71,7 @@ namespace GameManager {
 		}
 	}
 
-	void draw() {
+	void Draw() {
 
 		BeginDrawing();
 
@@ -80,15 +80,15 @@ namespace GameManager {
 		switch (actualScene)
 		{
 		case MainMenu:
-			MenuManager::draw();
+			MenuManager::Draw();
 			break;
 
 		case Gameplay:
-			Gameplay::draw();
+			Gameplay::Draw();
 			break;
 
 		case GameOver:
-			GameOver::draw();
+			GameOver::Draw();
 			break;
 
 		default:
@@ -98,10 +98,10 @@ namespace GameManager {
 		EndDrawing();
 	}
 
-	void deInit() {
+	void DeInit() {
 
-		MenuManager::deInit();
-		Gameplay::deInit();
+		MenuManager::DeInit();
+		Gameplay::DeInit();
 		UnloadMusicStream(backgroundMusic);
 		CloseAudioDevice();
 		CloseWindow();

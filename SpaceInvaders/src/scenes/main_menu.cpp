@@ -15,13 +15,13 @@ using namespace UI;
 	static Button title;
 	static Button menuButton[maxButtons];
 
-	void init() {
+	void Init() {
 
 		title.rec.width = 800;
 		title.rec.height = 100;
 		title.rec.x = screenWidth / 2 - title.rec.width / 2;
 		title.rec.y = 100 - title.rec.height / 2;
-		initButton(title, title.rec, 3, 70, GREEN, DARKGRAY);
+		InitButton(title, title.rec, 3, 70, GREEN, DARKGRAY);
 
 		for (int i = 0; i < maxButtons; i++)
 		{
@@ -29,17 +29,17 @@ using namespace UI;
 			menuButton[i].rec.height = 70;
 			menuButton[i].rec.x = 170 - menuButton[i].rec.width / 2;
 			menuButton[i].rec.y = screenHeight / 2 - 100 + (120 * i) - menuButton[i].rec.height / 2;
-			initButton(menuButton[i], menuButton[i].rec, 3, 50, BLANK, GREEN);
+			InitButton(menuButton[i], menuButton[i].rec, 3, 50, BLANK, GREEN);
 		}
 	}
 
-	void update() {
+	void Update() {
 
 		Vector2 mousePos = GetMousePosition();
 
 		for (int i = 0; i < maxButtons; i++)
 		{
-			updateButton(menuButton[i], BLANK, DARKGRAY);
+			UpdateButton(menuButton[i], BLANK, DARKGRAY);
 
 			if (CheckCollisionPointRec(mousePos, menuButton[i].rec))
 			{
@@ -92,16 +92,16 @@ using namespace UI;
 		}		
 	}
 
-	void draw() {
+	void Draw() {
 
-		drawButton("SPACE CONQUERORS", title);
-		drawButton("Start", menuButton[0]);
-		drawButton("Options", menuButton[1]);
-		drawButton("Controls", menuButton[2]);
-		drawButton("Credits", menuButton[3]);
-		drawButton("Exit", menuButton[4]);
+		DrawButton("SPACE CONQUERORS", title);
+		DrawButton("Start", menuButton[0]);
+		DrawButton("Options", menuButton[1]);
+		DrawButton("Controls", menuButton[2]);
+		DrawButton("Credits", menuButton[3]);
+		DrawButton("Exit", menuButton[4]);
 
-		drawProText("V1.0", screenWidth - 50, screenHeight - 50, 30, GREEN);
+		DrawProText("V1.0", screenWidth - 50, screenHeight - 50, 30, GREEN);
 	}
 }
 }

@@ -19,10 +19,10 @@ namespace Wall {
 	};
 	extern Wall walls[maxWalls];
 
-	void init();
-	void update();
-	void draw();
-	void deInit();
+	void Init();
+	void Update();
+	void Draw();
+	void DeInit();
 }
 }
 

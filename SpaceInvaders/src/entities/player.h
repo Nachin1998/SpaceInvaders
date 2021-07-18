@@ -30,10 +30,10 @@ namespace Player {
 	extern Player player;
 	extern Bullet bullet;
 
-	void init();
-	void update();
-	void draw();
-	void deInit();
+	void Init();
+	void Update();
+	void Draw();
+	void DeInit();
 }
 }
 

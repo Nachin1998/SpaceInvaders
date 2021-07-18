@@ -8,7 +8,7 @@ using namespace GameManager;
 
 	float wallTextureTimer = 0;
 	Wall walls[maxWalls];
-	void init() {
+	void Init() {
 
 		wallTextureTimer = 0;
 
@@ -28,7 +28,7 @@ using namespace GameManager;
 		}
 	}
 
-	void update() {
+	void Update() {
 
 		wallTextureTimer += GetFrameTime();
 
@@ -65,7 +65,7 @@ using namespace GameManager;
 		}
 	}
 
-	void draw() {
+	void Draw() {
 
 		for (int i = 0; i < maxWalls; i++)
 		{
@@ -83,7 +83,7 @@ using namespace GameManager;
 		}
 	}
 
-	void deInit() {
+	void DeInit() {
 
 		for (int i = 0; i < maxWalls; i++)
 		{

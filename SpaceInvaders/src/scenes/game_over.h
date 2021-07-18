@@ -4,9 +4,9 @@
 namespace MyGame {
 namespace GameOver {
 	
-	void init();
-	void update();
-	void draw();
+	void Init();
+	void Update();
+	void Draw();
 }
 }
 

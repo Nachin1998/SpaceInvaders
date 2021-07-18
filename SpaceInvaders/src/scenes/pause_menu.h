@@ -4,9 +4,9 @@
 namespace MyGame {
 namespace PauseMenu {
 
-	void init();
-	void update();
-	void draw();
+	void Init();
+	void Update();
+	void Draw();
 }
 
 }
