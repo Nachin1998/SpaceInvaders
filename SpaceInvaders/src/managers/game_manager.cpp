@@ -40,10 +40,16 @@ namespace GameManager {
 		SetExitKey(KEY_F4);
 		InitAudioDevice();
 
-		backgroundMusic = LoadMusicStream("res/music/BaseMusic.ogg");
 		MenuManager::Init();
 		Gameplay::Init();
 		GameOver::Init();
+
+		InitMusic();
+	}
+
+	void InitMusic()
+	{
+		backgroundMusic = LoadMusicStream("res/music/BaseMusic.ogg");
 
 		PlayMusicStream(backgroundMusic);
 		SetMusicVolume(backgroundMusic, 1.0f);
